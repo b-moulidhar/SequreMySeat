@@ -15,7 +15,6 @@ public class Seat {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int sId;
 	private String sName;
-	private Floors fId;
 
 	public int getsId() {
 		return sId;
@@ -33,35 +32,26 @@ public class Seat {
 		this.sName = sName;
 	}
 
-	public Floors getfId() {
-		return fId;
-	}
-
-	public void setfId(Floors fId) {
-		this.fId = fId;
-	}
 
 	public Seat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Seat(int sId, String sName, Floors fId) {
+	public Seat(int sId, String sName) {
 		super();
 		this.sId = sId;
 		this.sName = sName;
-		this.fId = fId;
 	}
 
-	public Seat(String sName, Floors fId) {
+	public Seat(String sName) {
 		super();
 		this.sName = sName;
-		this.fId = fId;
 	}
 
 	@Override
 	public String toString() {
-		return "Seat [sId=" + sId + ", sName=" + sName + ", fId=" + fId + "]";
+		return "Seat [sId=" + sId + ", sName=" + sName +"]";
 	}
 
 }

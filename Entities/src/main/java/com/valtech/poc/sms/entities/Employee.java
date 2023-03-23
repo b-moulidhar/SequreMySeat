@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,8 @@ public class Employee {
 	private String empName;
 	private String phNum;
 	private String mailId;
+	@OneToOne(targetEntity = Manager.class)
+	@JoinColumn(name = "mId", referencedColumnName = "mId")
 	private Manager managerDetails;
 
 	public int geteId() {

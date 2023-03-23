@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +19,9 @@ public class AttendanceTable {
 	private String startDate;
 	private String endDate;
 	private String shiftStart;
-	private Manager shiftEnd;
+	private String shiftEnd;
+	@OneToOne(targetEntity = Employee.class)
+	@JoinColumn(name = "eId", referencedColumnName = "eId")
 	private Employee eId;
 
 	public int getAtId() {
@@ -52,11 +56,11 @@ public class AttendanceTable {
 		this.shiftStart = shiftStart;
 	}
 
-	public Manager getShiftEnd() {
+	public String getShiftEnd() {
 		return shiftEnd;
 	}
 
-	public void setShiftEnd(Manager shiftEnd) {
+	public void setShiftEnd(String shiftEnd) {
 		this.shiftEnd = shiftEnd;
 	}
 
@@ -73,7 +77,7 @@ public class AttendanceTable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AttendanceTable(String startDate, String endDate, String shiftStart, Manager shiftEnd, Employee eId) {
+	public AttendanceTable(String startDate, String endDate, String shiftStart, String shiftEnd, Employee eId) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -82,7 +86,7 @@ public class AttendanceTable {
 		this.eId = eId;
 	}
 
-	public AttendanceTable(int atId, String startDate, String endDate, String shiftStart, Manager shiftEnd,
+	public AttendanceTable(int atId, String startDate, String endDate, String shiftStart, String shiftEnd,
 			Employee eId) {
 		super();
 		this.atId = atId;

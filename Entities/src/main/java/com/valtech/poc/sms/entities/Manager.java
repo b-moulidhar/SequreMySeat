@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +16,8 @@ public class Manager {
 	@Column(name = "mId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int mId;
+	@OneToOne(targetEntity = Employee.class)
+	@JoinColumn(name = "eId", referencedColumnName = "eId")
 	private Employee managerDetails;
 
 	public int getmId() {

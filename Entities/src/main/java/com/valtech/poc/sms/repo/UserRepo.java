@@ -1,17 +1,18 @@
 package com.valtech.poc.sms.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.User;
 
 @Repository
-public interface MailRepo extends JpaRepository<Employee, Integer> {
+public interface UserRepo extends JpaRepository<User, Integer> {
 
-	Employee findByEmpName(String empName);
+	List<User> findAll();
 
-	Employee findByMailId(String mailId);
-
-//	Employee findByEId(int eId);
-
+	User findByEmpDetails(Employee empDetails);
+	
 }

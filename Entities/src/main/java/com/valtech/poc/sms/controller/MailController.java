@@ -8,38 +8,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.valtech.poc.sms.entities.Employee;
-import com.valtech.poc.sms.entities.User;
-//import com.valtech.poc.sms.repo.EmployeeRepo;
-import com.valtech.poc.sms.repo.MailRepo;
-import com.valtech.poc.sms.repo.UserepoTemp;
-import com.valtech.poc.sms.service.ResetPasswordImpl;
+import com.valtech.poc.sms.service.EmployeeService;
+import com.valtech.poc.sms.service.ResetPassword;
 
 @RestController
 public class MailController {
 
-//	@Autowired
-//	EmployeeRepo employeeRepo;
+	@Autowired
+	EmployeeService empService;
 
 	@Autowired
-	MailRepo mailRepo;
-
-	@Autowired
-	ResetPasswordImpl resetPasswordImpl;
-	
-	@Autowired
-	UserepoTemp temp;
+	ResetPassword resetPassword;
 
 	@GetMapping("/getEmp/{empName}")
 	public Employee getidbyemail(@PathVariable("empName") String empName) {
-		return mailRepo.findByEmpName(empName);
+		return empService.findByEmpName(empName);
 	}
 
 	@PostMapping("/reset/{email}")
 	public String forgotPass(@PathVariable("email") String email) {
-		boolean b = resetPasswordImpl.checkMailId(email);
+		boolean b = resetPassword.checkMailId(email);
 		System.out.println(b);
 		if (b == true) {
-			Boolean forgot = resetPasswordImpl.generateOtp(email);
+			Boolean forgot = resetPassword.generateOtp(email);
 			System.out.println(forgot);
 			String s1 = "sent";
 			return s1;
@@ -51,17 +42,13 @@ public class MailController {
 	@PostMapping("/reset/newPass/{id}")
 	public String newPass(@PathVariable("id") int id, @RequestParam String otpKey, @RequestParam String newPassword) {
 
-//		String otp = user.getEmail();
-		Employee emp = mailRepo.findById(id).get();
+		Employee emp = empService.findById(id);
 		String email = emp.getMailId();
-//		User usr=temp.findByEmpDetails(emp);
-//		String email="temp";
 		System.out.println("test mail= " + email);
-		boolean b = resetPasswordImpl.newPasswod(email, otpKey, newPassword);
+		boolean b = resetPassword.newPasswod(email, otpKey, newPassword);
 		System.out.println(b);
 		if (b == true) {
 //			String password = bCryptPasswordEncoder.encode(user.getPassword());
-//			forgotPass.changepassword(id, password);
 			return "changed";
 		}
 		return "fail";

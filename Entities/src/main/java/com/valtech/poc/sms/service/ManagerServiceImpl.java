@@ -1,6 +1,8 @@
 package com.valtech.poc.sms.service;
 
 
+import java.sql.SQLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.valtech.poc.sms.dao.ManagerDAO;
-import com.valtech.poc.sms.entities.User;
+import com.valtech.poc.sms.entities.Employee;
 
 @Service
 @Transactional(propagation=Propagation.SUPPORTS)
@@ -21,9 +23,16 @@ public class ManagerServiceImpl implements ManagerService {
 	private static final Logger logger = LoggerFactory.getLogger(ManagerServiceImpl.class);
 	
 	@Override
-	public User getManagerByEmpId(int empId) {
-		logger.info("Fething the manager data using the empId of manager");
-		System.out.println(managerDAO.getManagerByEmpId(empId));
-		return managerDAO.getManagerByEmpId(empId);
+	public Employee getManagerByEmpId(int empId) throws SQLException {
+		
+		try {
+			logger.info("Fething the manager data using the empId of manager");
+			return managerDAO.getManagerByEmpId(empId);
+		}
+		catch(Exception e) {
+			logger.info("No manager found");
+//			System.out.println("No manager found");
+		}
+		return null; 
 	}
 }

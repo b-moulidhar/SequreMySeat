@@ -1,9 +1,11 @@
 package com.valtech.poc.sms.service;
 
-import com.valtech.poc.sms.entities.User;
+import java.sql.SQLException;
+
+import com.valtech.poc.sms.entities.Employee;
 
 public interface ManagerService {
 
-	User getManagerByEmpId(int empId);
+	Employee getManagerByEmpId(int empId) throws SQLException;
 
 }

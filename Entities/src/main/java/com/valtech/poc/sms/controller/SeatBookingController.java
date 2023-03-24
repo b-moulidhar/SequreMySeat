@@ -23,4 +23,13 @@ public class SeatBookingController {
         List<Integer> allSeats = seatService.getAllSeats();
         return ResponseEntity.ok().body(allSeats);
     }
+        
+    @GetMapping("/booked")
+    public ResponseEntity<List<Integer>> availableSeats() {
+    	List<Integer> availableSeats = seatService.availableSeats();
+    	return ResponseEntity.ok().body(availableSeats);
+    	
+    }
+        
+    
 }

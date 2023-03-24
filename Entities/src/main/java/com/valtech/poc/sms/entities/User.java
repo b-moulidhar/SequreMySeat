@@ -119,6 +119,12 @@ public class User {
 		this.otp = otp;
 	}
 
+	@Override
+	public String toString() {
+		return "User [uId=" + uId + ", empId=" + empId + ", pass=" + pass + ", empDetails=" + empDetails + ", approval="
+				+ approval + ", roles=" + roles + ", otp=" + otp + "]";
+	}
+
 	
 	
 	

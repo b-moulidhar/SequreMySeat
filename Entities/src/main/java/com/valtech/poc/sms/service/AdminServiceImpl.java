@@ -17,6 +17,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public void foodCount(LocalDateTime ftDate) {
+		
 		adminDao.foodCount(ftDate);
 	}
 }

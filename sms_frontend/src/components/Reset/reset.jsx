@@ -30,7 +30,6 @@ class SignIn extends React.Component {
         let input = {};
         input["username"] = "";
         input["email"] = "";
-        input["otp"] = Number;
         input["password"] = "";
         input["confirm_password"] = "";
         this.setState({input:input});
@@ -118,22 +117,8 @@ class SignIn extends React.Component {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={this.handleSubmit}>
           <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Reset Password</h3>
+          <h3 className="Auth-form-title">Sign In</h3>
   
-          <div class="form-group mt-3">
-            <label for="otp">otp:</label>
-            <input 
-              type="password" 
-              name="otp" 
-              value={this.state.input.password}
-              onChange={this.handleChange}
-      
-              className="form-control mt-1" 
-              placeholder="Enter otp" 
-              id="otp" />
-  
-              <div className="text-danger">{this.state.errors.password}</div>
-          </div>
           <div class="form-group mt-3">
             <label for="password">Password:</label>
             <input 
@@ -153,7 +138,7 @@ class SignIn extends React.Component {
             <input 
               type="password" 
               name="confirm_password" 
-              value={this.state.input.confirm_password}
+              value={this.state.input.password}
               onChange={this.handleChange}
       
               className="form-control mt-1" 

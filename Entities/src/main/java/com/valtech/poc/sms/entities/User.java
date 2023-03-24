@@ -1,6 +1,7 @@
 package com.valtech.poc.sms.entities;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ public class User {
 	private int uId;
 	private int empId;
 	private String pass;
+
 	@OneToOne(targetEntity = Employee.class)
 	@JoinColumn(name = "eId", referencedColumnName = "eId")
 	private Employee empDetails;
@@ -33,7 +35,7 @@ public class User {
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "userRoles", joinColumns = @JoinColumn(name = "uId"), inverseJoinColumns = @JoinColumn(name = "rId"))
 	private Set<Roles> roles = new HashSet<Roles>();
-	
+
 	@OneToOne(targetEntity = Otp.class)
 	@JoinColumn(name = "oId", referencedColumnName = "oId")
 	private Otp otp;

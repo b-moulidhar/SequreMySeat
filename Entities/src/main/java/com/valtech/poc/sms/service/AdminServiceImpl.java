@@ -13,11 +13,11 @@ import com.valtech.poc.sms.dao.AdminDao;
 @Transactional(propagation = Propagation.SUPPORTS)
 public class AdminServiceImpl implements AdminService{
 	
-	@Autowired AdminDao adminDao;
-
+	@Autowired 
+	private AdminDao adminDao;
+	
 	@Override
 	public void foodCount(LocalDateTime ftDate) {
 		
-		adminDao.foodCount(ftDate);
 	}
 }

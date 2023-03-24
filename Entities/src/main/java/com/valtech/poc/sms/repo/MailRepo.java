@@ -6,7 +6,12 @@ import org.springframework.stereotype.Repository;
 import com.valtech.poc.sms.entities.Employee;
 
 @Repository
-public interface MailRepo extends JpaRepository<Employee, Integer>{
+public interface MailRepo extends JpaRepository<Employee, Integer> {
 
 	Employee findByEmpName(String empName);
+
+	Employee findByMailId(String mailId);
+
+//	Employee findByEId(int eId);
+
 }

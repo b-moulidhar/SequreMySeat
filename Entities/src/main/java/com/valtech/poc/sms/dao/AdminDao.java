@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public interface AdminDao {
 
-	void foodCount(String foodDate);
+	int getFoodCount(LocalDateTime dateTime);
+
+	int getSeatBookedCount(LocalDateTime dateTime);
 
 }

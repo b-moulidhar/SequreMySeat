@@ -23,7 +23,7 @@
     box-shadow: 11px 12px 13px 12px rgb(207, 207, 207);
     padding-top: 30px;
     border-radius: 60px; 
-    background-color: white;
+    background-color: rgb(224, 167, 167);
   }
   .imgs {
       padding-top: 20px;
@@ -68,7 +68,7 @@
     width: 150px;
     height: 50px;
     border-radius: 60px;
-    background-color: #478a97;
+    background-color: #479754;
     color: white;
     font-size: 25px;
     border: none;
@@ -103,9 +103,22 @@
   }
 
   .link1{
-      font-size: 25px;
+      font-size: 20px;
       font-weight: 400;
+      display: flex;
+      color: rgb(3, 29, 35);
+      justify-content: space-between;
+      
+      
+     
   }
-   a{
-       color: rgb(6, 34, 41);
+   a1{
+         flex: 1;
+         text-decoration: none;
+   }
+   a2{
+         flex: 2;
+         text-decoration: none;
+
+         
    }

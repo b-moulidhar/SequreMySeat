@@ -30,6 +30,6 @@ public class SeatBookingController {
     	return ResponseEntity.ok().body(availableSeats);
     	
     }
-        
+    
     
 }

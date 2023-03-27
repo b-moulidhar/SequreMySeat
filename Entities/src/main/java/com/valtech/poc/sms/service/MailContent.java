@@ -1,5 +1,6 @@
 package com.valtech.poc.sms.service;
 
+import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.User;
 
 public interface MailContent {
@@ -13,5 +14,7 @@ public interface MailContent {
 	void successfulPasswordChange(User user);
 
 	void notifyRegisteration(User user);
+
+	void attendanceApprovalRequest(AttendanceTable attendanceTable);
 
 }

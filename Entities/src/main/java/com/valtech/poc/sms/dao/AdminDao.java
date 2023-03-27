@@ -15,4 +15,6 @@ public interface AdminDao {
 
 	List<AttendanceTable> listAttendance();
 
+	List<String> findRoles();
+
 }

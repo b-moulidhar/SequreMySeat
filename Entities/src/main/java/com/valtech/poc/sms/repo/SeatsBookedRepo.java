@@ -9,6 +9,6 @@ import com.valtech.poc.sms.entities.SeatsBooked;
 
 public interface SeatsBookedRepo extends JpaRepository<SeatsBooked, Integer>{
 	
-	List<SeatsBooked> findAllByEId(Employee emp);
+	List<SeatsBooked> findAllByeId(Employee emp);
 
 }

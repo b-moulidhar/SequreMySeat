@@ -1,0 +1,50 @@
+.mainpage {
+    display: flex;
+    margin: auto;
+}
+
+
+
+.top {
+    text-align: center;
+    justify-content: center;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.seat {
+    width: 250px;
+    height: 150px;
+    margin: 100px;
+
+}
+
+
+
+.status{
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(69, 3, 69);
+    color: white;
+}
+
+.atten{
+    display: flex;
+    padding: 10px;
+    margin: auto;
+}
+
+.attenstatus{
+    flex: 1;
+    
+    
+}
+
+.statusbtn{
+    width: 250px;
+    height: 150px;
+    justify-content: center;
+    margin: 0 100px;
+}

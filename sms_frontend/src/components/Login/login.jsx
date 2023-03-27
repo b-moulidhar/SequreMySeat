@@ -1,15 +1,28 @@
 import { useState } from "react";
-import Header from "../header";
-import "./login.css"
+
+import "./login.css";
 
 export default function Login(){
 
    const [state,setState] = useState({uid:'',password:''});
+   const[dig,setDig] = useState({dig:Number})
 
    function loginFunc(event){
     setState({
       [event.target.name]: event.target.value,
     });
+    
+   }
+
+   function checkVal(event){
+    setDig({
+      ...dig,dig: event.target.value
+    });
+    console.log(dig.length)
+    if(dig.length<5){
+      alert("do not exceed more than 4 characters")
+    }
+
    }
     return (
       <>
@@ -19,8 +32,7 @@ export default function Login(){
        <div>
          <div className="imgs">
            <div className="container-image">
-             {/* <img src={profile} alt="profile" className="profile"/> */}
-
+            
            </div>
 
 
@@ -28,11 +40,11 @@ export default function Login(){
          <div>
            <h1>Login Page</h1>
            <div>
-             {/* <img src={state.uid} alt="email" className="email"/> */}
-             <input type="text" placeholder="Email" className="name" name="email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" required value={state.uid} onChange={loginFunc}/>
+            
+             <input type="number" placeholder="Employee Id" className="name" name="empid" minlength="4" maxLength="4" required value={state.uid} onChange={loginFunc} onInput={checkVal}/>
            </div>
            <div className="second-input">
-             {/* <img src={pass} alt="pass" className="email"/> */}
+             
              <input type="password" placeholder="Password" className="name" name="password" pattern="[A-Za-z0-9#@$&]{3,10}" required  value={state.password} onChange={loginFunc}/>
            </div>
           <div className="login-button">
@@ -40,8 +52,8 @@ export default function Login(){
           </div>
            
             <p className="link1">
-            <a href="/forget">Forgot password ?</a> <br></br>
-            <a href="/register">Register</a>             
+            <a href="/forget" className="a1">Forgot password ?</a> <br></br>
+            <a href="/register" className="a2">Register</a>             
             </p>
             
            

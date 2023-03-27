@@ -2,7 +2,6 @@ package com.valtech.poc.sms.service;
 
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +36,5 @@ public class ManagerServiceImpl implements ManagerService {
 		return null; 
 	}
 
-	@Override
-	public List<Employee> getAllEmployees() {
-		logger.info("Getting All Employee Details");
-		return managerDAO.getAllEmployees();
-	}
+
 }

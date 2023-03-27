@@ -6,6 +6,6 @@ import com.valtech.poc.sms.entities.Employee;
 
 public interface EmployeeDAO {
 
-	List<Employee> getAllEmployees();
+	List<Employee> getAllEmployees(int empID);
 
 }

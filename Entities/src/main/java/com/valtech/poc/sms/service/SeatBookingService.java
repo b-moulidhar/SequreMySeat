@@ -10,12 +10,20 @@ public interface SeatBookingService {
 
 	List<Integer> getAllSeats();
 
-	List<Seat> findAvailableSeats();
+	//List<Seat> findAvailableSeats();
 
 	List<Integer> availableSeats();
+//
+//	int totalSeats();
+
+	List<Integer> countTotalSeats();
+
+	//List<Integer> getSeatById();
 
 	List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp);
 
 	SeatsBooked findCurrentSeatBookingDetails(Employee emp);
+
+	List<Seat> findAvailableSeats();
 
 }

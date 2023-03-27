@@ -14,7 +14,7 @@ public class AdminTempControllerToBeDeleted {
 	@GetMapping("/qr/codeGenerator/{empId}")
 	public String getCodeForQrGeneration(@PathVariable("empId") int empId) {
 		return null;
-		//call function which returns code from seat_booked table based on current status
+		//call function which returns "code" from seat_booked table based on current status for this empId
 	}
 	
 	@Autowired

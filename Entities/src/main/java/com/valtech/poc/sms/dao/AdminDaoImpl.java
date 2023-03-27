@@ -64,5 +64,12 @@ public class AdminDaoImpl implements AdminDao {
 		
 		
 	}
+
+	@Override
+	public List<String> findRoles() {
+		String query="select role from roles";
+		return jdbcTemplate.queryForList(query, String.class);
+
+	}
 	
 }

@@ -8,22 +8,19 @@ import com.valtech.poc.sms.entities.SeatsBooked;
 
 public interface SeatBookingDao {
 
-	List<Integer> getAllSeats();
-
-	
-
-//	List<Seat> findByBooked(boolean booked);
-
-
+//	List<Integer> getAllSeats();
 
 	List<Integer> availableSeats();
 
-
-
 	List<SeatsBooked> findAllByEId(Employee emp);
 
-
-
 	SeatsBooked findCurrentSeat(Employee emp);
+
+	List<Integer> countTotalSeats();
+
+	List<Integer> getAllSeats();
+
+//List<Integer> getSeatById();
+
 
 }

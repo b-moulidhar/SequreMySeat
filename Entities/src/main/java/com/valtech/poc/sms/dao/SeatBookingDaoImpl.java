@@ -42,6 +42,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 		return availableSeats;
 		// fetching the seats which are booked
 	}
+//
 
 	@Override
 	public List<SeatsBooked> findAllByEId(Employee emp) {
@@ -74,11 +75,24 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Override
 	public SeatsBooked findCurrentSeat(Employee emp) {
-		
+
 		return null;
 	}
 
+	@Override
+	public List<Integer> countTotalSeats() {
+		String query = "SELECT COUNT(*) FROM seat";
+		List<Integer> totalSeats = jdbcTemplate.queryForList(query, Integer.class);
+		return totalSeats;
+	}
+
 }
+//select s.*
+//from seat s
+//left join seats_booked sb on s.s_id = sb.s_id
+//where sb.s_id IS NULL;
+//
+//}
 //@Override
 //
 //public List<Seat> findByBooked(boolean booked) {
@@ -116,6 +130,33 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 //        return seat;
 //    }
 //}
+
+//public List<Map<String, Object>> getSeatBookingsByEmployeeId(int employeeId) throws SQLException {
+//    String sql = "SELECT s.s_name, sb.* " +
+//                 "FROM seat s " +
+//                 "JOIN seats_booked sb ON s.s_id = sb.s_id " +
+//                 "WHERE sb.e_id = ?";
+//    try (Connection conn = getConnection();
+//         PreparedStatement stmt = conn.prepareStatement(sql)) {
+//        stmt.setInt(1, employeeId);
+//        try (ResultSet rs = stmt.executeQuery()) {
+//            List<Map<String, Object>> results = new ArrayList<>();
+//            ResultSetMetaData meta = rs.getMetaData();
+//            int numColumns = meta.getColumnCount();
+//            while (rs.next()) {
+//                Map<String, Object> row = new HashMap<>();
+//                for (int i = 1; i <= numColumns; i++) {
+//                    String column = meta.getColumnName(i);
+//                    Object value = rs.getObject(i);
+//                    row.put(column, value);
+//                }
+//                results.add(row);
+//            }
+//            return results;
+//        }
+//    }
+//}
+
 //}
 
 //@Repository

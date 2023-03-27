@@ -16,6 +16,7 @@ public class SeatBookingServiceImpl implements SeatBookingService {
 
 	@Autowired
 	private SeatBookingDao seatBookingDao;
+	
 
 	@Override
 	public List<Integer> getAllSeats() {
@@ -25,23 +26,39 @@ public class SeatBookingServiceImpl implements SeatBookingService {
 	@Override
 	public List<Integer> availableSeats() {
 		return seatBookingDao.availableSeats();
-
 	}
-
+		
 	@Override
 	public List<Seat> findAvailableSeats() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+    public List<Integer> countTotalSeats() {
+        return seatBookingDao.countTotalSeats();
+    }
+//	@Override
+//	public List<Integer> getSeatById() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+
+
+//	@Override
+//	public List<Seat> findAvailableSeats() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
 //	@Override
 //	public List<Seat> findAvailableSeats() {
 //        return seatBookingDao.findByBooked(false);
 //    }
 	@Override
-	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp) {
+	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp)	{
 		return seatBookingDao.findAllByEId(emp);
-
 	}
 	
 	@Override

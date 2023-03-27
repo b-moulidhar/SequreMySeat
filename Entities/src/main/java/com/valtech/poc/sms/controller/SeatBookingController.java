@@ -30,7 +30,7 @@ public class SeatBookingController {
     	return ResponseEntity.ok().body(availableSeats);
     	
     }
-    
+
     @GetMapping("/count")
     public ResponseEntity<List<Integer>> getTotalSeatsCount() {
     	List<Integer> totalSeats = seatService.countTotalSeats();

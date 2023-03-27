@@ -1,149 +1,121 @@
-import { Component } from "react";
- 
-class App extends Component{
-    state = {
-        name : "",
-        emp_id : Number,
-        email : "",
-        managers : "",
-        role:"",
-        password:"",
-        confpassword:"",
-        pass_error: "",
-        confPass_error: "",
-        email_error: "",
-        man_error:"",
-        role_error:"",
-        email_error:"",
-        empid_error:"",
-        name_error:""
+import { useState } from "react";
+
+function Register(){
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const validatePassword = (password) => {
+    password.preventDefault()
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return regex.test(password);
+  };
+
+  function handleChange(event){
+    const { value } = event.target;
+    setPassword(value);
+    if (!validatePassword(value)) {
+      setError('Password must contain at least 8 characters, including at least one letter and one number');
+    } else {
+      setError(null);
     }
-    /* 
-    titleChangeHandler = (evt)=>{
-        this.setState({
-            password : evt.target.value
+  };
+
+    const [user,setUser]= useState({name:'',emp_id:'',email:'',role:'',manager:'',password:'',confirmpassword:''})
+
+    function newUser(event){
+        setUser({
+          [event.target.name]:event.target.value
         })
     }
-    nameChangeHandler = (evt)=>{
-        this.setState({
-            confpassword : evt.target.value
-        })
+    function validateSubmit(event){
+      event.preventDefault()
+
+        const confirmpassword= user.confirmpassword;
+        const password = user.password;
+
+         if((password=='') || (confirmpassword=='')) {
+           alert("password should not be empty")
+          }
+          else if(confirmpassword==password){
+           alert("registered successfully")
+         }
+         else{
+            alert("Password and ConfirmPassword are not same");
+           
+         }
+
     }
-    powerChangeHandler = (evt)=>{
-        this.setState({
-            email : evt.target.value
-        })
-    } 
-    */
-    changeHandler = (evt)=>{
-        this.setState({
-            [evt.target.name] : evt.target.value
-        })
-    }
-    validateForm = ()=> {
-        if( this.state.password === ""){
-            this.setState({
-                pass_error : "password is required"
-            })
-        }
-        if(this.state.confpassword === ""){
-            this.setState({
-                confPass_error : "password is required"
-            })
-        }
-        if(this.state.email === ""){
-            this.setState({
-                email_error: "email is required"
-            })
-        }
-        if(this.state.name === ""){
-            this.setState({
-                email_error: "name is required"
-            })
-        }
-        if(this.state.emp_id === ""){
-            this.setState({
-                email_error: "employee id is required"
-            })
-        }
-        if(this.state.role === ""){
-            this.setState({
-                email_error: "role is required"
-            })
-        }
-        if(this.state.managers === ""){
-            this.setState({
-                email_error: "manager is required"
-            })
-        }
-        // else if(this.state.email <5 && this.state.email >0){
-        //     this.setState({
-        //         email_error: "Power is less"
-        //     })
-        // }
-        // else{
-        //     this.setState({
-        //         email_error: "Power is more"
-        //     })
-        // }
-    }
-    render(){
-        return <div className="container">
-                <h1>{ this.state.apptitle }</h1>
+
+function PasswordValidation() {
+  
+}
+    return(
+      
+        <>
+            <form className="row g-3 needs-validation" onSubmit={PasswordValidation} noValidate>
+            <div className="main">
+            <div >
+              <div>
                 <div>
-                <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" placeholder="name" id="name" pattern="[A-Za-z]{5,10}" name="name" value={this.state.name} onChange={(evt) => this.changeHandler(evt)} required/>
+                  <h1>Registration</h1>
+                  <div>
+                    
+                    <input type="text" placeholder="name" className="name" pattern="[A-Za-z]{5,15}" name="name" value={user.name} onChange={newUser} required/>
                   </div>
-                <div>
-                <label htmlFor="emp_id" className="form-label">Employee Id</label>
-                    <input type="number" placeholder="name" id="emp_id" pattern="[0-9]{4}" name="emp_id" value={this.state.emp_id} onChange={(evt) => this.changeHandler(evt)} required/>
+                  <div className="second-input">
+                  
+                    <input type="email" placeholder="Email" className="name" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" value={user.email}  name="email" onChange={newUser} required/>
                   </div>
-                <div className="mb-3">
-                        <label htmlFor="email" className="form-label">email</label>
-                        <input onInput={ (evt) => this.changeHandler(evt) } value={this.state.email} id="email" name="email" type="email" className="form-control" pattern="^[a-zA-Z0-9+_.-]+@valtech.com" required/>
-                        {/* { (this.state.email  < 5 || this.state.email === 0) && <div className="form-text text-danger">{ this.state.email_error}</div> }
-                        { this.state.email > 10 && <div className="form-text text-danger">{ this.state.email_error}</div> }
-                        { this.state.email == 0 && <div className="form-text text-danger">{ this.state.email_error}</div> } */}
-                    </div>
-                <select   name="role"  value={this.state.role} onChange={(evt) => this.changeHandler(evt)} required >
+                
+                  <div className="second-input">
+                  
+                    <input type="text" placeholder="Phone number" className="name"  name="pnumber" pattern="(0/91)?[6-9][0-9]{9}" value={user.pnumber}  onChange={newUser} required/>
+                  </div>
+                  
+                  <br></br>
+                 <select   name="specialization"  value={user.role} onChange={newUser} required >
                 <option value="" disabled selected>Select Your Role</option>
                     <option value="Role 1">Role 1</option>
                     <option value="Role 2">Role 2</option>
                     <option value="Role 3">Role 3</option>
                     <option value="Role 4">Role 4</option> 
                   </select>
-		<br></br>
-                 <select   name="managers"  value={this.state.managers} onChange={(evt) => this.changeHandler(evt)} required >
+                 <select   name="specialization"  value={user.manager} onChange={newUser} required >
                 <option value="" disabled selected>Select Your Manager</option>
                     <option value="Manager 1">Manager 1</option>
                     <option value="Manager 2">Manager 2</option>
                     <option value="Manager 3">Manager 3</option>
                     <option value="Manager 4">Manager 4</option> 
                   </select>
-          
                     <br></br>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">password</label>
-                        <input onInput={ (evt) => this.changeHandler(evt) } value={this.state.password} id="password" type="text" className="form-control" required/>
-                        { this.state.pass_error !== "" && <div className="form-text text-danger">{ this.state.pass_error }</div> }
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="confpassword" className="form-label">confirm password</label>
-                        <input onChange={ (evt) => this.changeHandler(evt) } value={this.state.confpassword} id="confpassword" type="text" className="form-control" required/>
-                        { this.state.confPass_error !== "" && <div className="form-text text-danger">{ this.state.confPass_error }</div> }
-                    </div>
-                    
-                    <button type="submit" onClick={ this.validateForm } className="btn btn-primary">Submit</button>
-                    <ul>
-                        <li>Title : { this.state.name }</li>
-                        <li>Name : { this.state.emp_id }</li>
-                        <li>Power : { this.state.email }</li>
-                    </ul>
-               </div>
-    }
-}
+                    <br></br> 
 
-export default App;
- 
- 
-// http://p.ip.fi/XRt_
+                  <div className="second-input">
+                  
+                    <input type="password" placeholder="Password" className="name" name="password" pattern="[A-Za-z0-9#@$&]{3,10}"  value={user.password} onChange={handleChange} required/>
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
+                  </div>
+                  <div className="second-input">
+                  
+                    <input type="password" placeholder=" Confirm Password" className="name" name="confirmpassword" pattern="[A-Za-z0-9#@$&]{3,10}" value={user.confirmpassword} onChange={newUser}  required/>
+                  </div>   
+
+                
+                 
+                 <div className="login-button">
+                 <button  >submit</button><br></br>
+                 <br></br>
+                 {/* <button ><Link to={"/"}>Login Page</Link></button> */}
+                 </div>
+                </div>
+              </div>
+             
+       
+            </div>
+           </div>
+</form>
+
+        </>
+    )
+}
+export default Register;

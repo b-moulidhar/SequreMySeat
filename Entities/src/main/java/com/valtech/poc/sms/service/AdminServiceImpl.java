@@ -2,11 +2,14 @@ package com.valtech.poc.sms.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.valtech.poc.sms.dao.AdminDao;
+import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.Food;
 import com.valtech.poc.sms.repo.AdminRepository;
 
@@ -43,6 +46,16 @@ public class AdminServiceImpl implements AdminService{
 		LocalDateTime dateTime = LocalDateTime.parse(ftDate, formatter);
 		Food f= adminRepository.getFoodByFtDate(dateTime);
 		return f.getCount();
+	}
+	
+	@Override
+	public void updateAttendance(int atId) {
+		adminDao.approveAttendance(atId);
+	}
+
+	@Override
+	public List<AttendanceTable> listAttendance() {
+		return adminDao.listAttendance();
 	}
 
 	

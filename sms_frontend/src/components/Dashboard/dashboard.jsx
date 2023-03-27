@@ -1,12 +1,21 @@
+import Navbar from '../Navbar/navbar';
+import Sidebar from '../Sidebar/sidebar';
 import './dashboard.css';
 
 function Dashboard(){
     return(
+
+        <div>
+            <Navbar/>
         <div className='mainpage'>
+            
+            <Sidebar/>
           
-           <div className='container'>
+           <div className='dashboard_container'>
+            <div className='dashboard'>
            <button type="button" className="btn btn-primary seat">Book Seat</button>
            <button type="button" className="btn btn-success seat">View Booking</button>
+           </div>
            <h2 className="status">Status</h2>
            <div className='atten'>
                 <div className='attenstatus'>
@@ -22,6 +31,7 @@ function Dashboard(){
             </div>
 
         </div> 
+        </div>
     )
 }
 

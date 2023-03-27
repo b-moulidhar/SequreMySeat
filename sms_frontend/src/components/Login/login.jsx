@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Navbar from "../Navbar/navbar";
+import { Link } from "react-router-dom";
 
 import "./login.css";
 
@@ -25,7 +27,8 @@ export default function Login(){
 
    }
     return (
-      <>
+      <div>
+      <Navbar/>
         <form>
         <div className="main">
      <div className="sub-main">
@@ -48,7 +51,7 @@ export default function Login(){
              <input type="password" placeholder="Password" className="name" name="password" pattern="[A-Za-z0-9#@$&]{3,10}" required  value={state.password} onChange={loginFunc}/>
            </div>
           <div className="login-button">
-          <button>Login</button>
+          <Link to="/dashboard"><button>Login</button></Link>
           </div>
            
             <p className="link1">
@@ -66,6 +69,6 @@ export default function Login(){
     </div>
 </form>
 
-      </>
+      </div>
     );
 }

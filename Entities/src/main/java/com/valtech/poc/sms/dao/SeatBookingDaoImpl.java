@@ -4,21 +4,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.swing.tree.RowMapper;
-
+import org.hibernate.id.IntegralDataTypeHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.valtech.poc.sms.entities.Seat;
 
 @Component
-public  class SeatBookingDaoImpl implements SeatBookingDao {
+@ComponentScan
+public    class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-
+//
 @Override
 public List<Integer> getAllSeats() {
     String query = "SELECT s_id FROM seat";
@@ -29,14 +30,29 @@ public List<Integer> getAllSeats() {
 
 @Override
  public List<Integer> availableSeats() {
-	String query = "SELECT sb_id FROM seats_booked WHERE current = 1";
+	String query = "SELECT sb_id FROM seats_booked WHERE current = 0";
     List<Integer> availableSeats = jdbcTemplate.queryForList(query, Integer.class);
     return availableSeats;
     // fetching the seats which are booked
 }
 
 
+@Override
+public  List<Integer> countTotalSeats() {
+    String query = "SELECT COUNT(*) FROM seat";
+    List<Integer> totalSeats = jdbcTemplate.queryForList(query, Integer.class);
+    return totalSeats;
 }
+
+
+
+}
+//select s.*
+//from seat s
+//left join seats_booked sb on s.s_id = sb.s_id
+//where sb.s_id IS NULL;
+//
+//}
 //@Override
 //
 //public List<Seat> findByBooked(boolean booked) {
@@ -75,6 +91,33 @@ public List<Integer> getAllSeats() {
 //        return seat;
 //    }
 //}
+
+//public List<Map<String, Object>> getSeatBookingsByEmployeeId(int employeeId) throws SQLException {
+//    String sql = "SELECT s.s_name, sb.* " +
+//                 "FROM seat s " +
+//                 "JOIN seats_booked sb ON s.s_id = sb.s_id " +
+//                 "WHERE sb.e_id = ?";
+//    try (Connection conn = getConnection();
+//         PreparedStatement stmt = conn.prepareStatement(sql)) {
+//        stmt.setInt(1, employeeId);
+//        try (ResultSet rs = stmt.executeQuery()) {
+//            List<Map<String, Object>> results = new ArrayList<>();
+//            ResultSetMetaData meta = rs.getMetaData();
+//            int numColumns = meta.getColumnCount();
+//            while (rs.next()) {
+//                Map<String, Object> row = new HashMap<>();
+//                for (int i = 1; i <= numColumns; i++) {
+//                    String column = meta.getColumnName(i);
+//                    Object value = rs.getObject(i);
+//                    row.put(column, value);
+//                }
+//                results.add(row);
+//            }
+//            return results;
+//        }
+//    }
+//}
+
 //}
 
 

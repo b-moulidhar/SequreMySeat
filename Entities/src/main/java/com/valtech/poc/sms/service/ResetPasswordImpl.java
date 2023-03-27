@@ -22,6 +22,9 @@ public class ResetPasswordImpl implements ResetPassword {
 
 	@Autowired
 	OtpRepo otpRepo;
+	
+	@Autowired
+	MailContent mailContent;
 
 //	@Autowired
 //	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -53,6 +56,7 @@ public class ResetPasswordImpl implements ResetPassword {
 		System.out.println("otp1= " + otpKey);
 		otpRepo.save(otp);
 //		mailMessage.sendOTP(usr.getEmail(), otp1);
+		mailContent.sendOTP(email, otpKey);
 //		String Pass = bCryptPasswordEncoder.encode(otpKey);
 		usr.setOtp(otp);
 		userRepo.save(usr);
@@ -69,7 +73,9 @@ public class ResetPasswordImpl implements ResetPassword {
 //		System.out.println("otpKey= "+otpKey);
 		if (otpKey.equals(key)) {
 			usr.setPass(password);
+			usr.setOtp(null);
 			userRepo.save(usr);
+			mailContent.successfulPasswordChange(usr);
 			return true;
 		}
 		return false;

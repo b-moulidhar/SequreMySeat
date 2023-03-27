@@ -2,41 +2,97 @@ package com.valtech.poc.sms.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.tree.RowMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
+import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.SeatRepo;
 
 @Component
-public  class SeatBookingDaoImpl implements SeatBookingDao {
+public class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	SeatRepo seatRepo;
 
-@Override
-public List<Integer> getAllSeats() {
-    String query = "SELECT s_id FROM seat";
-    List<Integer> allSeats = jdbcTemplate.queryForList(query, Integer.class);
-    return allSeats;
-    // fetching all the available seats
+	@Override
+	public List<Integer> getAllSeats() {
+		String query = "SELECT s_id FROM seat";
+		List<Integer> allSeats = jdbcTemplate.queryForList(query, Integer.class);
+		return allSeats;
+		// fetching all the available seats
+	}
+
+	@Override
+	public List<Integer> availableSeats() {
+		String query = "SELECT sb_id FROM seats_booked WHERE current = 1";
+		List<Integer> availableSeats = jdbcTemplate.queryForList(query, Integer.class);
+		return availableSeats;
+		// fetching the seats which are booked
+	}
+//
+
+	@Override
+	public List<SeatsBooked> findAllByEId(Employee emp) {
+		String query = "select * from seats_booked where e_id = ?";
+		int empId = emp.geteId();
+		@SuppressWarnings("deprecation")
+		List<SeatsBooked> seatsBooked = jdbcTemplate.query(query, new Object[] { empId },
+				new ResultSetExtractor<List<SeatsBooked>>() {
+					public List<SeatsBooked> extractData(ResultSet rs) throws SQLException, DataAccessException {
+						List<SeatsBooked> list = new ArrayList<SeatsBooked>();
+						while (rs.next()) {
+							SeatsBooked seatsBooked = new SeatsBooked();
+							int seatId = rs.getInt("s_id");
+							Seat seat = seatRepo.findById(seatId).get();
+							seatsBooked.setsId(seat);
+//					seatsBooked.setEmpName(rs.getString("emp_name"));
+							seatsBooked.seteId(emp);
+							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+							String sbDate = rs.getString("punch_in");
+							LocalDateTime dateTime = LocalDateTime.parse(sbDate, formatter);
+							seatsBooked.setSbDate(dateTime);
+							list.add(seatsBooked);
+						}
+						return list;
+					}
+
+				});
+		return seatsBooked;
+	}
+
+	@Override
+	public SeatsBooked findCurrentSeat(Employee emp) {
+
+		return null;
+	}
+
+	@Override
+	public List<Integer> countTotalSeats() {
+		String query = "SELECT COUNT(*) FROM seat";
+		List<Integer> totalSeats = jdbcTemplate.queryForList(query, Integer.class);
+		return totalSeats;
+	}
+
 }
-
-@Override
- public List<Integer> availableSeats() {
-	String query = "SELECT sb_id FROM seats_booked WHERE current = 1";
-    List<Integer> availableSeats = jdbcTemplate.queryForList(query, Integer.class);
-    return availableSeats;
-    // fetching the seats which are booked
-}
-
-
-}
+//select s.*
+//from seat s
+//left join seats_booked sb on s.s_id = sb.s_id
+//where sb.s_id IS NULL;
+//
+//}
 //@Override
 //
 //public List<Seat> findByBooked(boolean booked) {
@@ -58,7 +114,6 @@ public List<Integer> getAllSeats() {
 //    }
 //}
 
-
 //@Override
 //public List<Seat> findByBooked(boolean booked) {
 //    String sql = "SELECT * FROM seats WHERE booked = ?";
@@ -75,9 +130,34 @@ public List<Integer> getAllSeats() {
 //        return seat;
 //    }
 //}
+
+//public List<Map<String, Object>> getSeatBookingsByEmployeeId(int employeeId) throws SQLException {
+//    String sql = "SELECT s.s_name, sb.* " +
+//                 "FROM seat s " +
+//                 "JOIN seats_booked sb ON s.s_id = sb.s_id " +
+//                 "WHERE sb.e_id = ?";
+//    try (Connection conn = getConnection();
+//         PreparedStatement stmt = conn.prepareStatement(sql)) {
+//        stmt.setInt(1, employeeId);
+//        try (ResultSet rs = stmt.executeQuery()) {
+//            List<Map<String, Object>> results = new ArrayList<>();
+//            ResultSetMetaData meta = rs.getMetaData();
+//            int numColumns = meta.getColumnCount();
+//            while (rs.next()) {
+//                Map<String, Object> row = new HashMap<>();
+//                for (int i = 1; i <= numColumns; i++) {
+//                    String column = meta.getColumnName(i);
+//                    Object value = rs.getObject(i);
+//                    row.put(column, value);
+//                }
+//                results.add(row);
+//            }
+//            return results;
+//        }
+//    }
 //}
 
-
+//}
 
 //@Repository
 //public class SeatRepositoryImpl implements SeatRepository {
@@ -104,7 +184,6 @@ public List<Integer> getAllSeats() {
 //        return seat;
 //    }
 //}
-
 
 //@Repository
 //public class SeatBookingDAOImpl implements SeatBookingDAO {

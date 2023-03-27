@@ -8,4 +8,6 @@ public interface ManagerService {
 
 	Employee getManagerByEmpId(int empId) throws SQLException;
 
+
+
 }

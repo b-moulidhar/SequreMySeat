@@ -8,8 +8,14 @@ public interface SeatBookingService {
 
 	List<Integer> getAllSeats();
 
-	List<Seat> findAvailableSeats();
+	//List<Seat> findAvailableSeats();
 
 	List<Integer> availableSeats();
+//
+//	int totalSeats();
+
+	List<Integer> countTotalSeats();
+
+	//List<Integer> getSeatById();
 
 }

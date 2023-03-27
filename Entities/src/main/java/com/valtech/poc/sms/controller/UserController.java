@@ -26,6 +26,7 @@ public class UserController {
 	    int mId=userService.getMidByMname(managerName);
 		userService.saveEmployee(employee,mId);
 		int eId=employee.geteId();
+		System.out.println(eId);
 		userService.saveUser(user,employee);
 		if(role=="Manager") {
 			userService.saveManager(mId,eId);

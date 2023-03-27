@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.valtech.poc.sms.entities.Employee;
@@ -17,10 +18,10 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	
 	@ResponseBody
-	@GetMapping("/getAllEmployees")
-	public  List<Employee> getAllEmployees() {
+	@GetMapping("/getAllEmployees/{empID}")
+	public  List<Employee> getAllEmployees(@PathVariable ("empID") int empID) {
 		
-		return employeeService.getAllEmployees();
+		return employeeService.getAllEmployees(empID);
 		
 	}
 }

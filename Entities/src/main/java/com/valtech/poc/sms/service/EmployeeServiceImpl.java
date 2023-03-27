@@ -33,8 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Employee> getAllEmployees() {
-		logger.info("Getting All Employee Details");
-		return employeeDAO.getAllEmployees();
+	public List<Employee> getAllEmployees(int empID) {
+		logger.info("Getting All Employee Details by manager");
+		return employeeDAO.getAllEmployees(empID);
 	}
 }

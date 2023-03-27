@@ -95,6 +95,7 @@ public class AdminController {
 	    	AttendanceTable attendance=new AttendanceTable();
 	    	adminService.automaticRegularization(sbId,attendance);
 	        attendanceRepository.save(attendance);
+	        mailContent.attendanceApprovalRequest(attendance);
 	        return "saved";
 	    }
 	    

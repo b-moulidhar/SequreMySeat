@@ -1,14 +1,18 @@
 package com.valtech.poc.sms.dao;
 
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
@@ -19,6 +23,7 @@ import com.valtech.poc.sms.entities.SeatsBooked;
 import com.valtech.poc.sms.repo.SeatRepo;
 
 @Component
+@ComponentScan
 public class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
@@ -85,8 +90,49 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 		List<Integer> totalSeats = jdbcTemplate.queryForList(query, Integer.class);
 		return totalSeats;
 	}
+  
+	@Override
+	public List<Seat> findAvailableSeatsByDate(LocalDate date) {
+	    String query = "SELECT s.s_id, s.s_name " +
+	            "FROM seat s " +
+	            "WHERE s.s_id NOT IN ( " +
+	            "   SELECT sb.s_id " +
+	            "   FROM seats_booked sb " +
+	            "   WHERE DATE(sb.sb_date) = ? AND sb.current = true" +
+	            ")";
+	    List<Seat> availableSeats = jdbcTemplate.query(query, new Object[]{date}, new BeanPropertyRowMapper<>(Seat.class));
+	    return availableSeats;
+	    // returns all the seats that are not booked on the given date. 
+	}
 
 }
+
+//public List<Map<String, Object>> getSeatBookingsByEmpId(int empId) throws SQLException {
+//    String sql = "SELECT s.s_name, sb.* " +
+//                 "FROM seat s " +
+//                 "JOIN seats_booked sb ON s.s_id = sb.s_id " +
+//                 "WHERE sb.e_id = (SELECT e_id FROM employee WHERE emp_id = ?)";
+//    try (Connection conn = dataSource.getConnection();
+//         PreparedStatement stmt = conn.prepareStatement(sql)) {
+//        stmt.setInt(1, empId);
+//        try (ResultSet rs = stmt.executeQuery()) {
+//            List<Map<String, Object>> results = new ArrayList<>();
+//            ResultSetMetaData meta = rs.getMetaData();
+//            int numColumns = meta.getColumnCount();
+//            while (rs.next()) {
+//                Map<String, Object> row = new HashMap<>();
+//                for (int i = 1; i <= numColumns; i++) {
+//                    String column = meta.getColumnName(i);
+//                    Object value = rs.getObject(i);
+//                    row.put(column, value);
+//                }
+//                results.add(row);
+//            }
+//            return results;
+//        }
+//    }
+//}
+
 //select s.*
 //from seat s
 //left join seats_booked sb on s.s_id = sb.s_id

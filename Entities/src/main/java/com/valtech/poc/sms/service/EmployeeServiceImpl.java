@@ -17,6 +17,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	
+	@Override
+    public Employee getEmployeeByeId(int eId) {
+        return employeeDAO.getEmployeeByeId(eId);
+    }
+	
 	@Autowired
 	EmployeeRepo empRepo;
 
@@ -33,8 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Employee> getAllEmployees() {
-		logger.info("Getting All Employee Details");
-		return employeeDAO.getAllEmployees();
+	public List<Employee> getAllEmployees(int empID) {
+		logger.info("Getting All Employee Details by manager");
+		return employeeDAO.getAllEmployees(empID);
 	}
 }

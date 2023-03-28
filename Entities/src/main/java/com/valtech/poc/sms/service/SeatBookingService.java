@@ -1,5 +1,6 @@
 package com.valtech.poc.sms.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.valtech.poc.sms.entities.Employee;
@@ -22,6 +23,14 @@ public interface SeatBookingService {
 
 	List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp);
 
+	SeatsBooked findCurrentSeatBookingDetails(Employee emp);
 
+	List<Seat> findAvailableSeats();
+
+	List<SeatsBooked> findAllByEId(Employee emp);
+
+	List<Seat> findAvailableSeatsByDate(LocalDate date);
+
+	void bookSeat();
 
 }

@@ -1,0 +1,28 @@
+package com.valtech.poc.sms.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.User;
+import com.valtech.poc.sms.service.UserService;
+
+@Controller
+public class UserController {
+	
+	@Autowired
+	private UserService userService;
+	
+	
+	@PostMapping("/save")
+	public void SaveEmployee(@RequestBody Employee employee, @RequestBody User user,String managerName,String role) {
+		int mId=userService.getMidByMname(managerName);
+		userService.saveEmployee(employee,mId);
+		userService.saveUser(user);
+		
+	}
+
+}

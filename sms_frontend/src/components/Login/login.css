@@ -50,7 +50,7 @@
       width: 300px;
       height: 50px;
       border-radius: 60px;
-      box-shadow: inset 0px 0px 25px 0px #888;
+      box-shadow: inset 0px 0px 25px 0px #f18686;
       border: none;
       outline: none;
       background-color: #fff;
@@ -79,7 +79,7 @@
       border-radius: 60px;
       background-color: #478a97;
       color: white;
-      font-size: 25px;
+      font-size: 20px;
       border: none;
   }
   table {
@@ -111,6 +111,19 @@
       
       
      
+  }
+
+  .log{
+    width: 300px;
+    height: 50px;
+    border-radius: 60px;
+    box-shadow: inset 0px 0px 25px 0px #f18686;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    text-decoration: none;
+    line-height: 50px;
+    color: white;
   }
    a1{
          flex: 1;

@@ -1,0 +1,22 @@
+.profile{
+    display: flex;
+    text-align: center;
+    
+}
+
+.imgs {
+    padding-top: 20px;
+    justify-content: center;
+    display: flex;
+    margin-left: 500px;
+   
+  }
+.container-image {
+  background-color: rgb(223, 221, 221); 
+  border-radius: 150px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 115px;
+  width: 115px;
+}

@@ -1,0 +1,49 @@
+package com.valtech.poc.sms.dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.naming.spi.DirStateFactory.Result;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+import com.valtech.poc.sms.entities.User;
+
+@Component
+public class ManagerDAOImpl implements ManagerDAO {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public class UserRowMapper implements RowMapper<User> {
+		  public User mapRow(Result rs, int rowNum) throws SQLException {
+		    User user = new User();
+		    user.setuId(rs.getInt("u_id"));
+		    user.setEmpId(rs.get("emp_id"));
+		    user.setUId(rs.getInt("u_id"));
+		    // other property mappings
+		    return user;
+		  }
+
+		@Override
+		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		}
+//	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+//	@Override
+//	public User getManagerByEmpId(int empId) {
+//		// TODO Auto-generated method stub
+		String sql="select * from user u where u.emp_id=? AND u.u_id=(select ur.u_id from roles r INNER JOIN user_roles ur ON r.r_id = ur.r_id AND r.role in ('Manager'));";
+		
+		 return (User) jdbcTemplate.queryForObject(
+					sql, 
+					new Object[]{empId}, 
+					new UserRowMapper(User.class));
+	}
+
+}

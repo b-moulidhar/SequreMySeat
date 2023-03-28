@@ -17,6 +17,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	
+	@Override
+    public Employee getEmployeeByeId(int eId) {
+        return employeeDAO.getEmployeeByeId(eId);
+    }
+	
 	@Autowired
 	EmployeeRepo empRepo;
 

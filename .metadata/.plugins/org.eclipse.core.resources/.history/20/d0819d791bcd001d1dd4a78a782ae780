@@ -1,0 +1,18 @@
+package com.valtech.poc.sms.dao;
+
+public interface UserDAO {
+
+	int getMidByMname(String managerName);
+
+//	void saveEmployee(Employee employee, int mId);
+
+//	void saveUser(User user, Employee eId);
+
+	int getRidByRoleName(String role);
+
+	void saveUserRole(int uId, int rId);
+
+
+//	void saveManager(Manager mng);
+
+}

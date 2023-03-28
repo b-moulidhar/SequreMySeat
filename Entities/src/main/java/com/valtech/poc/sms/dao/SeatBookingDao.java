@@ -1,8 +1,11 @@
 package com.valtech.poc.sms.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
+import com.valtech.poc.sms.entities.SeatsBooked;
 
 public interface SeatBookingDao {
 
@@ -10,13 +13,21 @@ public interface SeatBookingDao {
 
 	List<Integer> availableSeats();
 
-   List<Integer> countTotalSeats();
+	List<SeatsBooked> findAllByEId(Employee emp);
 
-List<Integer> getAllSeats();
+	SeatsBooked findCurrentSeat(Employee emp);
+
+	List<Integer> countTotalSeats();
+
+	List<Integer> getAllSeats();
+
+	List<Seat> findAvailableSeatsByDate(LocalDate date);
+
+	void bookSeat();
+
+	
 
 //List<Integer> getSeatById();
-
-
 
 
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.valtech.poc.sms.entities.Employee;
@@ -20,8 +21,10 @@ public class MailController {
 	@Autowired
 	ResetPassword resetPassword;
 
+	@ResponseBody
 	@GetMapping("/getEmp/{empName}")
 	public Employee getidbyemail(@PathVariable("empName") String empName) {
+//		System.out.println("MC: "+empService.findByEmpName(empName));
 		return empService.findByEmpName(empName);
 	}
 

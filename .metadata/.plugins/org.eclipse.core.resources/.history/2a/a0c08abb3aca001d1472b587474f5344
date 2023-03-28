@@ -1,0 +1,10 @@
+package com.valtech.poc.sms.dao;
+
+import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.User;
+
+public interface ManagerDAO {
+
+	Employee getManagerByEmpId(int empId);
+
+}

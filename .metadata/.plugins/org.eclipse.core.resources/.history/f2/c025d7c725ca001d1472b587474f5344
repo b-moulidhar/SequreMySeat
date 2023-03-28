@@ -1,0 +1,21 @@
+package com.valtech.poc.sms.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.service.ManagerService;
+
+@Controller
+public class ManagerController {
+
+	@Autowired
+	private ManagerService managerService;
+	
+	@GetMapping("/managerByEmpId")
+	public Employee managerProfileInfo(int empId) {
+		
+		return managerService.getManagerByEmpId(empId).getEmpDetails();
+	}
+}

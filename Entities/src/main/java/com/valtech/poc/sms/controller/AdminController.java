@@ -1,18 +1,14 @@
 package com.valtech.poc.sms.controller;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.Employee;
-import com.valtech.poc.sms.entities.Manager;
 import com.valtech.poc.sms.repo.AttendanceRepository;
-import com.valtech.poc.sms.repo.EmployeeRepo;
 import com.valtech.poc.sms.service.AdminService;
 import com.valtech.poc.sms.service.MailContent;
 
@@ -33,12 +29,6 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
-	@Autowired
-	private EmployeeRepo employeeRepo;
 	
 	@Autowired
 	private AttendanceRepository attendanceRepository;
@@ -63,10 +53,10 @@ public class AdminController {
 		}
 	
     @ResponseBody
-	  @GetMapping("/seatCount/{sbDate}")
-    public int getCountBySbDate(@PathVariable("sbDate")String sbDate) {
+	  @GetMapping("/seatCount/{sbStartDate}")
+    public int getCountBySbDate(@PathVariable("sbStartDate")String sbStartDate) {
     	logger.info("Fetching the seat booked count");
-    	int count=adminService.getSeatBookedCount(sbDate);
+    	int count=adminService.getSeatBookedCount(sbStartDate);
         return count;
     	
     }
@@ -88,13 +78,7 @@ public class AdminController {
 	    	    logger.info("Requesting approval");
 	    	    adminService.updateAttendance(atId);
 	    		return "approved";
-	    	}
-	    
-	    @ResponseBody
-	    @GetMapping("/AttendanceListt")
-	    public List<AttendanceTable> listAttendance() {
-	    	return adminService.listAttendance();
-	    	
+	  
 	    	}
 	    
 	    @ResponseBody
@@ -118,10 +102,36 @@ public class AdminController {
 	    @GetMapping("/att/{atId}")
 	    public AttendanceTable getList(@PathVariable("atId") int atId) {
 	       return adminService.getList(atId);
+	    }
 	    
+	    @ResponseBody
+	    @GetMapping("/attendance")
+	    public List<Map<String, Object>> getCompleteAttendanceList() {
+	        return adminService.getCompleteAttendanceList();
 	    	
 	    }
 	    
+	    @ResponseBody
+	    @GetMapping("/attendance/{atId}")
+	    public Map<String, Object> getAttendanceEachEmployeeBasedOnAttendanceId(@PathVariable("atId") int atId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceListForEachEmployee(atId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for id: " + atId);
+	    	    }
+	    	
+	    }
+	    
+	    @ResponseBody
+	    @GetMapping("/employeeAttendance/{eId}")
+	    public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
+	    	    }
+	    	
+	    }
 	  
 	 
 

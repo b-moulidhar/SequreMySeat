@@ -1,16 +1,11 @@
 package com.valtech.poc.sms.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
 import com.valtech.poc.sms.entities.AttendanceTable;
@@ -31,7 +26,7 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public int getSeatBookedCount(LocalDateTime dateTime) {
-		String query="select count(sb_date) from seats_booked where sb_date=?"; 
+		String query="select count(sb_start_date) from seats_booked where sb_start_date=?"; 
 	    return jdbcTemplate.queryForObject(query, Integer.class, dateTime);
 	}
 	
@@ -42,31 +37,6 @@ public class AdminDaoImpl implements AdminDao {
 		
 	}
 
-	@Override
-	public List<AttendanceTable> listAttendance() {
-		String SQL = "select * from attendance_table";
-    	List <AttendanceTable> att = 
-    			jdbcTemplate.query( SQL, new ResultSetExtractor<List<AttendanceTable>>()
-    	{
-    		public List<AttendanceTable> extractData(ResultSet rs) throws SQLException, DataAccessException { 
-    			List<AttendanceTable> list = new ArrayList<AttendanceTable>();
-    			while(rs.next()){ AttendanceTable attendanceTable = new AttendanceTable();
-    			attendanceTable.setAtId(rs.getInt("at_id"));
-    			attendanceTable.setStartDate(rs.getString("start_date")); 
-    			attendanceTable.setEndDate(rs.getString("end_date")); 
-    			attendanceTable.setShiftStart(rs.getString("shift_start"));
-    			attendanceTable.setShiftEnd(rs.getString("shift_end")); 
-    			attendanceTable.setApproval(rs.getBoolean("approval"));
-    			list.add(attendanceTable); 
-    			} 
-    			return list; 
-    			} 
-    		} 
-    			);
-    	return att; 
-		
-		
-	}
 
 	@Override
 	public List<String> findRoles() {
@@ -110,6 +80,29 @@ public class AdminDaoImpl implements AdminDao {
 		    employee.setManagerDetails(manager);
 		    
 		    return attendance;
+	}
+
+	@Override
+	public List<Map<String, Object>> getCompleteAttendanceList() {
+		String query = "SELECT * FROM attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id";
+        List<Map<String, Object>> results = jdbcTemplate.queryForList(query);
+        return results;
+	}
+
+	@Override
+	public Map<String, Object> getAttendanceListForEachEmployee(int atId) {
+String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id	WHERE a.at_id=?";
+		
+    	Map<String, Object> result = jdbcTemplate.queryForMap(query, atId);
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id	WHERE a.e_id=?";
+		
+    	Map<String, Object> result = jdbcTemplate.queryForMap(query, eId);
+		return result;
 	}
 	
 }

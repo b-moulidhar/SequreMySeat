@@ -33,4 +33,6 @@ public interface SeatBookingService {
 
 	void bookSeat();
 
+	void bookSeat(SeatsBooked seatsBooked);
+
 }

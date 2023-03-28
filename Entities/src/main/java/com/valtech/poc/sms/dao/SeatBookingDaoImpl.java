@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
@@ -24,13 +25,17 @@ import com.valtech.poc.sms.repo.SeatRepo;
 
 @Component
 @ComponentScan
-public class SeatBookingDaoImpl implements SeatBookingDao {
+
+public  class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	SeatRepo seatRepo;
+	
+	@Autowired
+	SeatBookingDao seatBookingDao;
 
 	@Override
 	public List<Integer> getAllSeats() {
@@ -104,12 +109,25 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 	    return availableSeats;
 	}
 	
+//	@Override
+//	public void bookSeat() {
+//        String sql = "INSERT INTO seats_booked (sb_id, sb_date, punch_in, punch_out, current, code, s_id, e_id) VALUES " +
+//                     "(?, ?, ?, ?, ?, ?, ?, ?)";
+//                      this.jdbcTemplate.update(sql);
+//    }
+	
 	@Override
-	public void bookSeat() {
-        String sql = "INSERT INTO seats_booked (sb_id, sb_date, punch_in, punch_out, current, code, s_id, e_id) VALUES " +
-                     "(?, ?, ?, ?, ?, ?, ?, ?)";
-                      this.jdbcTemplate.update(sql);
-    }
+	public void bookSeat(SeatsBooked seatsBooked) {
+	    String sql = "INSERT INTO seats_booked (sb_id, sb_date, punch_in, punch_out, current, code, s_id, e_id) " +
+	                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	    try {
+	        jdbcTemplate.update(sql, seatsBooked.getSbId(), seatsBooked.getSbDate(), seatsBooked.getPunchIn(),
+	                             seatsBooked.getPunchOut(), seatsBooked.getCurrent(), seatsBooked.getCode(),
+	                             seatsBooked.getsId(), seatsBooked.geteId());
+	    } catch (DataAccessException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 //	@Override
 //	public void saveEmployee(Employee employee, int mId) {

@@ -131,4 +131,14 @@ public class SeatsBooked {
 				+ ", current=" + current + ", code=" + code + ", sId=" + sId + ", eId=" + eId + "]";
 	}
 
+	public Object getCurrent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getSId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

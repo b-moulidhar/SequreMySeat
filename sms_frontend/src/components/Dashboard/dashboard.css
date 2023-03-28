@@ -1,10 +1,12 @@
 .mainpage {
     display: flex;
-    margin: auto;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
 }
 
 
-
+ 
 .top {
     text-align: center;
     justify-content: center;
@@ -15,9 +17,15 @@ ul li {
 }
 
 .seat {
-    width: 250px;
-    height: 150px;
-    margin: 100px;
+    width: 200px;
+    height: 100px;
+    border-radius: 100px;
+    box-shadow: inset 0px 0px 25px 0px #f18686;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    color: black;
+    margin: auto;
 
 }
 
@@ -27,6 +35,8 @@ ul li {
     text-align: center;
     justify-content: center;
     background-color: rgb(69, 3, 69);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 25px 0px #fadfdf;
     color: white;
 }
 
@@ -47,4 +57,53 @@ ul li {
     height: 150px;
     justify-content: center;
     margin: 0 100px;
+    box-shadow: inset 0px 0px 25px 0px #fadfdf;
+}
+
+.sidebar{
+    background-color: rgb(255, 165, 165);
+    color: rgb(0, 0, 0);
+    height: 100vh;
+    width: 200px;
+    transition: all 0.5s;
+}
+
+.top_section{
+    display: flex;
+    align-items: center;
+    padding: 20px 15px;
+}
+
+.logo{
+    font-size: 25px;
+}
+
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 50px;
+}
+
+.link{
+    display: flex;
+    color: black;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s;
+    text-decoration: none;
+}
+
+.link:hover{
+    background-color: crimson;
+    color: white;
+    transition: all 0.5s;
+}
+
+.active{
+    background-color: crimson;
+    color: white;
+}
+
+.icon, .link_text{
+    font-size: 20px;
 }

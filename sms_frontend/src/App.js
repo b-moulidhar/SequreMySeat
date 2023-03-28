@@ -6,8 +6,18 @@ import Home from './components/Home/home';
 import Forget from './components/Forget/forget';
 import Reset from './components/Reset/reset';
 import Dashboard from './components/Dashboard/dashboard';
-
 import Navbar from './components/Navbar/navbar';
+import Profile from './components/Profile/profile';
+import Sidebar from './components/Sidebar/sidebar';
+import Notify from './components/Notify/notify';
+import FloorList from './components/FloorList/floorList';
+import Floor from './components/Floor/floor';
+import BookSeat from './components/BookSeat/bookSeat';
+import AdminDashboard from './components/Dashboard/AdminDashboard/admin_dashboard';
+import GroundFloor from './components/layouts/ground';
+import QrCodeScan from './components/QR/qrscanner';
+import QrCodeGen from './components/QR/qrgenerator';
+
 
 function App() {
   return (
@@ -15,7 +25,7 @@ function App() {
     <>
     <BrowserRouter>
     {/* <Link to="register"><button type="button" class="btn btn-primary btn-lg">register</button></Link> */}
-
+   
     <Routes>
     <Route path="/" element={<Login/>}/>    
     <Route path="/home" element={<Home/>}/>    
@@ -23,7 +33,17 @@ function App() {
     <Route path="/forget" element={<Forget/>}/>    
     <Route path="/forget/reset" element={<Reset/>}/>    
     <Route path="/dashboard" element={<Dashboard/>}/>    
+    <Route path="/admin" element={<AdminDashboard/>}/>    
     <Route path="/navbar" element={<Navbar/>}/>    
+    <Route path="/profile" element={<Profile/>}/>    
+    <Route path="/sidebar" element={<Sidebar/>}/>    
+    <Route path="/notify" element={<Notify/>}/>    
+    {/* <Route path="/floor" element={<Floor/>}/>     */}
+    <Route path="/floorLIst" element={<FloorList/>}/>    
+    <Route path="/bookseat" element={<BookSeat/>}/>    
+    <Route path="/qrscanner" element={<QrCodeScan/>}/>    
+    <Route path="/qrgenerator" element={<QrCodeGen/>}/>    
+    <Route path="/gfloor" element={<GroundFloor/>}/>    
     </Routes>
     </BrowserRouter>
     </>

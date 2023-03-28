@@ -63,10 +63,10 @@ public class AdminController {
 		}
 	
     @ResponseBody
-	  @GetMapping("/seatCount/{sbDate}")
-    public int getCountBySbDate(@PathVariable("sbDate")String sbDate) {
+	  @GetMapping("/seatCount/{sbStartDate}")
+    public int getCountBySbDate(@PathVariable("sbStartDate")String sbStartDate) {
     	logger.info("Fetching the seat booked count");
-    	int count=adminService.getSeatBookedCount(sbDate);
+    	int count=adminService.getSeatBookedCount(sbStartDate);
         return count;
     	
     }

@@ -31,7 +31,7 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public int getSeatBookedCount(LocalDateTime dateTime) {
-		String query="select count(sb_date) from seats_booked where sb_date=?"; 
+		String query="select count(sb_start_date) from seats_booked where sb_start_date=?"; 
 	    return jdbcTemplate.queryForObject(query, Integer.class, dateTime);
 	}
 	

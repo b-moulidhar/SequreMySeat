@@ -1,5 +1,7 @@
 package com.valtech.poc.sms.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,19 +20,11 @@ public class Mail {
 	private String subject;
 	private String body;
 	private boolean status;
+	private LocalDateTime time;
 
 	public Mail() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Mail(int mId, String email, String subject, String body, boolean status) {
-		super();
-		this.mId = mId;
-		this.email = email;
-		this.subject = subject;
-		this.body = body;
-		this.status = status;
 	}
 
 	@Override
@@ -79,12 +73,31 @@ public class Mail {
 		this.status = status;
 	}
 
-	public Mail(String email, String subject, String body, boolean status) {
+	public LocalDateTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalDateTime time) {
+		this.time = time;
+	}
+
+	public Mail(int mId, String email, String subject, String body, boolean status, LocalDateTime time) {
+		super();
+		this.mId = mId;
+		this.email = email;
+		this.subject = subject;
+		this.body = body;
+		this.status = status;
+		this.time = time;
+	}
+
+	public Mail(String email, String subject, String body, boolean status, LocalDateTime time) {
 		super();
 		this.email = email;
 		this.subject = subject;
 		this.body = body;
 		this.status = status;
+		this.time = time;
 	}
 
 }

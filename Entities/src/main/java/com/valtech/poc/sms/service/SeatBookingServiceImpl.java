@@ -7,6 +7,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.valtech.poc.sms.dao.SeatBookingDao;
@@ -67,9 +68,25 @@ public   class SeatBookingServiceImpl implements SeatBookingService {
 	}
 
 	
+	@Override
+	public void bookSeat(SeatsBooked seatsBooked) {
+	    try {
+	    	seatBookingDao.bookSeat(seatsBooked);
+	    } catch (DataAccessException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	@Override
+	public void bookSeat() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+	
 	
 	
 	
 	
 
-}

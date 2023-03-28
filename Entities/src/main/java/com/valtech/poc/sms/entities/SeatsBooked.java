@@ -139,4 +139,14 @@ public class SeatsBooked {
 
 
 
+	public Object getCurrent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getSId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

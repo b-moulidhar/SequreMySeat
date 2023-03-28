@@ -76,8 +76,8 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void automaticRegularization(int sbId, AttendanceTable attendance) {
 		SeatsBooked sb=seatsBookedRepo.findById(sbId).orElseThrow(() -> new ResourceNotFoundException("SeatBooked not found" ));
-        attendance.setStartDate(""+sb.getSbDate());
-        attendance.setEndDate(""+sb.getSbDate());
+        attendance.setStartDate(""+sb.getSbStartDate());
+        attendance.setEndDate(""+sb.getSbEndDate());
         attendance.setShiftStart(""+sb.getPunchIn());
         attendance.setShiftEnd(""+sb.getPunchOut());
         attendance.seteId(sb.geteId());
@@ -88,6 +88,11 @@ public class AdminServiceImpl implements AdminService{
 	public Employee getSpecificEmploye(AttendanceTable attendance) {
 		return employeeRepo.findById(attendance.geteId().geteId())
         .orElseThrow(() -> new ResourceNotFoundException("Employee not found" ));
+	}
+
+	@Override
+	public AttendanceTable getList(int atId) {
+		return adminDao.getList(atId);
 	}
 
 	

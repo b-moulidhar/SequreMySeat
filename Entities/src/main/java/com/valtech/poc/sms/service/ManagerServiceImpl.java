@@ -27,7 +27,7 @@ public class ManagerServiceImpl implements ManagerService {
 	public Employee getManagerByEmpId(int empId) throws SQLException {
 		
 		try {
-			logger.info("Fething the manager data using the empId of manager");
+			logger.info("Fetching the manager data using the empId of manager");
 			return managerDAO.getManagerByEmpId(empId);
 		}
 		catch(Exception e) {

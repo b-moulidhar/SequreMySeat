@@ -47,6 +47,14 @@ public class AdminController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/qr/codeGenerator/{empId}")
+	public String getCodeForQrGeneration(@PathVariable("empId") int empId) {
+		//call function which returns "code" from seat_booked table based on current status for this empId
+		String qrCodeKey = adminService.generateQrCode(empId);
+		return qrCodeKey;
+	}
+	
+	@ResponseBody
 	@GetMapping("/foodCountWithJpa/{ftDate}")
 		public int getCountByFtdate(@PathVariable("ftDate")String ftDate) {
 		    return adminService.getCount(ftDate);

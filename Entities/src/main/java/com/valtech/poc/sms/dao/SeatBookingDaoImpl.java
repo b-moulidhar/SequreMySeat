@@ -18,8 +18,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.Manager;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.ManagerRepo;
 import com.valtech.poc.sms.repo.SeatRepo;
 
 @Component
@@ -35,6 +37,9 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
 	SeatBookingDao seatBookingDao;
+	
+	@Autowired
+	ManagerRepo managerRepo;
 
 	@Override
 	public List<Integer> getAllSeats() {
@@ -64,10 +69,14 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 						List<SeatsBooked> list = new ArrayList<SeatsBooked>();
 						while (rs.next()) {
 							SeatsBooked seatsBooked = new SeatsBooked();
+							seatsBooked.setSbId(rs.getInt("sb_id"));
 							int seatId = rs.getInt("s_id");
 							Seat seat = seatRepo.findById(seatId).get();
 							seatsBooked.setsId(seat);
-//					seatsBooked.setEmpName(rs.getString("emp_name"));
+//							int mngId = emp.getManagerDetails().getmId();
+//							Manager mng = managerRepo.findById(mngId);
+//							System.out.println(mng);					
+//							emp.setManagerDetails(mng);
 							seatsBooked.seteId(emp);
 							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 							String sbSDate = rs.getString("sb_start_date");
@@ -76,12 +85,21 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 							String sbEDate = rs.getString("sb_end_date");
 							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
 							seatsBooked.setSbEndDate(dateTime1);
-							System.out.println(seatsBooked);
+							String sbISDate = rs.getString("sb_start_date");
+							LocalDateTime dateTimeI = LocalDateTime.parse(sbISDate, formatter);
+							seatsBooked.setPunchIn(dateTimeI);
+							String sbOSDate = rs.getString("sb_start_date");
+							LocalDateTime dateTimeO = LocalDateTime.parse(sbOSDate, formatter);
+							seatsBooked.setPunchOut(dateTimeO);
+							seatsBooked.setCode(rs.getString("code"));
+							list.add(seatsBooked);
 						}
 						return list;
+						
 					}
 
 				});
+//		System.out.println(seatsBooked);
 		return seatsBooked;
 	}
 

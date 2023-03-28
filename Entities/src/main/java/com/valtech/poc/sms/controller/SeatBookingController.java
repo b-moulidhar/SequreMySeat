@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.service.EmployeeService;
 import com.valtech.poc.sms.service.SeatBookingService;
 
 @RestController
@@ -27,6 +28,9 @@ public class SeatBookingController {
 
     @Autowired
     private SeatBookingService seatService;
+    
+    @Autowired
+    private EmployeeService employeeService;
 //
     @GetMapping("/total")
     public ResponseEntity<List<Integer>> getAllSeats() {
@@ -50,8 +54,7 @@ public class SeatBookingController {
     @ResponseBody
     @GetMapping("/employees/{id}")
       public ResponseEntity<List<SeatsBooked>> findEmployeeWiseSeatsBooked(@PathVariable("id") int empId) {
-         Employee emp = new Employee();
-         emp.seteId(empId);
+         Employee emp = employeeService.getEmployeeByeId(empId);      
          List<SeatsBooked> seatsBookedList = seatService.findEmployeeWiseSeatsBooked(emp);
            if (seatsBookedList.isEmpty()) {
               return new ResponseEntity<>(HttpStatus.NO_CONTENT);

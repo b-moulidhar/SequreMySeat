@@ -28,11 +28,13 @@ public class UserController {
 	    String managerName = employeeRequest.getManagerName();
 	    String role = employeeRequest.getRole();
 //	    int mid=userService.getMidByName(managerName);
+	    userService.saveEmployee(employee,null);
 	    Manager manager=userService.getManagerByMname(managerName);
 //	    Employee emp = new Employee(employee.geteId(),employee.getEmpName(), employee.getPhNum(), employee.getMailId(), employee.getManagerDetails());
 //	    userService.saveEmployee(employee,mid);
-	    userService.saveEmployee(employee,manager);
-	    
+	  
+	    employee.setManagerDetails(manager);
+	    System.out.println(employee);
 //		int eId=employee.geteId();
 	
 		User newUser=new User(user.getuId(),user.getEmpId(),user.getPass(), employee, false, null, null);
@@ -43,7 +45,7 @@ public class UserController {
 			userService.saveManager(mng);
 		}
 		int rId=userService.getRidByRoleName(role);
-		int uId=user.getuId();
+		int uId=newUser.getuId();
 		userService.saveUserRoles(uId,rId);
 		return "saved all data";
 	  

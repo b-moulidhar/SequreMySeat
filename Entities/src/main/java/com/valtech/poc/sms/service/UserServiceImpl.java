@@ -43,17 +43,30 @@ public class UserServiceImpl implements UserService {
 	public Manager getManagerByMname(String managerName) {
 		logger.info("fetching manager ");
 		int mId=userDAO.getMidByMname(managerName);
+		System.out.println(mId);
+		if(mId!=0) {
 		Manager manager=managerRepo.findById(mId).get();
-//		logger.info("manager id is "+ mId);
 		return manager;
+		}
+		else {
+			
+			return null;
+		}
+//		logger.info("manager id is "+ mId);
+	
 	}
 
 	@Override
 	public void saveEmployee(Employee employee,Manager manager) {
 		logger.info("Saving Employee info");
 //		userDAO.saveEmployee(employee,mId);
+		if(manager!=null) {
 		employee.setManagerDetails(manager);
 		logger.info("assigning manger ");
+		}
+		else {
+			employee.setManagerDetails(null);
+		}
 		empRepo.save(employee);
 		logger.info("saved: "+employee );
 	}
@@ -84,7 +97,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveManager(Manager mng) {
 		logger.info("Saving Manager");
-		userDAO.saveManager(mng);
+		managerRepo.save(mng);
 	}
 
 	@Override

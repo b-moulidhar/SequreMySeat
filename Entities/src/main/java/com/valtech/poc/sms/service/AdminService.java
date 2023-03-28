@@ -23,6 +23,8 @@ public interface AdminService {
 
 	Employee getSpecificEmploye(AttendanceTable attendance);
 
+	AttendanceTable getList(int atId);
+
 
 
 }

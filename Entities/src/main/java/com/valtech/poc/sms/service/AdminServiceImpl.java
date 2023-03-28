@@ -90,5 +90,10 @@ public class AdminServiceImpl implements AdminService{
         .orElseThrow(() -> new ResourceNotFoundException("Employee not found" ));
 	}
 
+	@Override
+	public AttendanceTable getList(int atId) {
+		return adminDao.getList(atId);
+	}
+
 	
 }

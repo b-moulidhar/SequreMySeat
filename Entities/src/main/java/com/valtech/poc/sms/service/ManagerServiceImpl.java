@@ -2,6 +2,7 @@ package com.valtech.poc.sms.service;
 
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,13 @@ public class ManagerServiceImpl implements ManagerService {
 //			System.out.println("No manager found");
 		}
 		return null; 
+	}
+
+	@Override
+	public List<String> getAllManagerNames() {
+		// TODO Auto-generated method stub
+		logger.info("getting All the Managers");
+		return managerDAO.getAllManagerNames();
 	}
 
 

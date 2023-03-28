@@ -3,6 +3,7 @@ package com.valtech.poc.sms.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getSeatBookedCount(String sbDate) {
+	public int getSeatBookedCount(String sbStartDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-		LocalDateTime dateTime = LocalDateTime.parse(sbDate, formatter);
-		System.out.println(sbDate);
+		LocalDateTime dateTime = LocalDateTime.parse(sbStartDate, formatter);
+		System.out.println(sbStartDate);
 		return adminDao.getSeatBookedCount(dateTime);
 	}
 
@@ -61,11 +62,6 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateAttendance(int atId) {
 		adminDao.approveAttendance(atId);
-	}
-
-	@Override
-	public List<AttendanceTable> listAttendance() {
-		return adminDao.listAttendance();
 	}
 
 	@Override
@@ -93,6 +89,18 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public AttendanceTable getList(int atId) {
 		return adminDao.getList(atId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getCompleteAttendanceList() {
+		return adminDao.getCompleteAttendanceList();
+		
+	}
+
+	@Override
+	public Map<String, Object> getAttendanceListForEachEmployee(int atId) {
+		return adminDao.getAttendanceListForEachEmployee(atId);
+		
 	}
 
 	

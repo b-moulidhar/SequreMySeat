@@ -47,6 +47,14 @@ public class AdminController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/qr/codeGenerator/{empId}")
+	public String getCodeForQrGeneration(@PathVariable("empId") int empId) {
+		//call function which returns "code" from seat_booked table based on current status for this empId
+		String qrCodeKey = adminService.generateQrCode(empId);
+		return qrCodeKey;
+	}
+	
+	@ResponseBody
 	@GetMapping("/foodCountWithJpa/{ftDate}")
 		public int getCountByFtdate(@PathVariable("ftDate")String ftDate) {
 		    return adminService.getCount(ftDate);
@@ -113,11 +121,22 @@ public class AdminController {
 	    
 	    @ResponseBody
 	    @GetMapping("/attendance/{atId}")
-	    public Map<String, Object> getAttendanceListForEachEmployee(@PathVariable("atId") int atId) {    	
+	    public Map<String, Object> getAttendanceEachEmployeeBasedOnAttendanceId(@PathVariable("atId") int atId) {    	
 	    	  try {
 	    	       return adminService.getAttendanceListForEachEmployee(atId);
 	    	    } catch (EmptyResultDataAccessException ex) {
 	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for id: " + atId);
+	    	    }
+	    	
+	    }
+	    
+	    @ResponseBody
+	    @GetMapping("/employeeAttendance/{eId}")
+	    public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
 	    	    }
 	    	
 	    }

@@ -32,7 +32,17 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	@Autowired SeatsBookedRepo seatsBookedRepo;
+	@Autowired 
+	SeatsBookedRepo seatsBookedRepo;
+	
+	@Autowired
+	ResetPassword resetPassword;
+	
+	@Override
+	public String generateQrCode(int empId) {
+		String code ="" + empId + resetPassword.getRandomNumberString();
+		return code;
+	}
 	
 	@Override
 	public int getFoodCount(String ftDate) {
@@ -101,6 +111,11 @@ public class AdminServiceImpl implements AdminService{
 	public Map<String, Object> getAttendanceListForEachEmployee(int atId) {
 		return adminDao.getAttendanceListForEachEmployee(atId);
 		
+	}
+
+	@Override
+	public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+		return adminDao.getAttendanceForEmployeeBasedOnEmployeeId(eId);
 	}
 
 	

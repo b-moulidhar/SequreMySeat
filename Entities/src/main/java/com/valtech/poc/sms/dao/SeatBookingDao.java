@@ -23,6 +23,10 @@ public interface SeatBookingDao {
 
 	List<Seat> findAvailableSeatsByDate(LocalDate date);
 
+	void bookSeat();
+
+	
+
 //List<Integer> getSeatById();
 
 

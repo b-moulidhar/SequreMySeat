@@ -67,6 +67,11 @@ public   class SeatBookingServiceImpl implements SeatBookingService {
 	}
 
 	
+	@Override
+	public void bookSeat() {
+        this.seatBookingDao.bookSeat();
+    }
+	
 	
 	
 	

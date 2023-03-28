@@ -31,4 +31,6 @@ public interface SeatBookingService {
 
 	List<Seat> findAvailableSeatsByDate(LocalDate date);
 
+	void bookSeat();
+
 }

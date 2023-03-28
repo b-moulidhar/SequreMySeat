@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,10 +92,17 @@ public class SeatBookingController {
     	Employee emp = employeeRepo.findById(eId).get();
     	Seat seat = seatRepo.findById(sId).get();
     	String code = adminService.generateQrCode(eId);
-    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp);
+    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp,false);
            SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
             return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
+         }
+    
+    @PutMapping("/{sbId}/notif-status")
+    public void notifStatus(@PathVariable int sbId) {
+    	seatService.notifStatus(sbId);
     }
+    
+    
 //    @GetMapping("/{eId}")
 //    public Employee getEmployeeById(@PathVariable int eId) {
 //        return employeeService.getEmployeeByeId(eId);

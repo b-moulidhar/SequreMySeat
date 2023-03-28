@@ -1,5 +1,6 @@
 package com.valtech.poc.sms.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -119,7 +120,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 	@Override
 	public List<Seat> findAvailableSeatsByDate(LocalDate date) {
 		String query = "SELECT s.s_id, s.s_name " + "FROM seat s " + "WHERE s.s_id NOT IN ( " + "   SELECT sb.s_id "
-				+ "   FROM seats_booked sb " + "   WHERE DATE(sb.sb_date) = ? AND sb.current = true" + ")";
+				+ "   FROM seats_booked sb " + "   WHERE DATE(sb.sb_start_date) = ? AND sb.current = true" + ")";
 		List<Seat> availableSeats = jdbcTemplate.query(query, new Object[] { date },
 				new BeanPropertyRowMapper<>(Seat.class));
 		return availableSeats;
@@ -131,7 +132,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 //                     "(?, ?, ?, ?, ?, ?, ?, ?)";
 //                      this.jdbcTemplate.update(sql);
 //    }
-
+//
 	@Override
 	public void bookSeat(SeatsBooked seatsBooked) {
 		String sql = "INSERT INTO seats_booked (sb_id, sb_start_date,sb_end_date, punch_in, punch_out, current, code, s_id, e_id) "
@@ -144,6 +145,9 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
 
 //	@Override
 //	public void saveEmployee(Employee employee, int mId) {

@@ -103,5 +103,10 @@ public class AdminServiceImpl implements AdminService{
 		
 	}
 
+	@Override
+	public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+		return adminDao.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	}
+
 	
 }

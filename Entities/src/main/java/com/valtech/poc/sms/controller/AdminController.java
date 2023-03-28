@@ -113,11 +113,22 @@ public class AdminController {
 	    
 	    @ResponseBody
 	    @GetMapping("/attendance/{atId}")
-	    public Map<String, Object> getAttendanceListForEachEmployee(@PathVariable("atId") int atId) {    	
+	    public Map<String, Object> getAttendanceEachEmployeeBasedOnAttendanceId(@PathVariable("atId") int atId) {    	
 	    	  try {
 	    	       return adminService.getAttendanceListForEachEmployee(atId);
 	    	    } catch (EmptyResultDataAccessException ex) {
 	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for id: " + atId);
+	    	    }
+	    	
+	    }
+	    
+	    @ResponseBody
+	    @GetMapping("/employeeAttendance/{eId}")
+	    public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
 	    	    }
 	    	
 	    }

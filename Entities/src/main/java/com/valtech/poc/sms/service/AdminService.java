@@ -28,6 +28,8 @@ public interface AdminService {
 
 	Map<String, Object> getAttendanceListForEachEmployee(int atId);
 
+	Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
 
 
 }

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Sidebar from "../Sidebar/sidebar"
 import "./bookSeat.css"
 
 export default function BookSeat(){
@@ -27,7 +28,10 @@ export default function BookSeat(){
         console.log(optFood)
     }
     return(
-        <>
+        <div className="bookseat_head">
+            <div>
+                <Sidebar/>
+            </div>
         <div className="bookseat_container">
         <select   name="request"  value={place.request} onInput={getRequest} required>
                     <option value="">Select type of requests</option>
@@ -36,8 +40,8 @@ export default function BookSeat(){
                   </select>
                   <br />
 		<br/>
-        <label htmlFor=""></label>
-        <input type="date" name="fromdate" id="fromdate" required/> &nbsp;&nbsp;<br /><br /><input type="date" name="todate" id="todate" required/>
+        <label htmlFor="" ></label>
+        <input type="date" name="fromdate" id="fromdate" placeholder="From Date"  required/> &nbsp;&nbsp;<br /><br /><input type="date" name="todate" id="todate" required/>
         <br />
         <br />
                 <select name="shifttime"  value={place.shifttime} onInput={getRequest} required>
@@ -57,8 +61,8 @@ export default function BookSeat(){
                    </select>
                     <br/>
                     <br/>
-                  <a className="seatbook_next" onClick={sendData} type='submit' style={{backgroundColor:"crimson"}}>Next</a>
+                  <a href="/floorList" className="seatbook_next" onClick={sendData} type='submit' style={{backgroundColor:"crimson"}}>Next</a>
         </div>
-        </>
+        </div>
     )
 }

@@ -1,7 +1,7 @@
 function ViewPass(){
     return(
         <div>
-            <button>Home</button>
+            <button>View  pass</button>
         </div>
     )
 }

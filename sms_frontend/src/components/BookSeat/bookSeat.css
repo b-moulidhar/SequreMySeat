@@ -1,11 +1,16 @@
+.bookseat_head{
+    display: flex;
+}
+
 .bookseat_container{
-    border: 2px solid crimson;
+   
     margin: 100px;
+    margin-top: 50px;
     border-radius: 25px;
     padding: 50px;
     text-align: center;
     background-color:white;
-    box-shadow: inset 0px 0px 50px 0px #f18686;
+    box-shadow: 2px 5px 5px 5px grey;
 
 }
 
@@ -13,7 +18,7 @@ select{
     width: 300px;
     height: 50px;
     border-radius: 60px;
-    box-shadow: inset 0px 0px 25px 0px #f18686;
+    box-shadow: 10px 5px 5px ;
     border: none;
     outline: none;
     background-color: #fff;
@@ -23,7 +28,7 @@ select{
     width: 300px;
     height: 50px;
     border-radius: 60px;
-    box-shadow: inset 0px 0px 25px 0px #f18686;
+    box-shadow: 10px 5px 5px rgb(11, 13, 18);
     border: none;
     outline: none;
     background-color: #fff;

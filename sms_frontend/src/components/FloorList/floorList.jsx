@@ -1,10 +1,14 @@
 import React from 'react';
+import Sidebar from '../Sidebar/sidebar';
 import './floorList.css';
 
 function FloorList(){
     return(
        
-            
+        <div className='FloorList_container'> 
+            <div>
+                <Sidebar/>
+            </div>   
         <div className='fList'>
             <h3>Select Floor</h3>
             <div className="floor0">
@@ -23,6 +27,7 @@ function FloorList(){
                 
                 <button className='floorbtn'>Third Floor</button>
             </div>
+        </div>
         </div>
         
     )

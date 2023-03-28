@@ -3,9 +3,26 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    /* background-color: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1)); */
 }
 
-
+.dashboard_head{
+    margin-left: 100px;
+    margin-top: 20px;
+    
+    text-align: center;
+    /* border: 1px solid black; */
+    box-shadow: 10px 5px 5px grey;
+}
+ .dashboard_container{
+    /* background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1)); */
+     
+     background-image: url('D:/sms_frontend/sms_frontend/src/assets/back.jpg');
+     background-position: center ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
+} 
  
 .top {
     text-align: center;
@@ -20,10 +37,10 @@ ul li {
     width: 200px;
     height: 100px;
     border-radius: 100px;
-    box-shadow: inset 0px 0px 25px 0px #f18686;
+    /* box-shadow: inset 0px 0px 25px 0px #f18686; */
     border: none;
     outline: none;
-    background-color: #fff;
+    background-color: #e98181;
     color: black;
     margin: auto;
 
@@ -31,14 +48,14 @@ ul li {
 
 
 
-.status{
+/* .status{
     text-align: center;
     justify-content: center;
     background-color: rgb(69, 3, 69);
     border-radius: 10px;
-    box-shadow: inset 0px 0px 25px 0px #fadfdf;
+    box-shadow: inset 0px 0px 25px 0px #fadfdf; 
     color: white;
-}
+} */
 
 .atten{
     display: flex;

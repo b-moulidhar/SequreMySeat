@@ -1,3 +1,7 @@
+.FloorList_container{
+    display: flex;
+}
+
 .fList{
     border: 2px solid crimson;
     margin: 100px;

@@ -19,7 +19,8 @@ public class SeatsBooked {
 	@Column(name = "sbId")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int sbId;
-	private LocalDateTime sbDate;
+	private LocalDateTime sbStartDate;
+	private LocalDateTime sbEndDate;
 	private LocalDateTime punchIn;
 	private LocalDateTime punchOut;
 	private boolean current;
@@ -37,14 +38,6 @@ public class SeatsBooked {
 
 	public void setSbId(int sbId) {
 		this.sbId = sbId;
-	}
-
-	public LocalDateTime getSbDate() {
-		return sbDate;
-	}
-
-	public void setSbDate(LocalDateTime sbDate) {
-		this.sbDate = sbDate;
 	}
 
 	public LocalDateTime getPunchIn() {
@@ -94,17 +87,35 @@ public class SeatsBooked {
 	public void seteId(Employee eId) {
 		this.eId = eId;
 	}
+	
+
+	public LocalDateTime getSbStartDate() {
+		return sbStartDate;
+	}
+
+	public void setSbStartDate(LocalDateTime sbStartDate) {
+		this.sbStartDate = sbStartDate;
+	}
+
+	public LocalDateTime getSbEndDate() {
+		return sbEndDate;
+	}
+
+	public void setSbEndDate(LocalDateTime sbEndDate) {
+		this.sbEndDate = sbEndDate;
+	}
 
 	public SeatsBooked() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SeatsBooked(int sbId, LocalDateTime sbDate, LocalDateTime punchIn, LocalDateTime punchOut, boolean current,
-			String code, Seat sId, Employee eId) {
+	public SeatsBooked(int sbId, LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
+			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId) {
 		super();
 		this.sbId = sbId;
-		this.sbDate = sbDate;
+		this.sbStartDate = sbStartDate;
+		this.sbEndDate = sbEndDate;
 		this.punchIn = punchIn;
 		this.punchOut = punchOut;
 		this.current = current;
@@ -113,10 +124,11 @@ public class SeatsBooked {
 		this.eId = eId;
 	}
 
-	public SeatsBooked(LocalDateTime sbDate, LocalDateTime punchIn, LocalDateTime punchOut, boolean current,
-			String code, Seat sId, Employee eId) {
+	public SeatsBooked(LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
+			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId) {
 		super();
-		this.sbDate = sbDate;
+		this.sbStartDate = sbStartDate;
+		this.sbEndDate = sbEndDate;
 		this.punchIn = punchIn;
 		this.punchOut = punchOut;
 		this.current = current;
@@ -125,10 +137,6 @@ public class SeatsBooked {
 		this.eId = eId;
 	}
 
-	@Override
-	public String toString() {
-		return "SeatsBooked [sbId=" + sbId + ", sbDate=" + sbDate + ", punchIn=" + punchIn + ", punchOut=" + punchOut
-				+ ", current=" + current + ", code=" + code + ", sId=" + sId + ", eId=" + eId + "]";
-	}
+
 
 }

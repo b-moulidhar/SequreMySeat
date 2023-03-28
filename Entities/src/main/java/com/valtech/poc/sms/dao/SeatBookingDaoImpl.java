@@ -15,6 +15,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.valtech.poc.sms.entities.Employee;
@@ -66,9 +67,12 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 //					seatsBooked.setEmpName(rs.getString("emp_name"));
 							seatsBooked.seteId(emp);
 							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-							String sbDate = rs.getString("punch_in");
-							LocalDateTime dateTime = LocalDateTime.parse(sbDate, formatter);
-							seatsBooked.setSbDate(dateTime);
+							String sbSDate = rs.getString("punch_in");
+							LocalDateTime dateTime = LocalDateTime.parse(sbSDate, formatter);
+							seatsBooked.setSbStartDate(dateTime);
+							String sbEDate = rs.getString("punch_in");
+							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
+							seatsBooked.setSbEndDate(dateTime1);
 							list.add(seatsBooked);
 						}
 						return list;
@@ -78,10 +82,28 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 		return seatsBooked;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public SeatsBooked findCurrentSeat(Employee emp) {
-
-		return null;
+		int empId = emp.geteId();
+		String query = "select code from seats_booked where current = 1 and e_id = ?";
+		return jdbcTemplate.queryForObject(query,new Object[]{empId},
+		        new RowMapper<SeatsBooked>() {
+        	public SeatsBooked mapRow(ResultSet rs, int rowNum) throws SQLException {
+        		SeatsBooked seatsBooked = new SeatsBooked();
+//                employee.setEmpName(rs.getString("emp_name"));
+        		seatsBooked.seteId(emp);
+        		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+				String sbDate = rs.getString("punch_in");
+				LocalDateTime dateTime = LocalDateTime.parse(sbDate, formatter);
+				seatsBooked.setSbStartDate(dateTime);
+				String sbEDate = rs.getString("punch_in");
+				LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
+				seatsBooked.setSbEndDate(dateTime1);
+                return seatsBooked;
+            }
+			
+        });
 	}
 
 	@Override
@@ -91,6 +113,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 		return totalSeats;
 	}
   
+	@SuppressWarnings("deprecation")
 	@Override
 	public List<Seat> findAvailableSeatsByDate(LocalDate date) {
 	    String query = "SELECT s.s_id, s.s_name " +
@@ -100,7 +123,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 	            "   FROM seats_booked sb " +
 	            "   WHERE DATE(sb.sb_date) = ? AND sb.current = true" +
 	            ")";
-	    List<Seat> availableSeats = jdbcTemplate.query(query, new Object[]{date}, new BeanPropertyRowMapper<>(Seat.class));
+		List<Seat> availableSeats = jdbcTemplate.query(query, new Object[]{date}, new BeanPropertyRowMapper<>(Seat.class));
 	    return availableSeats;
 	    // returns all the seats that are not booked on the given date. 
 	}

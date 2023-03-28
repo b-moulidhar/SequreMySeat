@@ -69,13 +69,14 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 							seatsBooked.setsId(seat);
 //					seatsBooked.setEmpName(rs.getString("emp_name"));
 							seatsBooked.seteId(emp);
-							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-							String sbSDate = rs.getString("punch_in");
+							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+							String sbSDate = rs.getString("sb_start_date");
 							LocalDateTime dateTime = LocalDateTime.parse(sbSDate, formatter);
 							seatsBooked.setSbStartDate(dateTime);
-							String sbEDate = rs.getString("punch_in");
+							String sbEDate = rs.getString("sb_end_date");
 							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
 							seatsBooked.setSbEndDate(dateTime1);
+							System.out.println(seatsBooked);
 						}
 						return list;
 					}

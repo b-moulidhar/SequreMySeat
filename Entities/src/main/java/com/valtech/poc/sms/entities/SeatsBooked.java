@@ -148,4 +148,13 @@ public class SeatsBooked {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "SeatsBooked [sbId=" + sbId + ", sbStartDate=" + sbStartDate + ", sbEndDate=" + sbEndDate + ", punchIn="
+				+ punchIn + ", punchOut=" + punchOut + ", current=" + current + ", code=" + code + ", sId=" + sId
+				+ ", eId=" + eId + "]";
+	}
+	
+	
+
 }

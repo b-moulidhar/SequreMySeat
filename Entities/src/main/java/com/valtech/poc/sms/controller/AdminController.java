@@ -1,10 +1,18 @@
 package com.valtech.poc.sms.controller;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +24,7 @@ import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Manager;
 import com.valtech.poc.sms.repo.AttendanceRepository;
+import com.valtech.poc.sms.repo.EmployeeRepo;
 import com.valtech.poc.sms.service.AdminService;
 import com.valtech.poc.sms.service.MailContent;
 
@@ -24,6 +33,12 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private EmployeeRepo employeeRepo;
 	
 	@Autowired
 	private AttendanceRepository attendanceRepository;
@@ -98,6 +113,18 @@ public class AdminController {
 	        mailContent.attendanceApprovalRequest(attendance);
 	        return "saved";
 	    }
+	
+	    @ResponseBody
+	    @GetMapping("/att/{atId}")
+	    public AttendanceTable getList(@PathVariable("atId") int atId) {
+	       return adminService.getList(atId);
 	    
+	    	
+	    }
 	    
+	  
+	 
+
+	  
+	
 }

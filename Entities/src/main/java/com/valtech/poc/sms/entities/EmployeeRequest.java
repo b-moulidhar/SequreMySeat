@@ -1,7 +1,4 @@
-package com.valtech.poc.sms.controller;
-
-import com.valtech.poc.sms.entities.Employee;
-import com.valtech.poc.sms.entities.User;
+package com.valtech.poc.sms.entities;
 
 public class EmployeeRequest {
 	private Employee employee;
@@ -44,12 +41,12 @@ public class EmployeeRequest {
 		this.managerName = managerName;
 		this.role = role;
 	}
-	@Override
-	public String toString() {
-		return "EmployeeRequest [employee=" + employee + ", user=" + user + ", managerName=" + managerName + ", role="
-				+ role + "]";
-	}
-    
+//	@Override
+//	public String toString() {
+//		return "EmployeeRequest [employee=" + employee + ", user=" + user + ", managerName=" + managerName + ", role="
+//				+ role + "]";
+//	}
+//    
     
 
 }

@@ -14,5 +14,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	List<User> findAll();
 
 	User findByEmpDetails(Employee empDetails);
+
+	void save(Employee employee);
 	
 }

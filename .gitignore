@@ -2,7 +2,10 @@
 
 .metadata/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74acdfc192b7ae6682beb628b38f156d3c8213f2
 # dependencies
 /node_modules
 /.pnp

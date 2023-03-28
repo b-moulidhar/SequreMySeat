@@ -97,11 +97,15 @@ public class AdminDaoImpl implements AdminDao {
 		    
 		    Manager manager = new Manager();
 		    manager.setmId((int) result.get("m_id"));
-		    Employee employee1 = new Employee();
-		    employee1.seteId((int) result.get("e_id"));
-		    employee1.setEmpName((String) result.get("emp_name"));
-		    employee1.setMailId((String) result.get("mail_id"));
-		    employee1.setPhNum((String) result.get("Ph_num"));
+		   int m=(int) result.get("m_id");
+		   Employee employee1 = new Employee();
+		   String query1="select * from employee e JOIN Manager m ON e.e_id = m.e_id where m.m_id=?";
+		    		Map<String, Object> result1 = jdbcTemplate.queryForMap(query1, m);
+		    	
+		    employee1.seteId((int) result1.get("e_id"));
+		    employee1.setEmpName((String) result1.get("emp_name"));
+		    employee1.setMailId((String) result1.get("mail_id"));
+		    employee1.setPhNum((String) result1.get("Ph_num"));
 		    manager.setManagerDetails(employee1);
 		    employee.setManagerDetails(manager);
 		    

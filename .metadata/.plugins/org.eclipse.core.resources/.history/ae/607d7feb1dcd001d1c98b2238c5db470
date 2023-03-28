@@ -1,0 +1,220 @@
+package com.valtech.poc.sms.controller;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.valtech.poc.sms.entities.AttendanceTable;
+import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.Manager;
+import com.valtech.poc.sms.repo.AttendanceRepository;
+import com.valtech.poc.sms.repo.EmployeeRepo;
+import com.valtech.poc.sms.service.AdminService;
+import com.valtech.poc.sms.service.MailContent;
+
+@Controller
+public class AdminController {
+
+	@Autowired
+	private AdminService adminService;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private EmployeeRepo employeeRepo;
+	
+	@Autowired
+	private AttendanceRepository attendanceRepository;
+	
+	@Autowired
+	private MailContent mailContent;
+	
+	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	
+	@ResponseBody
+	@GetMapping("/foodCount/{ftDate}")
+	public int getFoodCount(@PathVariable("ftDate") String ftDate) {
+		logger.info("Fetching the food count");
+		int count=adminService.getFoodCount(ftDate);
+	    return count;
+	}
+	
+	@ResponseBody
+	@GetMapping("/foodCountWithJpa/{ftDate}")
+		public int getCountByFtdate(@PathVariable("ftDate")String ftDate) {
+		    return adminService.getCount(ftDate);
+		}
+	
+    @ResponseBody
+	  @GetMapping("/seatCount/{sbDate}")
+    public int getCountBySbDate(@PathVariable("sbDate")String sbDate) {
+    	logger.info("Fetching the seat booked count");
+    	int count=adminService.getSeatBookedCount(sbDate);
+        return count;
+    	
+    }
+	
+	    @ResponseBody
+	    @PostMapping("/attendanceRegularization")
+	    public String saveAttendance(@RequestBody AttendanceTable attendance) {
+	    	Employee employee=adminService.getSpecificEmploye(attendance);
+	     //   Manager manager = employee.getManagerDetails();
+	        attendance.seteId(employee);
+	        attendanceRepository.save(attendance);
+	        mailContent.attendanceApprovalRequest(attendance);
+	        return "saved";
+	    }
+	    
+	    @ResponseBody
+	    @PutMapping("/attendanceApproval/{atId}")
+	    	public String approveAttendance(@PathVariable("atId") int atId) {
+	    	    logger.info("Requesting approval");
+	    	    adminService.updateAttendance(atId);
+	    		return "approved";
+	    	}
+	    
+	    @ResponseBody
+	    @GetMapping("/AttendanceListt")
+	    public List<AttendanceTable> listAttendance() {
+	    	return adminService.listAttendance();
+	    	
+	    	}
+	    
+	    @ResponseBody
+	    @GetMapping("/roleNames")
+	    public List<String> findRoles() {
+			logger.info("fetching all the roles");
+			return adminService.findRoles();
+		}
+	    
+	    @ResponseBody
+	    @PostMapping("/automaticAttendance/{sbId}")
+        public String AutomaticRegularization(@PathVariable("sbId") int sbId) {
+	    	AttendanceTable attendance=new AttendanceTable();
+	    	adminService.automaticRegularization(sbId,attendance);
+	        attendanceRepository.save(attendance);
+	        mailContent.attendanceApprovalRequest(attendance);
+	        return "saved";
+	    }
+	
+//	    @ResponseBody
+//	    @GetMapping("/att/{atId}")
+//	    public AttendanceTable getList(@PathVariable("atId") int atId) {
+//	    	
+//	    	String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id 	WHERE a.at_id=?";
+//			Map<String, Object> result = jdbcTemplate.queryForMap(query, atId);
+//			 AttendanceTable attendance = new AttendanceTable();
+//			    attendance.setAtId((int) result.get("at_id"));
+//			    attendance.setStartDate((String) result.get("start_date"));
+//			    attendance.setEndDate((String) result.get("end_date"));
+//			    attendance.setShiftStart((String) result.get("shift_start"));
+//			    attendance.setShiftEnd((String) result.get("shift_end"));
+//			    attendance.setApproval((Boolean) result.get("approval"));
+//			    
+//			    Employee employee = new Employee();
+//			    employee.seteId((int) result.get("e_id"));
+//			    employee.setEmpName((String) result.get("emp_name"));
+//			    employee.setMailId((String) result.get("mail_id"));
+//			    employee.setPhNum((String) result.get("Ph_num"));
+//			    attendance.seteId(employee);
+//			    
+//			    
+//			    Manager manager = new Manager();
+//			    manager.setmId((int) result.get("m_id"));
+//			    employee.setManagerDetails(manager);
+//			    
+//			    return attendance;
+//	    	
+//	    }
+//	    
+	  
+	    @ResponseBody
+	    @GetMapping("/att/{atId}")
+	    public List<AttendanceTable> getAttendanceTableDetails() {
+	        String sql = "SELECT a.atId, a.startDate, a.endDate, a.shiftStart, a.shiftEnd, a.approval, " +
+	                     "e.eId, e.empName, e.phNum, e.mailId, " +
+	                     "m.mId, m.eId AS manager_eId, m.managerDetails " +
+	                     "FROM AttendanceTable a " +
+	                     "INNER JOIN Employee e ON a.eId = e.eId " +
+	                     "LEFT JOIN Manager m ON e.mId = m.mId";
+
+	        return jdbcTemplate.query(sql, new ResultSetExtractor<List<AttendanceTable>>() {
+	            @Override
+	            public List<AttendanceTable> extractData(ResultSet rs) throws SQLException, DataAccessException {
+	                Map<Integer, AttendanceTable> attendanceTableMap = new HashMap<>();
+	                Map<Integer, Employee> employeeMap = new HashMap<>();
+	                Map<Integer, Manager> managerMap = new HashMap<>();
+
+	                while (rs.next()) {
+	                    int attendanceTableId = rs.getInt("atId");
+	                    AttendanceTable attendanceTable = attendanceTableMap.get(attendanceTableId);
+
+	                    if (attendanceTable == null) {
+	                        attendanceTable = new AttendanceTable();
+	                        attendanceTable.setAtId(attendanceTableId);
+	                        attendanceTable.setStartDate(rs.getString("startDate"));
+	                        attendanceTable.setEndDate(rs.getString("endDate"));
+	                        attendanceTable.setShiftStart(rs.getString("shiftStart"));
+	                        attendanceTable.setShiftEnd(rs.getString("shiftEnd"));
+	                        attendanceTable.setApproval(rs.getBoolean("approval"));
+
+	                        attendanceTableMap.put(attendanceTableId, attendanceTable);
+	                    }
+
+	                    int employeeId = rs.getInt("eId");
+	                    Employee employee = employeeMap.get(employeeId);
+
+	                    if (employee == null) {
+	                        employee = new Employee();
+	                        employee.seteId(employeeId);
+	                        employee.setEmpName(rs.getString("empName"));
+	                        employee.setPhNum(rs.getString("phNum"));
+	                        employee.setMailId(rs.getString("mailId"));
+
+	                        employeeMap.put(employeeId, employee);
+	                    }
+
+	                    attendanceTable.seteId(employee);
+
+	                    int managerId = rs.getInt("mId");
+
+	                    if (managerId > 0) {
+	                        Manager manager = managerMap.get(managerId);
+
+	                        if (manager == null) {
+	                            manager = new Manager();
+	                            manager.setmId(managerId);
+	                            manager.setManagerDetails(employeeMap.get(rs.getInt("manager_eId")));
+
+	                            managerMap.put(managerId, manager);
+	                        }
+
+	                        employee.setManagerDetails(manager);
+	                    }
+	                }
+
+	                return new ArrayList<>(attendanceTableMap.values());
+	            }
+	        });
+	    }
+
+	  
+	
+}

@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@Column(name = "uId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int uId;
 	private int empId;
 	private String pass;

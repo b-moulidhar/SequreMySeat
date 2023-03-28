@@ -1,6 +1,7 @@
 package com.valtech.poc.sms.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,18 +73,61 @@ public class SeatBookingController {
                         }
                  return ResponseEntity.ok(availableSeats);
        }
- 
-    @PostMapping("/book")
-       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {
-        try {
-        	seatService.bookSeat(seatsBooked);
-            return new ResponseEntity<>("Seat booked successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to book seat", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    
+//    @PostMapping("/create/{eId}")
+//        public ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
+//    	
+//    	SeatsBooked sb = new SeatsBooked(null, null, null, null, false, null, null, null);
+//           SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
+//            return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
+//    }
+//    @GetMapping("/{eId}")
+//    public Employee getEmployeeById(@PathVariable int eId) {
+//        return employeeService.getEmployeeByeId(eId);
+//    }
+    
+//    @PostMapping("/seatsBooked/{eId}/{sId}")
+//    public ResponseEntity<SeatsBooked> createSeatsBooked(@PathVariable("eId") Long eId, @PathVariable("sId") Long sId) {
+//        Employee employee = null;
+//		try {
+//			employee = EmployeeService.getEmployeeByeId(eId);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        Seat seat = seatService.getSeatById(sId);
+//        if (employee == null || seat == null) {
+//            return ResponseEntity.notFound().build();
+//        } else {
+//            SeatsBooked seatsBooked = new SeatsBooked();
+//            seatsBooked.setEmployee(employee);
+//            seatsBooked.setSeat(seat);
+//            seatsBooked.setsbStartDate(LocalDate.now());
+//            seatsBooked.setsbEndDate(LocalDate.now().plusDays(7));
+//            seatsBooked.setPunchIn(LocalDateTime.now());
+//            seatsBooked.setPunchOut(LocalDateTime.now().plusHours(8));
+//            seatsBooked.setCurrent(true);
+//            seatsBooked.setCode("ABC123");
+//            SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(seatsBooked);
+//            return ResponseEntity.ok(savedSeatsBooked);
+//        }
+//    }
+
+    
     
 }
+ 
+//    @PostMapping("/book")
+//       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {
+//        try {
+//        	seatService.bookSeat(seatsBooked);
+//            return new ResponseEntity<>("Seat booked successfully", HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Failed to book seat", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//    
+
 
 
 //@GetMapping("/seats/count")

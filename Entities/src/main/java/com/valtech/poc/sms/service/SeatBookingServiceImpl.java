@@ -11,14 +11,18 @@ import com.valtech.poc.sms.dao.SeatBookingDao;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.SeatsBookedRepo;
 
 @Service
 
 
-public   class SeatBookingServiceImpl implements SeatBookingService {
+public  class SeatBookingServiceImpl implements SeatBookingService {
 
 	@Autowired
 	private SeatBookingDao seatBookingDao;
+	
+	@Autowired
+	SeatsBookedRepo seatsBookedRepo;
 	
 
 	@Override
@@ -64,23 +68,33 @@ public   class SeatBookingServiceImpl implements SeatBookingService {
 	    return seatBookingDao.findAvailableSeatsByDate(date);
 	}
 
-	
-	@Override
-	public void bookSeat(SeatsBooked seatsBooked) {
-	    try {
-	    	seatBookingDao.bookSeat(seatsBooked);
-	    } catch (DataAccessException e) {
-	        e.printStackTrace();
-	    }
-	}
+	 @Override
+	 public SeatsBooked saveSeatsBookedDetails(SeatsBooked seatsBooked) {
+	      return seatsBookedRepo.save(seatsBooked);
+	 }
+//	@Override
+//	public void createSeatsBooked() {
+//	     SeatsBooked seatsBooked = new SeatsBooked();
+//	     seatsBooked.setSbEndDate(LocalDate.now().plusDays(7));
+//	     seatsBooked.setStartDate(LocalDate.now());
+//	     seatsBooked.setPunchIn(LocalDateTime.now());
+//	     seatsBooked.setPunchOut(LocalDateTime.now().plusHours(8));
+//	     seatsBooked.setCurrent(true);
+//	        seatsBooked.setCode("ABC123");
+//	        seatsBooked.setSId(1L);
+//	        seatsBooked.setEId(2L);
+//	        seatsBookedRepository.save(seatsBooked);
+//	    }
 
 	@Override
-	public void bookSeat() {
+	public void bookSeat(SeatsBooked seatsBooked) {
 		// TODO Auto-generated method stub
 		
 	}
+	}
 
-}
+
+
 	
 	
 	

@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Seat {
 	@Id
 	@Column(name = "sId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sId;
 	private String sName;
 

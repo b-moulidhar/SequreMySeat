@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class SeatsBooked {
 	@Id
 	@Column(name = "sbId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sbId;
 	private LocalDateTime sbStartDate;
 	private LocalDateTime sbEndDate;

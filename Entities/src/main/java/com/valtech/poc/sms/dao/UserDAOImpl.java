@@ -1,12 +1,15 @@
 package com.valtech.poc.sms.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Manager;
-import com.valtech.poc.sms.entities.User;
 
 
 @Component
@@ -16,10 +19,25 @@ public class UserDAOImpl implements UserDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	public int getMidByMname(String managerName) {
-		String sql="select m_id from manager where e_id=(select e_id from employee where emp_name=?)";
-		return jdbcTemplate.queryForObject(sql, Integer.class,managerName);
+	public Manager getMidByMname(String managerName,Employee emp) {
+		String sql="select * from manager where e_id=(select e_id from employee where emp_name=?)";
+//		return jdbcTemplate.query(sql,new Object[]{managerName}, Manager.class);
+		Manager mng=  this.jdbcTemplate.queryForObject(
+		       sql,
+		        new Object[]{managerName},
+		        new RowMapper<Manager>() {
+		        	public Manager mapRow(ResultSet rs, int rowNum) throws SQLException {
+		                Manager manager = new Manager();
+		                manager.setmId(rs.getInt("m_id"));
+		                manager.setManagerDetails(emp);
+		                return manager;
+		            }
+					
+		        });
+		System.out.println(mng);
+		return mng;
 	}
 //
 //	@Override
@@ -52,5 +70,19 @@ public class UserDAOImpl implements UserDAO {
 		String sql="insert into manager values (?)";
 		jdbcTemplate.update(sql,mng);
 	}
+	@SuppressWarnings("deprecation")
+	@Override
+	public int checkIfEmpIdExist(int empId) {
+
+		String sql="select emp_id from user where emp_id=?";
+		return jdbcTemplate.queryForObject(sql,new Object[]{empId},Integer.class);
+	}
+
+	@Override
+	public void deleteEmployee(Employee emp) {
+		String sql="delete from employee where e_id=?";
+		jdbcTemplate.update(sql,emp.geteId());
+	}
+
 
 }

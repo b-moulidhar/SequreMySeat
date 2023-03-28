@@ -2,11 +2,10 @@ package com.valtech.poc.sms.dao;
 
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Manager;
-import com.valtech.poc.sms.entities.User;
 
 public interface UserDAO {
 
-	int getMidByMname(String managerName);
+	Manager getMidByMname(String managerName, Employee emp);
 //
 //	void saveEmployee(Employee employee, int mId);
 
@@ -18,5 +17,9 @@ public interface UserDAO {
 
 
 	void saveManager(Manager mng);
+
+	int checkIfEmpIdExist(int empId);
+
+	void deleteEmployee(Employee emp);
 
 }

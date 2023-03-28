@@ -12,7 +12,7 @@ public interface UserService {
 
 	void saveEmployee(Employee employee, Manager manager);
 
-	void saveUser(User user, Employee employee);
+	User saveUser(User user, Employee employee);
 
 	int getRidByRoleName(String role);
 
@@ -21,9 +21,10 @@ public interface UserService {
 
 	void saveManager(Manager mng);
 
-	Manager getManagerByMname(String managerName);
+	Manager getManagerByMname(String managerName, Employee emp);
 
-	int getMidByName(String managerName);
+	void deleteEmployee(Employee emp);
+
 
 //	void saveEmployee(Employee employee, int mid);
 

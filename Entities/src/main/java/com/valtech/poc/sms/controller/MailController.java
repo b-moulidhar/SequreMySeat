@@ -22,12 +22,6 @@ public class MailController {
 	ResetPassword resetPassword;
 
 	@ResponseBody
-	@GetMapping("/getEmp/{empName}")
-	public Employee getidbyemail(@PathVariable("empName") String empName) {
-//		System.out.println("MC: "+empService.findByEmpName(empName));
-		return empService.findByEmpName(empName);
-	}
-
 	@PostMapping("/reset/{email}")
 	public String forgotPass(@PathVariable("email") String email) {
 		boolean b = resetPassword.checkMailId(email);

@@ -157,7 +157,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			jdbcTemplate.update(sql, seatsBooked.getSbId(), seatsBooked.getSbStartDate(), seatsBooked.getSbEndDate(),
-					seatsBooked.getPunchIn(), seatsBooked.getPunchOut(), seatsBooked.getCurrent(),
+					seatsBooked.getPunchIn(), seatsBooked.getPunchOut(), seatsBooked.isCurrent(),
 					seatsBooked.getCode(), seatsBooked.getsId(), seatsBooked.geteId());
 		} catch (DataAccessException e) {
 			e.printStackTrace();

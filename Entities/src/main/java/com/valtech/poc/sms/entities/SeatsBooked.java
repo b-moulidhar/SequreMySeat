@@ -30,6 +30,15 @@ public class SeatsBooked {
 	@OneToOne(targetEntity = Employee.class)
 	@JoinColumn(name = "eId", referencedColumnName = "eId")
 	private Employee eId;
+	private boolean notifStatus;
+
+	public boolean isNotifStatus() {
+		return notifStatus;
+	}
+
+	public void setNotifStatus(boolean notifStatus) {
+		this.notifStatus = notifStatus;
+	}
 
 	public int getSbId() {
 		return sbId;
@@ -86,7 +95,6 @@ public class SeatsBooked {
 	public void seteId(Employee eId) {
 		this.eId = eId;
 	}
-	
 
 	public LocalDateTime getSbStartDate() {
 		return sbStartDate;
@@ -109,8 +117,22 @@ public class SeatsBooked {
 		// TODO Auto-generated constructor stub
 	}
 
+	public SeatsBooked(LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
+			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId, boolean notifStatus) {
+		super();
+		this.sbStartDate = sbStartDate;
+		this.sbEndDate = sbEndDate;
+		this.punchIn = punchIn;
+		this.punchOut = punchOut;
+		this.current = current;
+		this.code = code;
+		this.sId = sId;
+		this.eId = eId;
+		this.notifStatus = notifStatus;
+	}
+
 	public SeatsBooked(int sbId, LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
-			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId) {
+			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId, boolean notifStatus) {
 		super();
 		this.sbId = sbId;
 		this.sbStartDate = sbStartDate;
@@ -121,31 +143,7 @@ public class SeatsBooked {
 		this.code = code;
 		this.sId = sId;
 		this.eId = eId;
-	}
-
-	public SeatsBooked(LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
-			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId) {
-		super();
-		this.sbStartDate = sbStartDate;
-		this.sbEndDate = sbEndDate;
-		this.punchIn = punchIn;
-		this.punchOut = punchOut;
-		this.current = current;
-		this.code = code;
-		this.sId = sId;
-		this.eId = eId;
-	}
-
-
-
-	public Object getCurrent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object getSId() {
-		// TODO Auto-generated method stub
-		return null;
+		this.notifStatus = notifStatus;
 	}
 
 	@Override
@@ -154,7 +152,5 @@ public class SeatsBooked {
 				+ punchIn + ", punchOut=" + punchOut + ", current=" + current + ", code=" + code + ", sId=" + sId
 				+ ", eId=" + eId + "]";
 	}
-	
-	
 
 }

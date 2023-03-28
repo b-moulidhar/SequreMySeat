@@ -1,10 +1,7 @@
 package com.valtech.poc.sms.service;
 
 import java.time.LocalDate;
-
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

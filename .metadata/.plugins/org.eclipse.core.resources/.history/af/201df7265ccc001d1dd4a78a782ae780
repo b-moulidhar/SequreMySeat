@@ -1,0 +1,10 @@
+package com.valtech.poc.sms.controller;
+
+import com.valtech.poc.sms.service.EmployeeService;
+
+public class EmployeeController {
+
+	private EmployeeService employeeService;
+	
+	
+}

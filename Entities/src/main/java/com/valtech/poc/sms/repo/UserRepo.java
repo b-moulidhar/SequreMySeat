@@ -14,5 +14,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	List<User> findAll();
 
 	User findByEmpDetails(Employee empDetails);
+	User  findByEmpId(int empId);
 	
 }

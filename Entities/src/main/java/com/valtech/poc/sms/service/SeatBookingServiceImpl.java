@@ -1,5 +1,6 @@
 package com.valtech.poc.sms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,10 +15,7 @@ import com.valtech.poc.sms.entities.SeatsBooked;
 import com.valtech.poc.sms.repo.SeatsBookedRepo;
 
 @Service
-
-
-
-public     class SeatBookingServiceImpl implements SeatBookingService
+public class SeatBookingServiceImpl implements SeatBookingService
 {
 	
 	@Autowired
@@ -62,5 +60,7 @@ public     class SeatBookingServiceImpl implements SeatBookingService
 	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp)	{
 		return seatsBookedRepo.findAllByeId(emp);
 	}
+
+
 	
 }

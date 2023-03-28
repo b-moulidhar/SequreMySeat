@@ -3,9 +3,11 @@ package com.valtech.poc.sms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +39,17 @@ public class SeatBookingController {
 		return ResponseEntity.ok().body(totalSeats);
     	
     }
+//    @PostMapping("/book-seat")
+//    public ResponseEntity<String> bookSeat() {
+//        int seatNumber = seatService.bookSeat();
+//        if (seatNumber != 0000) {
+//        	 return ResponseEntity.ok("Seat " + seatNumber + " booked");
+//        } else {
+//         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No seats available");
+//         
+//        }
+//    }
+
         
 //    @GetMapping("/id")
 //    public ResponseEntity<List<Integer>> getSeatById() {

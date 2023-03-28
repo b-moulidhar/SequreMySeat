@@ -22,4 +22,6 @@ public interface SeatBookingService {
 
 	List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp);
 
+
+
 }

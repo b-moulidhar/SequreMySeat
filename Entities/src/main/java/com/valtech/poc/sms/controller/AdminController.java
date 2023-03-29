@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,6 +69,37 @@ public class AdminController {
         return count;
     	
     }
+    
+    @ResponseBody
+	    @GetMapping("/shiftStart")
+	    public List<String> findShiftStartTimings() {
+			logger.info("fetching all the shift start timings");
+			return adminService.findShiftStartTimings();
+		}
+
+
+ @ResponseBody
+	    @GetMapping("/shiftEnd")
+	    public List<String> findShiftEndTimings() {
+			logger.info("fetching all the shift end timings");
+			return adminService.findShiftEndTimings();
+		}
+
+ @ResponseBody
+ @GetMapping("/roleNames")
+ public List<String> findRoles() {
+		logger.info("fetching all the roles");
+		return adminService.findRoles();
+	}
+ @ResponseBody
+ @GetMapping("/registrationApprovalList")
+ 	public List<Map<String,Object>>getRegistrationListForApproval(){
+	 logger.info("fetching the list of approval requests");
+ 		return adminService.getRegistrationListForApproval();
+ 		
+ 	}
+ 
+
 	
 	    @ResponseBody
 	    @PostMapping("/attendanceRegularization")
@@ -90,12 +121,7 @@ public class AdminController {
 	  
 	    	}
 	    
-	    @ResponseBody
-	    @GetMapping("/roleNames")
-	    public List<String> findRoles() {
-			logger.info("fetching all the roles");
-			return adminService.findRoles();
-		}
+	 
 	    
 	    @ResponseBody
 	    @PostMapping("/automaticAttendance/{sbId}")
@@ -106,10 +132,17 @@ public class AdminController {
 	        mailContent.attendanceApprovalRequest(attendance);
 	        return "saved";
 	    }
+	    
+	    @DeleteMapping("/disapproveAttendance/{atId}")
+		public void deleteAttendanceRequest(@PathVariable("atId") int atId) {
+	        adminService.deleteAttendanceRequest(atId);
+	    }
+			
+
 	
 	    @ResponseBody
 	    @GetMapping("/att/{atId}")
-	    public AttendanceTable getList(@PathVariable("atId") int atId) {
+	    public AttendanceTable getListWithManagerDetails(@PathVariable("atId") int atId) {
 	       return adminService.getList(atId);
 	    }
 	    
@@ -152,10 +185,7 @@ public class AdminController {
 	    	    }
 	    	
 	    }
+	    
+	   
 	  
-	  
-	 
-
-	  
-	
 }

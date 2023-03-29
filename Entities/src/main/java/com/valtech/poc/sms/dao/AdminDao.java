@@ -26,4 +26,12 @@ public interface AdminDao {
 
 	List<Map<String, Object>> getAttendanceListForApproval(int eId);
 
+	List<Map<String, Object>> getRegistrationListForApproval();
+
+	void deleteAttendanceRequest(int atId);
+
+	List<String> findShiftStartTimings();
+
+	List<String> findShiftEndTimings();
+
 }

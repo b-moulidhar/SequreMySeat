@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-    FaTH,
+    FaHome,
     FaUserAlt,
-    FashoppigBag,
     FaBars,
     FaElementor,
-    FaBullhorn,
+    FaBell,
+    FaStickyNote,
     FaPowerOff
 
 } from "react-icons/fa";
@@ -18,7 +18,7 @@ function Sidebar({children}){
         {
             path:"/dashboard",
             name:"Dashboard",
-            icon:<FaUserAlt/>
+            icon:<FaHome/>
         },
         {
             path:"/profile",
@@ -34,7 +34,12 @@ function Sidebar({children}){
         {
             path:"/notify",
             name:"Notification",
-            icon:<FaBullhorn/>
+            icon:<FaBell/>
+        },
+        {
+            path:"/regular",
+            name:"Regular",
+            icon:<FaStickyNote/>
         },
         {
             path:"/",

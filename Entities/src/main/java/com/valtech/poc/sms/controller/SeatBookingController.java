@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.EmployeeRepo;
+import com.valtech.poc.sms.repo.SeatRepo;
+import com.valtech.poc.sms.service.AdminService;
 import com.valtech.poc.sms.service.EmployeeService;
 import com.valtech.poc.sms.service.SeatBookingService;
 
@@ -74,13 +78,31 @@ public class SeatBookingController {
                  return ResponseEntity.ok(availableSeats);
        }
     
-//    @PostMapping("/create/{eId}")
-//        public ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
-//    	
-//    	SeatsBooked sb = new SeatsBooked(null, null, null, null, false, null, null, null);
-//           SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
-//            return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
-//    }
+    @Autowired
+    EmployeeRepo employeeRepo;
+    
+    @Autowired
+    SeatRepo seatRepo;
+    
+    @Autowired
+    AdminService adminService;
+    
+    @PostMapping("/create/{eId}")
+        public ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
+    	Employee emp = employeeRepo.findById(eId).get();
+    	Seat seat = seatRepo.findById(sId).get();
+    	String code = adminService.generateQrCode(eId);
+    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp,false);
+           SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
+            return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
+         }
+    
+    @PutMapping("/{sbId}/notif-status")
+    public void notifStatus(@PathVariable int sbId) {
+    	seatService.notifStatus(sbId);
+    }
+    
+    
 //    @GetMapping("/{eId}")
 //    public Employee getEmployeeById(@PathVariable int eId) {
 //        return employeeService.getEmployeeByeId(eId);

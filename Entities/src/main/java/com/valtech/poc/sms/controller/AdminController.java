@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -178,14 +179,26 @@ public class AdminController {
 	    
 	    @ResponseBody
 	    @GetMapping("/employeeAttendance/{eId}")
-	    public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
+	    public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
 	    	  try {
 	    	       return adminService.getAttendanceForEmployeeBasedOnEmployeeId(eId);
 	    	    } catch (EmptyResultDataAccessException ex) {
 	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
 	    	    }
+	    	  
+	    }
+	    
+	    @ResponseBody
+	    @GetMapping("/attendanceApproval/{eId}")
+	    public List<Map<String, Object>> getAttendanceListForApproval(@PathVariable("eId") int eId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceListForApproval(eId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
+	    	    }
 	    	
 	    }
+	  
 	  
 	 
 

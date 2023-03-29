@@ -1,5 +1,7 @@
 package com.valtech.poc.sms.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.valtech.poc.sms.dao.SeatBookingDao;
+import com.valtech.poc.sms.dao.SeatBookingDaoImpl;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
@@ -74,6 +77,14 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
 	 public SeatsBooked saveSeatsBookedDetails(SeatsBooked seatsBooked) {
 	      return seatsBookedRepo.save(seatsBooked);
 	 }
+	 
+	
+	 
+	 @Override
+	 public void notifStatus(int sbId) {
+		 seatsBookedRepo.notifStatus(sbId);
+	 }
+	 
 //	@Override
 //	public void createSeatsBooked() {
 //	     SeatsBooked seatsBooked = new SeatsBooked();
@@ -93,6 +104,17 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
 		// TODO Auto-generated method stub
 		
 	}
+	
+//	@Override
+//	public void updateNotifStatus(int sbId, Connection connection) {
+//	    try (Connection connection = dataSource.getConnection()) {
+//	        SeatBookingDao seatBookingDao = new SeatBookingDaoImpl();
+//	        seatBookingDao.updateNotifStatus(sbId, connection);
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	}
+
 	}
 
 

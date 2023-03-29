@@ -22,6 +22,8 @@ public interface AdminDao {
 
 	Map<String, Object> getAttendanceListForEachEmployee(int atId);
 
-	Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+	List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
+	List<Map<String, Object>> getAttendanceListForApproval(int eId);
 
 }

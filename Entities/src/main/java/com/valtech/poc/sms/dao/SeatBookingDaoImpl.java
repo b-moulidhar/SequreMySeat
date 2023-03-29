@@ -1,5 +1,6 @@
 package com.valtech.poc.sms.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -179,6 +180,19 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 			e.printStackTrace();
 		}
 	}
+	
+//	@Override
+//	public void updateNotifStatus(int sbId , Connection connection) {
+//	    String query = "UPDATE seats_booked SET notifStatus = false WHERE sbId = ?";
+//	    try {
+//	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+//	        preparedStatement.setInt(1, sbId);
+//	        preparedStatement.executeUpdate();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	}
+
 	
 	
 

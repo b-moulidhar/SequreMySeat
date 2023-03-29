@@ -33,6 +33,10 @@ public interface UserService {
 
 	User findByEId(int eId);
 
+	int getMidByName(String managerName);
+
+	void save(User user);
+
 //	void saveEmployee(Employee employee, int mid);
 
 }

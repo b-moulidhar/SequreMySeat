@@ -227,10 +227,20 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 		return usr;
 	}
 
-//	@Override
-//	public void saveEmployee(Employee employee, int mid) {
-//		// TODO Auto-generated method stub
-//		userDAO.saveEmployee(employee, mid);
-//	}
+
+	@Override
+	public void save(User user) {
+		logger.info("Saving User Info");
+		userepo.save(user);
+		
+	}
+
+
+	@Override
+	public int getMidByName(String managerName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 
 }

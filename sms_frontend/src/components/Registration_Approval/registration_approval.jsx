@@ -1,4 +1,5 @@
 import "./registration_approval.css"
+
 function Registration_Approval(){
     return(
         
@@ -7,6 +8,7 @@ function Registration_Approval(){
         </div>
         <div>
         <h2>Employee Approval for SMS</h2>
+
         <table className="table1">
         <thead>
             <tr>

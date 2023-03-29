@@ -3,6 +3,7 @@ package com.valtech.poc.sms.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,17 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	@Autowired SeatsBookedRepo seatsBookedRepo;
+	@Autowired 
+	SeatsBookedRepo seatsBookedRepo;
+	
+	@Autowired
+	ResetPassword resetPassword;
+	
+	@Override
+	public String generateQrCode(int empId) {
+		String code ="" + empId + resetPassword.getRandomNumberString();
+		return code;
+	}
 	
 	@Override
 	public int getFoodCount(String ftDate) {
@@ -43,10 +54,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getSeatBookedCount(String sbDate) {
+	public int getSeatBookedCount(String sbStartDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-		LocalDateTime dateTime = LocalDateTime.parse(sbDate, formatter);
-		System.out.println(sbDate);
+		LocalDateTime dateTime = LocalDateTime.parse(sbStartDate, formatter);
+		System.out.println(sbStartDate);
 		return adminDao.getSeatBookedCount(dateTime);
 	}
 
@@ -59,13 +70,19 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public void updateAttendance(int atId) {
-		adminDao.approveAttendance(atId);
+	public List<String> findShiftStartTimings() {
+		return adminDao.findShiftStartTimings();
 	}
 
 	@Override
-	public List<AttendanceTable> listAttendance() {
-		return adminDao.listAttendance();
+	public List<String> findShiftEndTimings() {
+		return adminDao.findShiftEndTimings();
+	}
+
+	
+	@Override
+	public void updateAttendance(int atId) {
+		adminDao.approveAttendance(atId);
 	}
 
 	@Override
@@ -76,8 +93,8 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void automaticRegularization(int sbId, AttendanceTable attendance) {
 		SeatsBooked sb=seatsBookedRepo.findById(sbId).orElseThrow(() -> new ResourceNotFoundException("SeatBooked not found" ));
-        attendance.setStartDate(""+sb.getSbDate());
-        attendance.setEndDate(""+sb.getSbDate());
+        attendance.setStartDate(""+sb.getSbStartDate());
+        attendance.setEndDate(""+sb.getSbEndDate());
         attendance.setShiftStart(""+sb.getPunchIn());
         attendance.setShiftEnd(""+sb.getPunchOut());
         attendance.seteId(sb.geteId());
@@ -88,6 +105,44 @@ public class AdminServiceImpl implements AdminService{
 	public Employee getSpecificEmploye(AttendanceTable attendance) {
 		return employeeRepo.findById(attendance.geteId().geteId())
         .orElseThrow(() -> new ResourceNotFoundException("Employee not found" ));
+	}
+
+	@Override
+	public AttendanceTable getList(int atId) {
+		return adminDao.getList(atId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getCompleteAttendanceList() {
+		return adminDao.getCompleteAttendanceList();
+		
+	}
+
+	@Override
+	public Map<String, Object> getAttendanceListForEachEmployee(int atId) {
+		return adminDao.getAttendanceListForEachEmployee(atId);
+		
+	}
+
+	@Override
+	public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+		return adminDao.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAttendanceListForApproval(int eId) {
+		return adminDao.getAttendanceListForApproval(eId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getRegistrationListForApproval() {
+		return adminDao.getRegistrationListForApproval();
+	}
+
+	@Override
+	public void deleteAttendanceRequest(int atId) {
+		adminDao.deleteAttendanceRequest(atId);
+		
 	}
 
 	

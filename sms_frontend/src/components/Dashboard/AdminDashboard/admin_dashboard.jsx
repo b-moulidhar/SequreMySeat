@@ -86,8 +86,22 @@ function AdminDashboard(){
               </button>
             </a>            
             </div>
+          </div>
+          <div className="dashboard">
+            <a href="/bookseat">
+              <button type="button" className="btn btn-primary seat">
+                Book Seat
+              </button>
+            </a>
+            <a href="/viewpass">
+              <button type="button" className="btn btn-success seat">
+                View Booking
+              </button>
+            </a>
+          </div>
 
             {/* <div className="dashboard_bottom">
+
             <div>
               <img
                 style={{ margin: "" }}
@@ -111,6 +125,7 @@ function AdminDashboard(){
           </div>
         </div>
       </div>
+
       // <div classname="container admin_body">
       //   <div classname="mainpage">
       //     <div classname="admin_container">
@@ -179,6 +194,7 @@ function AdminDashboard(){
       //     </div>
       //   </div>
       // </div>
+
     );
 }
 

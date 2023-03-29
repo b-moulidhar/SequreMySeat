@@ -14,7 +14,6 @@ import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.service.EmployeeService;
 
 @Controller
-@RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 	

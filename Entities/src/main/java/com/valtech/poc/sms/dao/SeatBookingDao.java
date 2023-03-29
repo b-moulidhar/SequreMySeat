@@ -1,6 +1,8 @@
 package com.valtech.poc.sms.dao;
 
+import java.sql.Connection;
 import java.time.LocalDate;
+
 import java.util.List;
 
 import com.valtech.poc.sms.entities.Employee;
@@ -23,7 +25,13 @@ public interface SeatBookingDao {
 
 	List<Seat> findAvailableSeatsByDate(LocalDate date);
 
-	void bookSeat();
+    void bookSeat(SeatsBooked seatsBooked);
+
+	//void notifStatus(boolean notifStatus, int sbId);
+
+	void notifStatus(int sbId);
+
+	//void updateNotifStatus(int sbId, Connection connection);
 
 	
 

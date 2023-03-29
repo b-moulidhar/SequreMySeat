@@ -1,36 +1,30 @@
 package com.valtech.poc.sms.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Mail")
 public class Mail {
 	@Id
 	@Column(name = "mId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int mId;
 	private String email;
 	private String subject;
 	private String body;
 	private boolean status;
+	private LocalDateTime time;
 
 	public Mail() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Mail(int mId, String email, String subject, String body, boolean status) {
-		super();
-		this.mId = mId;
-		this.email = email;
-		this.subject = subject;
-		this.body = body;
-		this.status = status;
 	}
 
 	@Override
@@ -79,12 +73,31 @@ public class Mail {
 		this.status = status;
 	}
 
-	public Mail(String email, String subject, String body, boolean status) {
+	public LocalDateTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalDateTime time) {
+		this.time = time;
+	}
+
+	public Mail(int mId, String email, String subject, String body, boolean status, LocalDateTime time) {
+		super();
+		this.mId = mId;
+		this.email = email;
+		this.subject = subject;
+		this.body = body;
+		this.status = status;
+		this.time = time;
+	}
+
+	public Mail(String email, String subject, String body, boolean status, LocalDateTime time) {
 		super();
 		this.email = email;
 		this.subject = subject;
 		this.body = body;
 		this.status = status;
+		this.time = time;
 	}
 
 }

@@ -2,24 +2,24 @@ package com.valtech.poc.sms.entities;
 
 import java.time.LocalDateTime;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SeatsBooked")
 public class SeatsBooked {
 	@Id
 	@Column(name = "sbId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sbId;
-	private LocalDateTime sbDate;
+	private LocalDateTime sbStartDate;
+	private LocalDateTime sbEndDate;
 	private LocalDateTime punchIn;
 	private LocalDateTime punchOut;
 	private boolean current;
@@ -30,6 +30,15 @@ public class SeatsBooked {
 	@OneToOne(targetEntity = Employee.class)
 	@JoinColumn(name = "eId", referencedColumnName = "eId")
 	private Employee eId;
+	private boolean notifStatus;
+
+	public boolean isNotifStatus() {
+		return notifStatus;
+	}
+
+	public void setNotifStatus(boolean notifStatus) {
+		this.notifStatus = notifStatus;
+	}
 
 	public int getSbId() {
 		return sbId;
@@ -37,14 +46,6 @@ public class SeatsBooked {
 
 	public void setSbId(int sbId) {
 		this.sbId = sbId;
-	}
-
-	public LocalDateTime getSbDate() {
-		return sbDate;
-	}
-
-	public void setSbDate(LocalDateTime sbDate) {
-		this.sbDate = sbDate;
 	}
 
 	public LocalDateTime getPunchIn() {
@@ -95,40 +96,61 @@ public class SeatsBooked {
 		this.eId = eId;
 	}
 
+	public LocalDateTime getSbStartDate() {
+		return sbStartDate;
+	}
+
+	public void setSbStartDate(LocalDateTime sbStartDate) {
+		this.sbStartDate = sbStartDate;
+	}
+
+	public LocalDateTime getSbEndDate() {
+		return sbEndDate;
+	}
+
+	public void setSbEndDate(LocalDateTime sbEndDate) {
+		this.sbEndDate = sbEndDate;
+	}
+
 	public SeatsBooked() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SeatsBooked(int sbId, LocalDateTime sbDate, LocalDateTime punchIn, LocalDateTime punchOut, boolean current,
-			String code, Seat sId, Employee eId) {
+	public SeatsBooked(LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
+			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId, boolean notifStatus) {
 		super();
-		this.sbId = sbId;
-		this.sbDate = sbDate;
+		this.sbStartDate = sbStartDate;
+		this.sbEndDate = sbEndDate;
 		this.punchIn = punchIn;
 		this.punchOut = punchOut;
 		this.current = current;
 		this.code = code;
 		this.sId = sId;
 		this.eId = eId;
+		this.notifStatus = notifStatus;
 	}
 
-	public SeatsBooked(LocalDateTime sbDate, LocalDateTime punchIn, LocalDateTime punchOut, boolean current,
-			String code, Seat sId, Employee eId) {
+	public SeatsBooked(int sbId, LocalDateTime sbStartDate, LocalDateTime sbEndDate, LocalDateTime punchIn,
+			LocalDateTime punchOut, boolean current, String code, Seat sId, Employee eId, boolean notifStatus) {
 		super();
-		this.sbDate = sbDate;
+		this.sbId = sbId;
+		this.sbStartDate = sbStartDate;
+		this.sbEndDate = sbEndDate;
 		this.punchIn = punchIn;
 		this.punchOut = punchOut;
 		this.current = current;
 		this.code = code;
 		this.sId = sId;
 		this.eId = eId;
+		this.notifStatus = notifStatus;
 	}
 
 	@Override
 	public String toString() {
-		return "SeatsBooked [sbId=" + sbId + ", sbDate=" + sbDate + ", punchIn=" + punchIn + ", punchOut=" + punchOut
-				+ ", current=" + current + ", code=" + code + ", sId=" + sId + ", eId=" + eId + "]";
+		return "SeatsBooked [sbId=" + sbId + ", sbStartDate=" + sbStartDate + ", sbEndDate=" + sbEndDate + ", punchIn="
+				+ punchIn + ", punchOut=" + punchOut + ", current=" + current + ", code=" + code + ", sId=" + sId
+				+ ", eId=" + eId + "]";
 	}
 
 }

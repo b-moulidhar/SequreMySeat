@@ -86,13 +86,14 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 							String sbEDate = rs.getString("sb_end_date");
 							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
 							seatsBooked.setSbEndDate(dateTime1);
-							String sbISDate = rs.getString("sb_start_date");
+							String sbISDate = rs.getString("punch_in");
 							LocalDateTime dateTimeI = LocalDateTime.parse(sbISDate, formatter);
 							seatsBooked.setPunchIn(dateTimeI);
-							String sbOSDate = rs.getString("sb_start_date");
+							String sbOSDate = rs.getString("punch_out");
 							LocalDateTime dateTimeO = LocalDateTime.parse(sbOSDate, formatter);
 							seatsBooked.setPunchOut(dateTimeO);
 							seatsBooked.setCode(rs.getString("code"));
+							seatsBooked.setCurrent(rs.getBoolean("current"));
 							list.add(seatsBooked);
 						}
 						return list;
@@ -108,19 +109,34 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 	@Override
 	public SeatsBooked findCurrentSeat(Employee emp) {
 		int empId = emp.geteId();
-		String query = "select code from seats_booked where current = 1 and e_id = ?";
+		System.out.println(empId);
+		String query = "select * from seats_booked where current = 1 and e_id = ?";
 		return jdbcTemplate.queryForObject(query, new Object[] { empId }, new RowMapper<SeatsBooked>() {
 			public SeatsBooked mapRow(ResultSet rs, int rowNum) throws SQLException {
 				SeatsBooked seatsBooked = new SeatsBooked();
-//                employee.setEmpName(rs.getString("emp_name"));
+				seatsBooked.setSbId(rs.getInt("sb_id"));
+				int seatId = rs.getInt("s_id");
+				Seat seat = seatRepo.findById(seatId).get();
+				seatsBooked.setsId(seat);
+//				int mngId = emp.getManagerDetails().getmId();
+//				Manager mng = managerRepo.findById(mngId);
+//				System.out.println(mng);					
+//				emp.setManagerDetails(mng);
 				seatsBooked.seteId(emp);
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-				String sbDate = rs.getString("punch_in");
-				LocalDateTime dateTime = LocalDateTime.parse(sbDate, formatter);
+				String sbSDate = rs.getString("sb_start_date");
+				LocalDateTime dateTime = LocalDateTime.parse(sbSDate, formatter);
 				seatsBooked.setSbStartDate(dateTime);
-				String sbEDate = rs.getString("punch_in");
+				String sbEDate = rs.getString("sb_end_date");
 				LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
 				seatsBooked.setSbEndDate(dateTime1);
+				String sbISDate = rs.getString("punch_in");
+				LocalDateTime dateTimeI = LocalDateTime.parse(sbISDate, formatter);
+				seatsBooked.setPunchIn(dateTimeI);
+				String sbOSDate = rs.getString("punch_out");
+				LocalDateTime dateTimeO = LocalDateTime.parse(sbOSDate, formatter);
+				seatsBooked.setPunchOut(dateTimeO);
+				seatsBooked.setCode(rs.getString("code"));
 				return seatsBooked;
 			}
 

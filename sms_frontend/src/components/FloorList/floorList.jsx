@@ -13,19 +13,19 @@ function FloorList(){
             <h3>Select Floor</h3>
             <div className="floor0">
                 
-                <button className='floorbtn'>Ground Floor</button>
+                <a href='/gfloor'><button className='floorbtn'>Ground Floor</button></a>
             </div>
             <div className="floor0">
                 
-                <button className='floorbtn'>First Floor</button>
+            <a href='/'><button className='floorbtn'>First Floor</button></a>
             </div>
             <div className="floor0">
                 
-                <button className='floorbtn'>Second Floor</button>
+            <a href='/'><button className='floorbtn'>Second Floor</button></a>
             </div>
             <div className="floor0">
                 
-                <button className='floorbtn'>Third Floor</button>
+            <a href='/'><button className='floorbtn'>Third Floor</button></a>
             </div>
         </div>
         </div>

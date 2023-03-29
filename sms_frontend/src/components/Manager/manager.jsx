@@ -35,9 +35,7 @@ function Manager(){
             <td>18:00pm</td>
             <td><button  type="button" className="btn btn-success manager_approve">Approve</button> </td>
             <td><button  type="button" className="btn btn-danger manager_approve">Decline</button> </td>
-            </tr>
-           
-           
+            </tr>   
         </tbody>
         </table>
         

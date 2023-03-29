@@ -42,11 +42,13 @@ function Profile(){
     // console.log(data);
     return(
         <div className='profile'>
-        <div>
         <Sidebar/>
-        </div>
-        <div className='profile_table'>
-           
+        <div>
+            <div className="pro_imgs">
+           <div className="pro_container-image">
+            
+           </div>
+           </div>
            <h2>User Info</h2>
             <h3>Name</h3>
             <table className="table">

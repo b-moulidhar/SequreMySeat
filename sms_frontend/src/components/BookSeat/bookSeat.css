@@ -31,8 +31,12 @@ select{
     box-shadow: 10px 5px 5px rgb(11, 13, 18);
     border: none;
     outline: none;
-    background-color: #fff;
+    background-color: skyblue;
     text-decoration: none;
     line-height: 50px;
-    color: white;
+    color:black;
+}
+
+.seatbook_next:hover{
+    background-color: rgb(35, 65, 186);
 }

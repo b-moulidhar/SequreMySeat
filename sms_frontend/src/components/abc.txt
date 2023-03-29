@@ -1,47 +1,85 @@
-import Sidebar from "../Sidebar/sidebar";
+import React, { useState } from 'react';
 
-function Manager(){
-    return(
-        <div>
-        <div className='manager'>
-        <div>
-        <Sidebar/>
-        </div>
-        <div>
-        <h2>Manager Dashboard</h2>
-        <table className="table">
-        <thead>
-            <tr>
-            <th scope="col">Employee ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Start Date</th>
-            <th scope="col">End Date</th>
-            <th scope="col">Shift Start</th>
-            <th scope="col">Shift End</th>
-            <th scope="col">Approve</th>
-            <th scope="col">Decline</th>
-            <p></p>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>12</td>
-            <td>22</td>
-            <td>09:00am</td>
-            <td>18:00pm</td>
-            <td><button  type="button" className="btn btn-success ">Approve</button> </td>
-            <td><button  type="button" className="btn btn-danger">Decline</button> </td>
-            </tr>
-           
-        </tbody>
-        </table>
 
-        </div>
-    </div>
-    </div>
-    
-    )
+
+
+
+const Floor = () => {
+
+ const [seats, setSeats] = useState([
+
+{ id: 1, name: 'A1', booked: false },
+{ id: 2, name: 'A2', booked: false },
+ { id: 3, name: 'A3', booked: false },
+ { id: 4, name: 'A4', booked: false },
+{ id: 5, name: 'B1', booked: false },
+{ id: 6, name: 'B2', booked: false },
+{ id: 7, name: 'B3', booked: false },
+{ id: 8, name: 'B4', booked: false },
+{ id: 9, name: 'C1', booked: false },
+{ id: 10, name: 'C2', booked: false },
+{ id: 11, name: 'C3', booked: false },
+{ id: 12, name: 'C4', booked: false },
+{ id: 13, name: 'D1', booked: false },
+{ id: 14, name: 'D2', booked: false },
+ { id: 15, name: 'D3', booked: false },
+{ id: 16, name: 'D4', booked: false },
+]);
+
+
+
+const handleSeatClick = (id) => {
+const updatedSeats = seats.map((seat) => {
+if (seat.id === id) {
+return { ...seat, booked: !seat.booked };
+} else {
+ return seat;
 }
-export default Manager;
+});
+setSeats(updatedSeats);
+ };
+
+
+
+return (
+<div className="seat-booking-app">
+
+<h1>Seat Matrix</h1>
+
+<h2>Ground Floor</h2>
+
+<div className="seat-map">
+
+{seats.map((seat) => (
+
+<div
+ key={seat.id}
+className={`seat ${seat.booked ? 'booked' : ''}`}
+ onClick={() => handleSeatClick(seat.id)}
+>
+{seat.name}
+</div>
+))}
+</div>
+<br/>
+<div id="legend">
+<div class="floor_seat"></div> <div class="txt">Available</div>
+<div class="seat taken"></div> <div class="txt">Taken</div>
+<div class="seat selected"></div> <div class="txt">Your Chosen Seats</div>
+{/* {
+     seats.map((seat)=>(
+        <div className='seat-map'>
+         <div className='seat'> {seat.id}</div>
+        </div>
+    )
+    )
+    } */}
+</div>
+</div>
+);
+};
+
+
+
+
+export default Floor;

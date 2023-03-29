@@ -2,6 +2,7 @@ package com.valtech.poc.sms.dao;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import com.valtech.poc.sms.entities.AttendanceTable;
 
@@ -13,8 +14,12 @@ public interface AdminDao {
 	
 	void approveAttendance(int atId);
 
-	List<AttendanceTable> listAttendance();
-
 	List<String> findRoles();
+
+	AttendanceTable getList(int atId);
+
+	List<Map<String, Object>> getCompleteAttendanceList();
+
+	Map<String, Object> getAttendanceListForEachEmployee(int atId);
 
 }

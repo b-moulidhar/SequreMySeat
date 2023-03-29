@@ -17,6 +17,8 @@ import AdminDashboard from './components/Dashboard/AdminDashboard/admin_dashboar
 import GroundFloor from './components/layouts/ground';
 import QrCodeScan from './components/QR/qrscanner';
 import QrCodeGen from './components/QR/qrgenerator';
+import ViewPass from './components/ViewPass/viewPass';
+import Registration_Approval from './components/Registration_Approval/registration_approval';
 
 
 function App() {
@@ -40,10 +42,12 @@ function App() {
     <Route path="/notify" element={<Notify/>}/>    
     {/* <Route path="/floor" element={<Floor/>}/>     */}
     <Route path="/floorLIst" element={<FloorList/>}/>    
+    <Route path="/viewpass" element={<ViewPass/>}/>    
     <Route path="/bookseat" element={<BookSeat/>}/>    
     <Route path="/qrscanner" element={<QrCodeScan/>}/>    
     <Route path="/qrgenerator" element={<QrCodeGen/>}/>    
     <Route path="/gfloor" element={<GroundFloor/>}/>    
+    <Route path="/admin/approval" element={<Registration_Approval/>}/>    
     </Routes>
     </BrowserRouter>
     </>

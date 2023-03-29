@@ -1,5 +1,6 @@
 package com.valtech.poc.sms.service;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,8 +32,18 @@ public interface SeatBookingService {
 
 	List<Seat> findAvailableSeatsByDate(LocalDate date);
 
-	void bookSeat();
-
 	void bookSeat(SeatsBooked seatsBooked);
+
+	SeatsBooked saveSeatsBookedDetails(SeatsBooked seatsBooked);
+
+	//void updateNotifStatus(int sbId);
+
+	void notifStatus(int sbId);
+
+	//void updateNotifStatus(int sbId, Connection connection);
+
+//	void bookSeat();
+
+//	void bookSeat(SeatsBooked seatsBooked);
 
 }

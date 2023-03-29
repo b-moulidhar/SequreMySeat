@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.valtech.poc.sms.entities.Employee;
@@ -24,11 +25,7 @@ public class MailController {
 	@Autowired
 	private HttpService httpService;
 
-	@GetMapping("/getEmp/{empName}")
-	public Employee getidbyemail(@PathVariable("empName") String empName) {
-		return empService.findByEmpName(empName);
-	}
-
+	@ResponseBody
 	@PostMapping("/reset/{email}")
 	public String forgotPass(@PathVariable("email") String email) {
 		boolean b = resetPassword.checkMailId(email);

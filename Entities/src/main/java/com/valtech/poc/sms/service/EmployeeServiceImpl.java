@@ -29,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee findByEmpName(String empName) {
+//		System.out.println("ESI "+empRepo.findByEmpName(empName));
 		return empRepo.findByEmpName(empName);
 	}
 	

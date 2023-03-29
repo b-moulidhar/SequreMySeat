@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class ShiftTimings {
 	@Id
 	@Column(name = "stId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int stId;
 	private String stStart;
 	private String stEnd;

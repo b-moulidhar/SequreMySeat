@@ -1,5 +1,7 @@
 package com.valtech.poc.sms.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -8,17 +10,22 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.valtech.poc.sms.dao.SeatBookingDao;
+import com.valtech.poc.sms.dao.SeatBookingDaoImpl;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.SeatsBookedRepo;
 
 @Service
 
 
-public   class SeatBookingServiceImpl implements SeatBookingService {
+public  class SeatBookingServiceImpl implements SeatBookingService {
 
 	@Autowired
 	private SeatBookingDao seatBookingDao;
+	
+	@Autowired
+	SeatsBookedRepo seatsBookedRepo;
 	
 
 	@Override
@@ -64,23 +71,52 @@ public   class SeatBookingServiceImpl implements SeatBookingService {
 	    return seatBookingDao.findAvailableSeatsByDate(date);
 	}
 
+	 @Override
+	 public SeatsBooked saveSeatsBookedDetails(SeatsBooked seatsBooked) {
+	      return seatsBookedRepo.save(seatsBooked);
+	 }
+	 
 	
-	@Override
-	public void bookSeat(SeatsBooked seatsBooked) {
-	    try {
-	    	seatBookingDao.bookSeat(seatsBooked);
-	    } catch (DataAccessException e) {
-	        e.printStackTrace();
-	    }
-	}
+	 
+	 @Override
+	 public void notifStatus(int sbId) {
+		 seatsBookedRepo.notifStatus(sbId);
+	 }
+	 
+//	@Override
+//	public void createSeatsBooked() {
+//	     SeatsBooked seatsBooked = new SeatsBooked();
+//	     seatsBooked.setSbEndDate(LocalDate.now().plusDays(7));
+//	     seatsBooked.setStartDate(LocalDate.now());
+//	     seatsBooked.setPunchIn(LocalDateTime.now());
+//	     seatsBooked.setPunchOut(LocalDateTime.now().plusHours(8));
+//	     seatsBooked.setCurrent(true);
+//	        seatsBooked.setCode("ABC123");
+//	        seatsBooked.setSId(1L);
+//	        seatsBooked.setEId(2L);
+//	        seatsBookedRepository.save(seatsBooked);
+//	    }
 
 	@Override
-	public void bookSeat() {
+	public void bookSeat(SeatsBooked seatsBooked) {
 		// TODO Auto-generated method stub
 		
 	}
+	
+//	@Override
+//	public void updateNotifStatus(int sbId, Connection connection) {
+//	    try (Connection connection = dataSource.getConnection()) {
+//	        SeatBookingDao seatBookingDao = new SeatBookingDaoImpl();
+//	        seatBookingDao.updateNotifStatus(sbId, connection);
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	}
 
-}
+	}
+
+
+
 	
 	
 	

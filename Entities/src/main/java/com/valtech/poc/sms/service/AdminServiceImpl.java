@@ -32,7 +32,17 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	@Autowired SeatsBookedRepo seatsBookedRepo;
+	@Autowired 
+	SeatsBookedRepo seatsBookedRepo;
+	
+	@Autowired
+	ResetPassword resetPassword;
+	
+	@Override
+	public String generateQrCode(int empId) {
+		String code ="" + empId + resetPassword.getRandomNumberString();
+		return code;
+	}
 	
 	@Override
 	public int getFoodCount(String ftDate) {

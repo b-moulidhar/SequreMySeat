@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Roles {
 	@Id
 	@Column(name = "rId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rId;
 	@Column(unique = true)
 	private String role;

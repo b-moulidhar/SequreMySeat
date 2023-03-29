@@ -1,10 +1,10 @@
 package com.valtech.poc.sms.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.EmployeeRequest;
 import com.valtech.poc.sms.entities.Manager;
 import com.valtech.poc.sms.entities.User;
-import com.valtech.poc.sms.service.ManagerServiceImpl;
 import com.valtech.poc.sms.security.JwtUtil;
 import com.valtech.poc.sms.service.UserService;
 

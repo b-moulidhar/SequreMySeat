@@ -1,6 +1,6 @@
 import './App.css';
-import Register from './components/Register/register';
 import {BrowserRouter,Routes,Route,Link} from "react-router-dom"
+import Register from './components/Register/register';
 import Login from './components/Login/login';
 import Home from './components/Home/home';
 import Forget from './components/Forget/forget';
@@ -11,12 +11,15 @@ import Profile from './components/Profile/profile';
 import Sidebar from './components/Sidebar/sidebar';
 import Notify from './components/Notify/notify';
 import FloorList from './components/FloorList/floorList';
-import Floor from './components/Floor/floor';
 import BookSeat from './components/BookSeat/bookSeat';
 import AdminDashboard from './components/Dashboard/AdminDashboard/admin_dashboard';
 import GroundFloor from './components/layouts/ground';
 import QrCodeScan from './components/QR/qrscanner';
 import QrCodeGen from './components/QR/qrgenerator';
+import ViewPass from './components/ViewPass/viewPass';
+import Manager from './components/Manager/manager';
+import Regestration_Approval from './components/Registration_Approval/registration_approval';
+
 
 
 function App() {
@@ -38,12 +41,14 @@ function App() {
     <Route path="/profile" element={<Profile/>}/>    
     <Route path="/sidebar" element={<Sidebar/>}/>    
     <Route path="/notify" element={<Notify/>}/>    
-    {/* <Route path="/floor" element={<Floor/>}/>     */}
+    <Route path="/manager" element={<Manager/>}/>    
     <Route path="/floorLIst" element={<FloorList/>}/>    
+    <Route path="/viewpass" element={<ViewPass/>}/>    
     <Route path="/bookseat" element={<BookSeat/>}/>    
     <Route path="/qrscanner" element={<QrCodeScan/>}/>    
     <Route path="/qrgenerator" element={<QrCodeGen/>}/>    
     <Route path="/gfloor" element={<GroundFloor/>}/>    
+    <Route path="/admin/approval" element={<Regestration_Approval/>}/>    
     </Routes>
     </BrowserRouter>
     </>

@@ -10,14 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.valtech.poc.sms.dao.AdminDao;
+import com.valtech.poc.sms.dao.UserDAO;
 import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Food;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.entities.User;
 import com.valtech.poc.sms.exception.ResourceNotFoundException;
 import com.valtech.poc.sms.repo.AdminRepository;
 import com.valtech.poc.sms.repo.EmployeeRepo;
 import com.valtech.poc.sms.repo.SeatsBookedRepo;
+import com.valtech.poc.sms.repo.UserRepo;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS)
@@ -25,7 +28,10 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired 
 	private AdminDao adminDao;
-	
+	@Autowired
+	private UserDAO userDao;
+	@Autowired
+	private UserRepo userRepo;
 	@Autowired
 	private EmployeeRepo employeeRepo;
 	
@@ -68,6 +74,17 @@ public class AdminServiceImpl implements AdminService{
 		Food f= adminRepository.getFoodByFtDate(dateTime);
 		return f.getCount();
 	}
+	
+	@Override
+	public List<String> findShiftStartTimings() {
+		return adminDao.findShiftStartTimings();
+	}
+
+	@Override
+	public List<String> findShiftEndTimings() {
+		return adminDao.findShiftEndTimings();
+	}
+
 	
 	@Override
 	public void updateAttendance(int atId) {
@@ -114,8 +131,42 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+	public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
 		return adminDao.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAttendanceListForApproval(int eId) {
+		return adminDao.getAttendanceListForApproval(eId);
+	}
+
+	@Override
+	public void ApproveRegistration(int uId) {
+		// TODO Auto-generated method stub
+		
+		adminDao.approroveRegistration(uId);
+		
+	}
+
+	@Override
+	public void deleteUser(int empId) {
+		// TODO Auto-generated method stub
+		User u=userRepo.findByEmpId(empId);
+		
+		userDao.deleteUserRoles(u.getuId());
+		adminDao.deleteUser(u.getuId());
+//		employeeRepo.deleteById(u.getEmpDetails().geteId());
+		userDao.deleteEmployee(u.getEmpDetails());
+	
+	}
+	public List<Map<String, Object>> getRegistrationListForApproval() {
+		return adminDao.getRegistrationListForApproval();
+	}
+
+	@Override
+	public void deleteAttendanceRequest(int atId) {
+		adminDao.deleteAttendanceRequest(atId);
+		
 	}
 
 	

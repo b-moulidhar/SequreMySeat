@@ -31,7 +31,20 @@ public interface AdminService {
 
 	String generateQrCode(int empId);
 
-	Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+	List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
+	List<Map<String, Object>> getAttendanceListForApproval(int eId);
+
+	void ApproveRegistration(int empId);
+
+	void deleteUser(int empId);
+	List<Map<String, Object>> getRegistrationListForApproval();
+
+	void deleteAttendanceRequest(int atId);
+
+	List<String> findShiftStartTimings();
+
+	List<String> findShiftEndTimings();
 
 
 

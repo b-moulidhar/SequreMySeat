@@ -22,6 +22,18 @@ public interface AdminDao {
 
 	Map<String, Object> getAttendanceListForEachEmployee(int atId);
 
-	Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+	List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
+	List<Map<String, Object>> getAttendanceListForApproval(int eId);
+	void approroveRegistration(int uId);
+
+	void deleteUser(int getuId);
+	List<Map<String, Object>> getRegistrationListForApproval();
+
+	void deleteAttendanceRequest(int atId);
+
+	List<String> findShiftStartTimings();
+
+	List<String> findShiftEndTimings();
 
 }

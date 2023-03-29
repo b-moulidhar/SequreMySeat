@@ -214,8 +214,18 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
 	@Override
 	public User findByEmpId(int empId) {
-		User user=userRepo.findByEmpId(empId);
-		return user;
+		User usr = userRepo.findByEmpId(empId);
+//		User usr = userRepo.findById(empId);
+//		System.out.println(usr);
+		return usr;
+	}
+	
+	
+	@Override
+	public User findByEId(int eId) {
+		Employee emp = employeeRepo.findById(eId).get();
+		User usr = userRepo.findByEmpDetails(emp);
+		return usr;
 	}
 
 

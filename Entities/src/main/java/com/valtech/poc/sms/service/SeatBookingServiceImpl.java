@@ -82,7 +82,7 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
 	 
 	 @Override
 	 public void notifStatus(int sbId) {
-		 seatsBookedRepo.notifStatus(sbId);
+		 seatBookingDao.notifStatus( sbId);
 	 }
 	 
 //	@Override

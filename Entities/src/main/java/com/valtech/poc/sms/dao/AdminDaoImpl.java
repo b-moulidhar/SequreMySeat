@@ -107,10 +107,46 @@ String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id
 
 	@Override
 	public List<Map<String, Object>> getAttendanceListForApproval(int eId) {
-String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id	WHERE a.e_id=? and approval=?";
+String query="select * from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id	WHERE a.e_id=? and approval=?";
 		
     	List<Map<String, Object>> result = jdbcTemplate.queryForList(query, eId,false);
 		return result;
+	}
+
+	@Override
+	public void approroveRegistration(int uId) {
+		// TODO Auto-generated method stub
+		String sql="UPDATE user SET approval=? WHERE u_id=?";
+		jdbcTemplate.update(sql, 1 ,uId);
+	}
+	public List<Map<String, Object>> getRegistrationListForApproval() {
+		String query = "SELECT emp_id,emp_name,mail_id,ph_num,m_id,approval FROM user u JOIN employee e ON u.e_id = e.e_id  WHERE approval=?";
+        List<Map<String, Object>> results = jdbcTemplate.queryForList(query,false);
+        return results;
+	}
+
+	@Override
+	public void deleteAttendanceRequest(int atId) {
+		String sql = "delete from attendance_table where at_id= ?";
+		jdbcTemplate.update(sql, atId);
+		
+	}
+
+	@Override
+	public void deleteUser(int uId) {
+		// TODO Auto-generated method stub
+		String sql="delete from user where u_id=?";
+		jdbcTemplate.update(sql,uId);
+	}
+	public List<String> findShiftStartTimings() {
+		String query="select st_start from shift_timings";
+		return jdbcTemplate.queryForList(query, String.class);
+	}
+
+	@Override
+	public List<String> findShiftEndTimings() {
+		String query="select st_end from shift_timings";
+		return jdbcTemplate.queryForList(query, String.class);
 	}
 	
 }

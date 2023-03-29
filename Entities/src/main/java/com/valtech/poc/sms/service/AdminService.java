@@ -35,6 +35,17 @@ public interface AdminService {
 
 	List<Map<String, Object>> getAttendanceListForApproval(int eId);
 
+	void ApproveRegistration(int empId);
+
+	void deleteUser(int empId);
+	List<Map<String, Object>> getRegistrationListForApproval();
+
+	void deleteAttendanceRequest(int atId);
+
+	List<String> findShiftStartTimings();
+
+	List<String> findShiftEndTimings();
+
 
 
 

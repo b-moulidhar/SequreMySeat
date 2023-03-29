@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.valtech.poc.sms.dao.ManagerDAO;
 import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.Manager;
+import com.valtech.poc.sms.repo.ManagerRepo;
 
 @Service
 @Transactional(propagation=Propagation.SUPPORTS)
@@ -20,6 +22,9 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Autowired
 	private ManagerDAO managerDAO;
+	
+	@Autowired
+	private ManagerRepo managerRepo;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ManagerServiceImpl.class);
 	
@@ -42,6 +47,12 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		logger.info("getting All the Managers");
 		return managerDAO.getAllManagerNames();
+	}
+
+	@Override
+	public Manager saveManager(Manager manager) {
+		// TODO Auto-generated method stub
+		return managerRepo.save(manager);
 	}
 
 

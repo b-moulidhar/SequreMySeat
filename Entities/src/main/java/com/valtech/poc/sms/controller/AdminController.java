@@ -2,6 +2,7 @@ package com.valtech.poc.sms.controller;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,10 @@ public class AdminController {
 		SeatsBooked sb = seatBookingService.findCurrentSeatBookingDetails(emp);
 		System.out.println("sb details: "+sb.getPunchIn());
 		LocalDateTime now = LocalDateTime.now();
-		sb.setPunchOut(now);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(formatter.format(now), formatter);
+//		LocalDateTime dateTime = formatter.format(now);
+		sb.setPunchOut(dateTime);
 		seatsBookedRepo.save(sb);
 	    return "test";
 	}

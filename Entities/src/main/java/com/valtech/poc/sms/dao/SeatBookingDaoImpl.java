@@ -124,7 +124,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 //				System.out.println(mng);					
 //				emp.setManagerDetails(mng);
 				seatsBooked.seteId(emp);
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				String sbSDate = rs.getString("sb_start_date");
 				LocalDateTime dateTime = LocalDateTime.parse(sbSDate, formatter);
 				seatsBooked.setSbStartDate(dateTime);

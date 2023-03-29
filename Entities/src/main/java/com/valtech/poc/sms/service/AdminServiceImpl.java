@@ -114,8 +114,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+	public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
 		return adminDao.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAttendanceListForApproval(int eId) {
+		return adminDao.getAttendanceListForApproval(eId);
 	}
 
 	

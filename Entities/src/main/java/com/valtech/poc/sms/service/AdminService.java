@@ -38,6 +38,13 @@ public interface AdminService {
 	void ApproveRegistration(int empId);
 
 	void deleteUser(int empId);
+	List<Map<String, Object>> getRegistrationListForApproval();
+
+	void deleteAttendanceRequest(int atId);
+
+	List<String> findShiftStartTimings();
+
+	List<String> findShiftEndTimings();
 
 
 

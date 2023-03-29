@@ -76,6 +76,17 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
+	public List<String> findShiftStartTimings() {
+		return adminDao.findShiftStartTimings();
+	}
+
+	@Override
+	public List<String> findShiftEndTimings() {
+		return adminDao.findShiftEndTimings();
+	}
+
+	
+	@Override
 	public void updateAttendance(int atId) {
 		adminDao.approveAttendance(atId);
 	}
@@ -147,7 +158,15 @@ public class AdminServiceImpl implements AdminService{
 //		employeeRepo.deleteById(u.getEmpDetails().geteId());
 		userDao.deleteEmployee(u.getEmpDetails());
 	
-	
+	}
+	public List<Map<String, Object>> getRegistrationListForApproval() {
+		return adminDao.getRegistrationListForApproval();
+	}
+
+	@Override
+	public void deleteAttendanceRequest(int atId) {
+		adminDao.deleteAttendanceRequest(atId);
+		
 	}
 
 	

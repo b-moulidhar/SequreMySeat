@@ -37,7 +37,15 @@ public class SeatBookingController {
     
     @Autowired
     private EmployeeService employeeService;
-//
+    
+    @Autowired
+    EmployeeRepo employeeRepo;
+    
+    @Autowired
+    SeatRepo seatRepo;
+    
+    @Autowired
+    AdminService adminService;
     @GetMapping("/total")
     public ResponseEntity<List<Integer>> getAllSeats() {
         List<Integer> allSeats = seatService.getAllSeats();
@@ -78,15 +86,7 @@ public class SeatBookingController {
                  return ResponseEntity.ok(availableSeats);
        }
     
-    @Autowired
-    EmployeeRepo employeeRepo;
-    
-    @Autowired
-    SeatRepo seatRepo;
-    
-    @Autowired
-    AdminService adminService;
-    
+
     @PostMapping("/create/{eId}")
         public synchronized ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
     	Employee emp = employeeRepo.findById(eId).get();
@@ -97,10 +97,27 @@ public class SeatBookingController {
             return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
          }
     
-    @PutMapping("/{sbId}/notif-status")
-    public void notifStatus(@PathVariable int sbId) {
+    @PutMapping("/notification/{sbId}")
+    public void notifStatus(@PathVariable int sbId)   {
     	seatService.notifStatus(sbId);
     }
+    
+    
+    
+//   
+//     @GetMapping("/current-booking")
+//     public ResponseEntity<SeatsBooked> getCurrentSeatBookingDetails(@RequestParam("eId") Long employeeId) {
+//        Employee employee = new Employee(eId);
+//        SeatsBooked currentSeatBooking = seatService.findCurrentSeatBookingDetails(employee);
+//        if (currentSeatBooking != null) {
+//          return ResponseEntity.ok(currentSeatBooking);
+//        } else {
+//          return ResponseEntity.notFound().build();
+//        }
+//      }
+
+    }
+
     
     
 //    @GetMapping("/{eId}")
@@ -137,7 +154,7 @@ public class SeatBookingController {
 
     
     
-}
+
  
 //    @PostMapping("/book")
 //       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {

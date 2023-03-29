@@ -27,6 +27,8 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
 	@Autowired
 	SeatsBookedRepo seatsBookedRepo;
 	
+//	@Override
+//	public String getQrCodeKeyForEmpId(int empId)
 
 	@Override
 	public List<Integer> getAllSeats() {

@@ -102,6 +102,21 @@ public class SeatBookingController {
     	seatService.notifStatus(sbId);
     }
     
+//   
+//     @GetMapping("/current-booking")
+//     public ResponseEntity<SeatsBooked> getCurrentSeatBookingDetails(@RequestParam("eId") Long employeeId) {
+//        Employee employee = new Employee(eId);
+//        SeatsBooked currentSeatBooking = seatService.findCurrentSeatBookingDetails(employee);
+//        if (currentSeatBooking != null) {
+//          return ResponseEntity.ok(currentSeatBooking);
+//        } else {
+//          return ResponseEntity.notFound().build();
+//        }
+//      }
+
+    }
+
+    
     
 //    @GetMapping("/{eId}")
 //    public Employee getEmployeeById(@PathVariable int eId) {
@@ -137,7 +152,7 @@ public class SeatBookingController {
 
     
     
-}
+
  
 //    @PostMapping("/book")
 //       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {

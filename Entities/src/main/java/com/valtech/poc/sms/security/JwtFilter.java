@@ -27,26 +27,31 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtil jwtUtil;
-
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+                throws ServletException, IOException {
         final String header = request.getHeader("Authorization");
 
-        String username = null;
+        int empId = 0;
         String jwt = null;
         if (header != null && header.startsWith("Bearer ")) {
             jwt = header.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+            empId = jwtUtil.extractEmpId(jwt);
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(jwt).getBody();
-            Collection<? extends GrantedAuthority> authorities = getAuthoritiesFromClaims(claims);
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null,
-                    authorities);
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (empId != 0 && SecurityContextHolder.getContext().getAuthentication() == null) {
+            try {
+                Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(jwt).getBody();
+                Collection<? extends GrantedAuthority> authorities = getAuthoritiesFromClaims(claims);
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(empId, null, authorities);
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("User not authorized");
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);
@@ -55,10 +60,13 @@ public class JwtFilter extends OncePerRequestFilter {
     private Collection<? extends GrantedAuthority> getAuthoritiesFromClaims(Claims claims) {
         List<Map<String, String>> authorities = (List<Map<String, String>>) claims.get("authorities");
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (Map<String, String> authority : authorities) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(authority.get("authority")));
+        if (authorities != null) {
+            for (Map<String, String> authority : authorities) {
+                grantedAuthorities.add(new SimpleGrantedAuthority(authority.get("authority")));
+            }
         }
         return grantedAuthorities;
     }
-}
+
+    }
 

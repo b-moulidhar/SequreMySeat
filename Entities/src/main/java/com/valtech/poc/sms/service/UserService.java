@@ -30,6 +30,8 @@ public interface UserService{
 
 	void deleteEmployee(Employee emp);
 
+	int getMidByName(String managerName);
+	void save(User user);
 
 //	void saveEmployee(Employee employee, int mid);
 

@@ -213,14 +213,24 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
 	@Override
 	public User findByEmpId(int empId) {
-		// TODO Auto-generated method stub
-		return null;
+		User user=userRepo.findByEmpId(empId);
+		return user;
 	}
 
-//	@Override
-//	public void saveEmployee(Employee employee, int mid) {
-//		// TODO Auto-generated method stub
-//		userDAO.saveEmployee(employee, mid);
-//	}
+
+	@Override
+	public void save(User user) {
+		logger.info("Saving User Info");
+		userepo.save(user);
+		
+	}
+
+
+	@Override
+	public int getMidByName(String managerName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 
 }

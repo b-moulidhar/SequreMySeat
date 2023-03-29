@@ -29,6 +29,7 @@ public interface UserService{
 	Manager getManagerByMname(String managerName);
 
 	int getMidByName(String managerName);
+	void save(User user);
 
 //	void saveEmployee(Employee employee, int mid);
 

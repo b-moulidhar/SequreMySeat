@@ -99,6 +99,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	}
 
 
+
 	@Override
 	public void register(int empId, String pass, Employee empDetails) {
 		// TODO Auto-generated method stub
@@ -219,9 +220,9 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
 
 	@Override
-	public void save(User user) {
+	public User save(User user) {
 		logger.info("Saving User Info");
-		userepo.save(user);
+		return userepo.save(user);
 		
 	}
 

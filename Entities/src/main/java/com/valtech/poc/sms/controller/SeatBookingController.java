@@ -92,7 +92,8 @@ public class SeatBookingController {
     	Employee emp = employeeRepo.findById(eId).get();
     	Seat seat = seatRepo.findById(sId).get();
     	String code = adminService.generateQrCode(eId);
-    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp,false);
+//    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp,false);
+    	SeatsBooked sb = new SeatsBooked(LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), true, code, seat, emp,false);
            SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
             return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
          }

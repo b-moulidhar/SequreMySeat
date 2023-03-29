@@ -19,7 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.valtech.poc.sms.security.JwtFilter;
@@ -63,8 +62,9 @@ public class SecurityConfig {
         .cors().and() 
                 .authorizeHttpRequests()
                 .requestMatchers("/api/login").permitAll()
-                .anyRequest().authenticated().and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .requestMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources/**", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll().requestMatchers("/api/").permitAll()
+                .anyRequest().authenticated().and().formLogin().and().httpBasic();
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         DefaultSecurityFilterChain defaultSecurityFilterChain=http.build();

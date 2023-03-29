@@ -1,5 +1,7 @@
 package com.valtech.poc.sms.service;
 
+import java.util.Map;
+
 import com.valtech.poc.sms.entities.Employee;
 
 import com.valtech.poc.sms.entities.Manager;
@@ -31,7 +33,7 @@ public interface UserService{
 	void deleteEmployee(Employee emp);
 
 	int getMidByName(String managerName);
-	void save(User user);
+	User save(User user);
 
 //	void saveEmployee(Employee employee, int mid);
 

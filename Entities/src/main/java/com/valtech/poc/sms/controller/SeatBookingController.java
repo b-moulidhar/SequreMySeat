@@ -1,6 +1,7 @@
 package com.valtech.poc.sms.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -11,14 +12,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.EmployeeRepo;
+import com.valtech.poc.sms.repo.SeatRepo;
+import com.valtech.poc.sms.service.AdminService;
+import com.valtech.poc.sms.service.EmployeeService;
 import com.valtech.poc.sms.service.SeatBookingService;
 
 @RestController
@@ -27,6 +34,9 @@ public class SeatBookingController {
 
     @Autowired
     private SeatBookingService seatService;
+    
+    @Autowired
+    private EmployeeService employeeService;
 //
     @GetMapping("/total")
     public ResponseEntity<List<Integer>> getAllSeats() {
@@ -50,8 +60,7 @@ public class SeatBookingController {
     @ResponseBody
     @GetMapping("/employees/{id}")
       public ResponseEntity<List<SeatsBooked>> findEmployeeWiseSeatsBooked(@PathVariable("id") int empId) {
-         Employee emp = new Employee();
-         emp.seteId(empId);
+         Employee emp = employeeService.getEmployeeByeId(empId);      
          List<SeatsBooked> seatsBookedList = seatService.findEmployeeWiseSeatsBooked(emp);
            if (seatsBookedList.isEmpty()) {
               return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -68,18 +77,79 @@ public class SeatBookingController {
                         }
                  return ResponseEntity.ok(availableSeats);
        }
- 
-    @PostMapping("/book")
-       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {
-        try {
-        	seatService.bookSeat(seatsBooked);
-            return new ResponseEntity<>("Seat booked successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to book seat", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    
+    @Autowired
+    EmployeeRepo employeeRepo;
+    
+    @Autowired
+    SeatRepo seatRepo;
+    
+    @Autowired
+    AdminService adminService;
+    
+    @PostMapping("/create/{eId}")
+        public ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
+    	Employee emp = employeeRepo.findById(eId).get();
+    	Seat seat = seatRepo.findById(sId).get();
+    	String code = adminService.generateQrCode(eId);
+    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp,false);
+           SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
+            return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
+         }
+    
+    @PutMapping("/{sbId}/notif-status")
+    public void notifStatus(@PathVariable int sbId) {
+    	seatService.notifStatus(sbId);
     }
     
+    
+//    @GetMapping("/{eId}")
+//    public Employee getEmployeeById(@PathVariable int eId) {
+//        return employeeService.getEmployeeByeId(eId);
+//    }
+    
+//    @PostMapping("/seatsBooked/{eId}/{sId}")
+//    public ResponseEntity<SeatsBooked> createSeatsBooked(@PathVariable("eId") Long eId, @PathVariable("sId") Long sId) {
+//        Employee employee = null;
+//		try {
+//			employee = EmployeeService.getEmployeeByeId(eId);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        Seat seat = seatService.getSeatById(sId);
+//        if (employee == null || seat == null) {
+//            return ResponseEntity.notFound().build();
+//        } else {
+//            SeatsBooked seatsBooked = new SeatsBooked();
+//            seatsBooked.setEmployee(employee);
+//            seatsBooked.setSeat(seat);
+//            seatsBooked.setsbStartDate(LocalDate.now());
+//            seatsBooked.setsbEndDate(LocalDate.now().plusDays(7));
+//            seatsBooked.setPunchIn(LocalDateTime.now());
+//            seatsBooked.setPunchOut(LocalDateTime.now().plusHours(8));
+//            seatsBooked.setCurrent(true);
+//            seatsBooked.setCode("ABC123");
+//            SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(seatsBooked);
+//            return ResponseEntity.ok(savedSeatsBooked);
+//        }
+//    }
+
+    
+    
 }
+ 
+//    @PostMapping("/book")
+//       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {
+//        try {
+//        	seatService.bookSeat(seatsBooked);
+//            return new ResponseEntity<>("Seat booked successfully", HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Failed to book seat", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//    
+
 
 
 //@GetMapping("/seats/count")

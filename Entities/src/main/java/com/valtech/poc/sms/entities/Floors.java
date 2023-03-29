@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Floors {
 	@Id
 	@Column(name = "fId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int fId;
 	private String fName;
 	private int fSeats;

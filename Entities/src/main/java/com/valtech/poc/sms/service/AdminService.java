@@ -29,5 +29,13 @@ public interface AdminService {
 	Map<String, Object> getAttendanceListForEachEmployee(int atId);
 
 
+	String generateQrCode(int empId);
+
+	List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
+	List<Map<String, Object>> getAttendanceListForApproval(int eId);
+
+
+
 
 }

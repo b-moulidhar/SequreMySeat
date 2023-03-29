@@ -1,5 +1,7 @@
 package com.valtech.poc.sms.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -18,8 +20,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.Manager;
 import com.valtech.poc.sms.entities.Seat;
 import com.valtech.poc.sms.entities.SeatsBooked;
+import com.valtech.poc.sms.repo.ManagerRepo;
 import com.valtech.poc.sms.repo.SeatRepo;
 
 @Component
@@ -35,6 +39,9 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
 	SeatBookingDao seatBookingDao;
+	
+	@Autowired
+	ManagerRepo managerRepo;
 
 	@Override
 	public List<Integer> getAllSeats() {
@@ -64,10 +71,14 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 						List<SeatsBooked> list = new ArrayList<SeatsBooked>();
 						while (rs.next()) {
 							SeatsBooked seatsBooked = new SeatsBooked();
+							seatsBooked.setSbId(rs.getInt("sb_id"));
 							int seatId = rs.getInt("s_id");
 							Seat seat = seatRepo.findById(seatId).get();
 							seatsBooked.setsId(seat);
-//					seatsBooked.setEmpName(rs.getString("emp_name"));
+//							int mngId = emp.getManagerDetails().getmId();
+//							Manager mng = managerRepo.findById(mngId);
+//							System.out.println(mng);					
+//							emp.setManagerDetails(mng);
 							seatsBooked.seteId(emp);
 							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 							String sbSDate = rs.getString("sb_start_date");
@@ -76,12 +87,21 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 							String sbEDate = rs.getString("sb_end_date");
 							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
 							seatsBooked.setSbEndDate(dateTime1);
-							System.out.println(seatsBooked);
+							String sbISDate = rs.getString("sb_start_date");
+							LocalDateTime dateTimeI = LocalDateTime.parse(sbISDate, formatter);
+							seatsBooked.setPunchIn(dateTimeI);
+							String sbOSDate = rs.getString("sb_start_date");
+							LocalDateTime dateTimeO = LocalDateTime.parse(sbOSDate, formatter);
+							seatsBooked.setPunchOut(dateTimeO);
+							seatsBooked.setCode(rs.getString("code"));
+							list.add(seatsBooked);
 						}
 						return list;
+						
 					}
 
 				});
+//		System.out.println(seatsBooked);
 		return seatsBooked;
 	}
 
@@ -119,7 +139,7 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 	@Override
 	public List<Seat> findAvailableSeatsByDate(LocalDate date) {
 		String query = "SELECT s.s_id, s.s_name " + "FROM seat s " + "WHERE s.s_id NOT IN ( " + "   SELECT sb.s_id "
-				+ "   FROM seats_booked sb " + "   WHERE DATE(sb.sb_date) = ? AND sb.current = true" + ")";
+				+ "   FROM seats_booked sb " + "   WHERE DATE(sb.sb_start_date) = ? AND sb.current = true" + ")";
 		List<Seat> availableSeats = jdbcTemplate.query(query, new Object[] { date },
 				new BeanPropertyRowMapper<>(Seat.class));
 		return availableSeats;
@@ -131,19 +151,35 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 //                     "(?, ?, ?, ?, ?, ?, ?, ?)";
 //                      this.jdbcTemplate.update(sql);
 //    }
-
+//
 	@Override
 	public void bookSeat(SeatsBooked seatsBooked) {
 		String sql = "INSERT INTO seats_booked (sb_id, sb_start_date,sb_end_date, punch_in, punch_out, current, code, s_id, e_id) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			jdbcTemplate.update(sql, seatsBooked.getSbId(), seatsBooked.getSbStartDate(), seatsBooked.getSbEndDate(),
-					seatsBooked.getPunchIn(), seatsBooked.getPunchOut(), seatsBooked.getCurrent(),
+					seatsBooked.getPunchIn(), seatsBooked.getPunchOut(), seatsBooked.isCurrent(),
 					seatsBooked.getCode(), seatsBooked.getsId(), seatsBooked.geteId());
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
 	}
+	
+//	@Override
+//	public void updateNotifStatus(int sbId , Connection connection) {
+//	    String query = "UPDATE seats_booked SET notifStatus = false WHERE sbId = ?";
+//	    try {
+//	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+//	        preparedStatement.setInt(1, sbId);
+//	        preparedStatement.executeUpdate();
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	}
+
+	
+	
+
 
 //	@Override
 //	public void saveEmployee(Employee employee, int mId) {

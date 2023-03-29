@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Otp {
 	@Id
 	@Column(name = "oId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oId;
 	private String otpKey;
 

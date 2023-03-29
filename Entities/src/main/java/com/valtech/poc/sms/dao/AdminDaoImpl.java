@@ -96,5 +96,21 @@ String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id
     	Map<String, Object> result = jdbcTemplate.queryForMap(query, atId);
 		return result;
 	}
+
+	@Override
+	public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
+String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id	WHERE a.e_id=?";
+		
+    	List<Map<String, Object>> result = jdbcTemplate.queryForList(query, eId);
+		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> getAttendanceListForApproval(int eId) {
+String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id JOIN manager m ON e.m_id = m.m_id	WHERE a.e_id=? and approval=?";
+		
+    	List<Map<String, Object>> result = jdbcTemplate.queryForList(query, eId,false);
+		return result;
+	}
 	
 }

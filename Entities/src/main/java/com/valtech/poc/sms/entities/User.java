@@ -1,6 +1,7 @@
 package com.valtech.poc.sms.entities;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -21,7 +22,7 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@Column(name = "uId")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int uId;
 	private int empId;
 	private String pass;

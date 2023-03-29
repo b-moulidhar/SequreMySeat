@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,14 @@ public class AdminController {
 		logger.info("Fetching the food count");
 		int count=adminService.getFoodCount(ftDate);
 	    return count;
+	}
+	
+	@ResponseBody
+	@GetMapping("/qr/codeGenerator/{empId}")
+	public String getCodeForQrGeneration(@PathVariable("empId") int empId) {
+		//call function which returns "code" from seat_booked table based on current status for this empId
+		String qrCodeKey = adminService.generateQrCode(empId);
+		return qrCodeKey;
 	}
 	
 	@ResponseBody
@@ -113,7 +122,7 @@ public class AdminController {
 	    
 	    @ResponseBody
 	    @GetMapping("/attendance/{atId}")
-	    public Map<String, Object> getAttendanceListForEachEmployee(@PathVariable("atId") int atId) {    	
+	    public Map<String, Object> getAttendanceEachEmployeeBasedOnAttendanceId(@PathVariable("atId") int atId) {    	
 	    	  try {
 	    	       return adminService.getAttendanceListForEachEmployee(atId);
 	    	    } catch (EmptyResultDataAccessException ex) {
@@ -121,6 +130,29 @@ public class AdminController {
 	    	    }
 	    	
 	    }
+	    
+	    @ResponseBody
+	    @GetMapping("/employeeAttendance/{eId}")
+	    public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceForEmployeeBasedOnEmployeeId(eId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
+	    	    }
+	    	  
+	    }
+	    
+	    @ResponseBody
+	    @GetMapping("/attendanceApproval/{eId}")
+	    public List<Map<String, Object>> getAttendanceListForApproval(@PathVariable("eId") int eId) {    	
+	    	  try {
+	    	       return adminService.getAttendanceListForApproval(eId);
+	    	    } catch (EmptyResultDataAccessException ex) {
+	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
+	    	    }
+	    	
+	    }
+	  
 	  
 	 
 

@@ -37,7 +37,15 @@ public class SeatBookingController {
     
     @Autowired
     private EmployeeService employeeService;
-//
+    
+    @Autowired
+    EmployeeRepo employeeRepo;
+    
+    @Autowired
+    SeatRepo seatRepo;
+    
+    @Autowired
+    AdminService adminService;
     @GetMapping("/total")
     public ResponseEntity<List<Integer>> getAllSeats() {
         List<Integer> allSeats = seatService.getAllSeats();
@@ -78,15 +86,7 @@ public class SeatBookingController {
                  return ResponseEntity.ok(availableSeats);
        }
     
-    @Autowired
-    EmployeeRepo employeeRepo;
-    
-    @Autowired
-    SeatRepo seatRepo;
-    
-    @Autowired
-    AdminService adminService;
-    
+
     @PostMapping("/create/{eId}")
         public ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
     	Employee emp = employeeRepo.findById(eId).get();
@@ -101,6 +101,8 @@ public class SeatBookingController {
     public void notifStatus(@PathVariable int sbId) {
     	seatService.notifStatus(sbId);
     }
+    
+    
     
 //   
 //     @GetMapping("/current-booking")

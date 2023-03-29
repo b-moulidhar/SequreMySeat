@@ -145,13 +145,6 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 		return availableSeats;
 	}
 
-//	@Override
-//	public void bookSeat() {
-//        String sql = "INSERT INTO seats_booked (sb_id, sb_date, punch_in, punch_out, current, code, s_id, e_id) VALUES " +
-//                     "(?, ?, ?, ?, ?, ?, ?, ?)";
-//                      this.jdbcTemplate.update(sql);
-//    }
-//
 	@Override
 	public void bookSeat(SeatsBooked seatsBooked) {
 		String sql = "INSERT INTO seats_booked (sb_id, sb_start_date,sb_end_date, punch_in, punch_out, current, code, s_id, e_id) "
@@ -166,38 +159,45 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 	}
 	
 //	@Override
-//	public void updateNotifStatus(int sbId , Connection connection) {
-//	    String query = "UPDATE seats_booked SET notifStatus = false WHERE sbId = ?";
-//	    try {
-//	        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//	        preparedStatement.setInt(1, sbId);
-//	        preparedStatement.executeUpdate();
-//	    } catch (SQLException e) {
-//	        e.printStackTrace();
-//	    }
+//	public List<RecurringSeats> countRecurringSeats() {
+//		String sql = "SELECT s.s_id, s.s_name, COUNT(*) AS bookings, e.emp_name\r\n"
+//				+ "FROM seat s\r\n"
+//				+ "INNER JOIN seats_booked sb ON s.s_id = sb.s_id\r\n"
+//				+ "INNER JOIN employee e ON sb.e_id = e.e_id\r\n"
+//				+ "WHERE   e.e_id=123\r\n"
+//				+ "GROUP BY s.s_id, s.s_name, e.emp_name\r\n"
+//				+ "HAVING COUNT(*) >= 1\r\n"
+//				+ "ORDER BY bookings DESC;";
+//		List<RecurringSeats> RecurringList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(RecurringSeats.class));
+//		return RecurringList;
 //	}
+	
 
 	
-	
 
 
-//	@Override
-//	public void saveEmployee(Employee employee, int mId) {
-//		String sql="insert into employee values (?,?,?,?,?)";
-//		jdbcTemplate.update(sql,7,employee.getEmpName(),employee.getMailId(),employee.getPhNum(),mId);
-//	}
+
 
 }
 
 //	public List<RecurringSeats> getRecurringSeats() {
-//	    String sql = "SELECT s.s_id, s.s_name, COUNT(*) AS bookings, e.e_id " +
-//	                 "FROM seat s " +
-//	                 "INNER JOIN seats_booked sb ON s.s_id = sb.s_id " +
-//	                 "INNER JOIN employee e ON sb.e_id = e.e_id " +
-//	                 "GROUP BY s.s_id, s.s_name, e.e_id " +
-//	                 "HAVING COUNT(*) >= 1 " +
-//	                 "ORDER BY bookings DESC";
+//	    String sql = "SELECT s.s_id, s.s_name, COUNT(*) AS bookings, e.emp_name\r\n"
+//	    		+ "FROM seat s\r\n"
+//	    		+ "INNER JOIN seats_booked sb ON s.s_id = sb.s_id\r\n"
+//	    		+ "INNER JOIN employee e ON sb.e_id = e.e_id\r\n"
+//	    		+ "WHERE   e.e_id=123\r\n"
+//	    		+ "GROUP BY s.s_id, s.s_name, e.emp_name\r\n"
+//	    		+ "HAVING COUNT(*) >= 1\r\n"
+//	    		+ "ORDER BY bookings DESC;";
 //
+//SELECT s.s_id, s.s_name, COUNT(*) AS bookings, e.emp_name
+//FROM seat s
+//INNER JOIN seats_booked sb ON s.s_id = sb.s_id
+//INNER JOIN employee e ON sb.e_id = e.e_id
+//WHERE   e.e_id=123
+//GROUP BY s.s_id, s.s_name, e.emp_name
+//HAVING COUNT(*) >= 1
+//ORDER BY bookings DESC;
 //	    List<RecurringSeats> RecurringList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(RecurringSeats.class));
 //	    return RecurringList;
 //	}

@@ -97,8 +97,8 @@ public class SeatBookingController {
             return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
          }
     
-    @PutMapping("/{sbId}/notif-status")
-    public void notifStatus(@PathVariable int sbId) {
+    @PutMapping("/notification/{sbId}")
+    public void notifStatus(@PathVariable int sbId)   {
     	seatService.notifStatus(sbId);
     }
     

@@ -27,6 +27,10 @@ public interface SeatBookingDao {
 
     void bookSeat(SeatsBooked seatsBooked);
 
+	//void notifStatus(boolean notifStatus, int sbId);
+
+	void notifStatus(int sbId);
+
 	//void updateNotifStatus(int sbId, Connection connection);
 
 	

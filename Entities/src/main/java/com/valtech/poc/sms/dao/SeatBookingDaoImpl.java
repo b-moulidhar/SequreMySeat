@@ -29,7 +29,7 @@ import com.valtech.poc.sms.repo.SeatRepo;
 @Component
 @ComponentScan
 
-public class SeatBookingDaoImpl implements SeatBookingDao {
+public  class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -59,6 +59,12 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 		// fetching the seats which are booked
 	}
 //
+	@Override
+	public void notifStatus( int sbId) {
+		String sql = "UPDATE seats_booked SET notif_status = ? WHERE sb_id = ?";
+		jdbcTemplate.update(sql,1,sbId);
+	}
+	
 
 	@Override
 	public List<SeatsBooked> findAllByEId(Employee emp) {
@@ -157,6 +163,9 @@ public class SeatBookingDaoImpl implements SeatBookingDao {
 			e.printStackTrace();
 		}
 	}
+
+	
+
 	
 //	@Override
 //	public List<RecurringSeats> countRecurringSeats() {

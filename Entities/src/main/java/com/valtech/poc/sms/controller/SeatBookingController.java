@@ -88,7 +88,7 @@ public class SeatBookingController {
     AdminService adminService;
     
     @PostMapping("/create/{eId}")
-        public ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
+        public synchronized ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
     	Employee emp = employeeRepo.findById(eId).get();
     	Seat seat = seatRepo.findById(sId).get();
     	String code = adminService.generateQrCode(eId);

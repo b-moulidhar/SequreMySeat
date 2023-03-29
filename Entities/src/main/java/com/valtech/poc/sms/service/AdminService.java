@@ -35,6 +35,10 @@ public interface AdminService {
 
 	List<Map<String, Object>> getAttendanceListForApproval(int eId);
 
+	void ApproveRegistration(int empId);
+
+	void deleteUser(int empId);
+
 
 
 

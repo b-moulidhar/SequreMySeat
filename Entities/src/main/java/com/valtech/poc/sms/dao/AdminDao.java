@@ -26,4 +26,8 @@ public interface AdminDao {
 
 	List<Map<String, Object>> getAttendanceListForApproval(int eId);
 
+	void approroveRegistration(int uId);
+
+	void deleteUser(int getuId);
+
 }

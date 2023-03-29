@@ -112,5 +112,20 @@ String query="select *from attendance_table a JOIN employee e ON a.e_id = e.e_id
     	List<Map<String, Object>> result = jdbcTemplate.queryForList(query, eId,false);
 		return result;
 	}
+
+	@Override
+	public void approroveRegistration(int uId) {
+		// TODO Auto-generated method stub
+		String sql="UPDATE user SET approval=? WHERE u_id=?";
+		jdbcTemplate.update(sql, 1 ,uId);
+		
+	}
+
+	@Override
+	public void deleteUser(int uId) {
+		// TODO Auto-generated method stub
+		String sql="delete from user where u_id=?";
+		jdbcTemplate.update(sql,uId);
+	}
 	
 }

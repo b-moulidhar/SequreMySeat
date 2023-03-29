@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.entities.User;
 import com.valtech.poc.sms.repo.AttendanceRepository;
+import com.valtech.poc.sms.repo.UserRepo;
 import com.valtech.poc.sms.service.AdminService;
 import com.valtech.poc.sms.service.MailContent;
 
@@ -152,8 +155,29 @@ public class AdminController {
 	    	    }
 	    	
 	    }
+	    @Autowired
+	    private UserRepo userRepo;
+	    
+	    @ResponseBody
+	    @PutMapping("/regestrationApproval/{empId}")
+	    public String RegestrationApproval(@PathVariable("empId") int empId) {
+	    	User u=userRepo.findByEmpId(empId);
+	    	if(u.isApproval()==false) {
+	    		adminService.ApproveRegistration(u.getuId());
+	    		return "Approved";
+	    	}
+	    	else {
+	    		return "The User is Already Approved";
+	    	}
+	    }
 	  
-	  
+	  @ResponseBody
+	  @DeleteMapping("/regestrationDisapproval/{empId}")
+	  public String RegestrationDisApproval(@PathVariable("empId") int empId) {
+		adminService.deleteUser(empId);
+		return "DisApproved";
+		  
+	  }
 	 
 
 	  

@@ -31,7 +31,9 @@ public interface AdminService {
 
 	String generateQrCode(int empId);
 
-	Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+	List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
+	List<Map<String, Object>> getAttendanceListForApproval(int eId);
 
 
 

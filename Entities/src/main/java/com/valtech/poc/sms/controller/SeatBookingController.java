@@ -2,8 +2,8 @@ package com.valtech.poc.sms.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,79 +32,83 @@ import com.valtech.poc.sms.service.SeatBookingService;
 @RequestMapping("/seats")
 public class SeatBookingController {
 
-    @Autowired
-    private SeatBookingService seatService;
-    
-    @Autowired
-    private EmployeeService employeeService;
-    
-    @Autowired
-    EmployeeRepo employeeRepo;
-    
-    @Autowired
-    SeatRepo seatRepo;
-    
-    @Autowired
-    AdminService adminService;
-    @GetMapping("/total")
-    public ResponseEntity<List<Integer>> getAllSeats() {
-        List<Integer> allSeats = seatService.getAllSeats();
-        return ResponseEntity.ok().body(allSeats);
-    }
+	@Autowired
+	private SeatBookingService seatService;
+
+	@Autowired
+	private EmployeeService employeeService;
+
+	@Autowired
+	EmployeeRepo employeeRepo;
+
+	@Autowired
+	SeatRepo seatRepo;
+
+	@Autowired
+	AdminService adminService;
+
+	@GetMapping("/total")
+	public ResponseEntity<List<Integer>> getAllSeats() {
+		List<Integer> allSeats = seatService.getAllSeats();
+		return ResponseEntity.ok().body(allSeats);
+	}
+
 //        
-    @GetMapping("/available")
-    public ResponseEntity<List<Integer>> availableSeats() {
-    	List<Integer> availableSeats = seatService.availableSeats();
-    	return ResponseEntity.ok().body(availableSeats);
-    	
-    }
+	@GetMapping("/available")
+	public ResponseEntity<List<Integer>> availableSeats() {
+		List<Integer> availableSeats = seatService.availableSeats();
+		return ResponseEntity.ok().body(availableSeats);
 
-    @GetMapping("/count")
-    public ResponseEntity<List<Integer>> getTotalSeatsCount() {
-    	List<Integer> totalSeats = seatService.countTotalSeats();
+	}
+
+	@GetMapping("/count")
+	public ResponseEntity<List<Integer>> getTotalSeatsCount() {
+		List<Integer> totalSeats = seatService.countTotalSeats();
 		return ResponseEntity.ok().body(totalSeats);
-    	
-    }
-    @ResponseBody
-    @GetMapping("/employees/{id}")
-      public ResponseEntity<List<SeatsBooked>> findEmployeeWiseSeatsBooked(@PathVariable("id") int empId) {
-         Employee emp = employeeService.getEmployeeByeId(empId);      
-         List<SeatsBooked> seatsBookedList = seatService.findEmployeeWiseSeatsBooked(emp);
-           if (seatsBookedList.isEmpty()) {
-              return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-           return new ResponseEntity<>(seatsBookedList, HttpStatus.OK);
-        }
-    
-    
-    @GetMapping("/available/{date}")
-       public ResponseEntity<List<Seat>> getAvailableSeatsByDate(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-         List<Seat> availableSeats = seatService.findAvailableSeatsByDate(date);
-             if (availableSeats.isEmpty()) {
-                 return ResponseEntity.noContent().build();
-                        }
-                 return ResponseEntity.ok(availableSeats);
-       }
-    
 
-    @PostMapping("/create/{eId}")
-        public synchronized ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId, @RequestParam("sId") int sId) {
-    	Employee emp = employeeRepo.findById(eId).get();
-    	Seat seat = seatRepo.findById(sId).get();
-    	String code = adminService.generateQrCode(eId);
+	}
+
+//    @ResponseBody
+//    @GetMapping("/employees/{id}")
+//      public ResponseEntity<List<SeatsBooked>> findEmployeeWiseSeatsBooked(@PathVariable("id") int eId) {
+//         Employee emp = employeeService.getEmployeeByeId(eId);      
+//         List<SeatsBooked> seatsBookedList = seatService.findEmployeeWiseSeatsBooked(emp);
+//           if (seatsBookedList.isEmpty()) {
+//              return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//           return new ResponseEntity<>(seatsBookedList, HttpStatus.OK);
+//        }
+
+	@GetMapping("/available/{date}")
+	public ResponseEntity<List<Seat>> getAvailableSeatsByDate(
+			@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+		List<Seat> availableSeats = seatService.findAvailableSeatsByDate(date);
+		if (availableSeats.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(availableSeats);
+	}
+
+	@PostMapping("/create/{eId}")
+	public synchronized ResponseEntity<String> createSeatsBooked(@PathVariable("eId") int eId,
+			@RequestParam("sId") int sId) {
+		Employee emp = employeeRepo.findById(eId).get();
+		Seat seat = seatRepo.findById(sId).get();
+		String code = adminService.generateQrCode(eId);
 //    	SeatsBooked sb = new SeatsBooked(null, null, LocalDateTime.now(), null, true, code, seat, emp,false);
-    	SeatsBooked sb = new SeatsBooked(LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), true, code, seat, emp,false);
-           SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
-            return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
-         }
-    
-    @PutMapping("/notification/{sbId}")
-    public void notifStatus(@PathVariable int sbId)   {
-    	seatService.notifStatus(sbId);
-    }
-    
-    
-    
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(formatter.format(now), formatter);
+		SeatsBooked sb = new SeatsBooked(dateTime, dateTime, dateTime, dateTime, true, code, seat, emp, false);
+		SeatsBooked savedSeatsBooked = seatService.saveSeatsBookedDetails(sb);
+		return ResponseEntity.ok("Seats booked created successfully with ID: " + savedSeatsBooked.getSbId());
+	}
+
+	@PutMapping("/notification/{sbId}")
+	public void notifStatus(@PathVariable int sbId) {
+		seatService.notifStatus(sbId);
+	}
+
 //   
 //     @GetMapping("/current-booking")
 //     public ResponseEntity<SeatsBooked> getCurrentSeatBookingDetails(@RequestParam("eId") Long employeeId) {
@@ -117,15 +121,13 @@ public class SeatBookingController {
 //        }
 //      }
 
-    }
+}
 
-    
-    
 //    @GetMapping("/{eId}")
 //    public Employee getEmployeeById(@PathVariable int eId) {
 //        return employeeService.getEmployeeByeId(eId);
 //    }
-    
+
 //    @PostMapping("/seatsBooked/{eId}/{sId}")
 //    public ResponseEntity<SeatsBooked> createSeatsBooked(@PathVariable("eId") Long eId, @PathVariable("sId") Long sId) {
 //        Employee employee = null;
@@ -153,10 +155,6 @@ public class SeatBookingController {
 //        }
 //    }
 
-    
-    
-
- 
 //    @PostMapping("/book")
 //       public ResponseEntity<String> bookSeat(@RequestBody SeatsBooked seatsBooked) {
 //        try {
@@ -167,8 +165,6 @@ public class SeatBookingController {
 //        }
 //    }
 //    
-
-
 
 //@GetMapping("/seats/count")
 //public ResponseEntity<Integer> getTotalSeatsCount() {

@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.valtech.poc.sms.dao.AdminDao;
 import com.valtech.poc.sms.dao.UserDAO;
+import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Food;
 import com.valtech.poc.sms.entities.User;
 import com.valtech.poc.sms.repo.AdminRepository;
+import com.valtech.poc.sms.repo.EmployeeRepo;
 import com.valtech.poc.sms.repo.SeatsBookedRepo;
 import com.valtech.poc.sms.repo.UserRepo;
 
@@ -37,8 +39,15 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	ResetPassword resetPassword;
 	
+	@Autowired
+	EmployeeRepo employeeRepo;
+	
+	
 	@Override
-	public String generateQrCode(int empId) {
+	public String generateQrCode(int eId) {
+		Employee emp = employeeRepo.findById(eId).get();
+		User usr = userRepo.findByEmpDetails(emp);
+		int empId = usr.getEmpId();
 		String code ="" + empId + resetPassword.getRandomNumberString();
 		return code;
 	}

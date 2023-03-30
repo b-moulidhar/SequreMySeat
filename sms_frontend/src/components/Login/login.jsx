@@ -1,10 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 
+import Navbar from "../Navbar/navbar";
+import { useNavigate } from "react-router-dom";
+
+
 function LoginPage() {
   const [empId, setEmpId] = useState("");
   const [pass, setPass] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
 
   const handleLogin = async () => {
     try {
@@ -42,8 +47,6 @@ function LoginPage() {
         onChange={(e) => setPass(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
-    </div>
-  );
-}
-
-export default LoginPage;
+      </div>
+)}
+export default function Login()

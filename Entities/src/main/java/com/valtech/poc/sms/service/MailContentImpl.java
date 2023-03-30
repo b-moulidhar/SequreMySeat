@@ -79,4 +79,23 @@ public class MailContentImpl implements MailContent {
 		sendMail.sendMail(email, subject, body);
 	}
 
+	@Override
+	public void attendanceApproved(String mail) {
+		String email = mail;
+		String subject = "Attendance Request is been approved";
+		String body = "Hello, Your Attendance Request approved  -admin";
+		sendMail.sendMail(email, subject, body);
+	}
+
+	@Override
+	public void attendanceDisApproved(String mail) {
+		String email = mail;
+		String subject = "Attendance Request is been disapproved";
+		String body = "Hello, Your Attendance Request disapproved  -admin";
+		sendMail.sendMail(email, subject, body);
+	}
+	
+	
+	
+
 }

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import com.valtech.poc.sms.entities.AttendanceTable;
 
 public interface AdminDao {
 
@@ -12,16 +11,16 @@ public interface AdminDao {
 
 	int getSeatBookedCount(LocalDateTime dateTime);
 	
-	void approveAttendance(int atId);
-
 	List<String> findRoles();
 
-	AttendanceTable getList(int atId);
+	void approroveRegistration(int uId);
 
-	List<Map<String, Object>> getCompleteAttendanceList();
+	void deleteUser(int getuId);
+	
+	List<Map<String, Object>> getRegistrationListForApproval();
 
-	Map<String, Object> getAttendanceListForEachEmployee(int atId);
+	List<String> findShiftStartTimings();
 
-	Map<String, Object> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+	List<String> findShiftEndTimings();
 
 }

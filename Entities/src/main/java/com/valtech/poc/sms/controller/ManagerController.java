@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.valtech.poc.sms.entities.Employee;
+import com.valtech.poc.sms.service.EmployeeService;
 import com.valtech.poc.sms.service.ManagerService;
 
 @Controller
@@ -18,6 +19,9 @@ public class ManagerController {
 
 	@Autowired
 	private ManagerService managerService;
+	
+	@Autowired
+	EmployeeService employeeService;
 	
 	@GetMapping("/managerByEmpId/{empId}")
 	public ResponseEntity<Employee> managerProfileInfo(@PathVariable("empId") int empId) throws SQLException {
@@ -31,6 +35,11 @@ public class ManagerController {
 		return managerService.getAllManagerNames();
 		
 	}
+	
+//	@GetMapping("/{eId}")
+//    public Employee getEmployeeById(@PathVariable int eId) {
+//        return employeeService.getEmployeeByeId(eId);
+//    }
 	
     	
 }

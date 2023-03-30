@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@Column(name = "uId")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int uId;
 	private int empId;
 	private String pass;
@@ -126,5 +126,7 @@ public class User {
 		return "User [uId=" + uId + ", empId=" + empId + ", pass=" + pass + ", empDetails=" + empDetails + ", approval="
 				+ approval + ", roles=" + roles + ", otp=" + otp + "]";
 	}
+
+	
 
 }

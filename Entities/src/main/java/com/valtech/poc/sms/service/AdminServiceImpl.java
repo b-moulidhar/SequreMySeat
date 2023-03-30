@@ -11,14 +11,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.valtech.poc.sms.dao.AdminDao;
 import com.valtech.poc.sms.dao.UserDAO;
-import com.valtech.poc.sms.entities.AttendanceTable;
-import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Food;
-import com.valtech.poc.sms.entities.SeatsBooked;
 import com.valtech.poc.sms.entities.User;
-import com.valtech.poc.sms.exception.ResourceNotFoundException;
 import com.valtech.poc.sms.repo.AdminRepository;
-import com.valtech.poc.sms.repo.EmployeeRepo;
 import com.valtech.poc.sms.repo.SeatsBookedRepo;
 import com.valtech.poc.sms.repo.UserRepo;
 
@@ -32,8 +27,6 @@ public class AdminServiceImpl implements AdminService{
 	private UserDAO userDao;
 	@Autowired
 	private UserRepo userRepo;
-	@Autowired
-	private EmployeeRepo employeeRepo;
 	
 	@Autowired
 	private AdminRepository adminRepository;
@@ -84,60 +77,11 @@ public class AdminServiceImpl implements AdminService{
 	public List<String> findShiftEndTimings() {
 		return adminDao.findShiftEndTimings();
 	}
-
 	
-	@Override
-	public void updateAttendance(int atId) {
-		adminDao.approveAttendance(atId);
-	}
 
 	@Override
 	public List<String> findRoles() {
 		return adminDao.findRoles();
-	}
-
-	@Override
-	public void automaticRegularization(int sbId, AttendanceTable attendance) {
-		SeatsBooked sb=seatsBookedRepo.findById(sbId).orElseThrow(() -> new ResourceNotFoundException("SeatBooked not found" ));
-        attendance.setStartDate(""+sb.getSbStartDate());
-        attendance.setEndDate(""+sb.getSbEndDate());
-        attendance.setShiftStart(""+sb.getPunchIn());
-        attendance.setShiftEnd(""+sb.getPunchOut());
-        attendance.seteId(sb.geteId());
-	}
-
-
-	@Override
-	public Employee getSpecificEmploye(AttendanceTable attendance) {
-		return employeeRepo.findById(attendance.geteId().geteId())
-        .orElseThrow(() -> new ResourceNotFoundException("Employee not found" ));
-	}
-
-	@Override
-	public AttendanceTable getList(int atId) {
-		return adminDao.getList(atId);
-	}
-
-	@Override
-	public List<Map<String, Object>> getCompleteAttendanceList() {
-		return adminDao.getCompleteAttendanceList();
-		
-	}
-
-	@Override
-	public Map<String, Object> getAttendanceListForEachEmployee(int atId) {
-		return adminDao.getAttendanceListForEachEmployee(atId);
-		
-	}
-
-	@Override
-	public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId) {
-		return adminDao.getAttendanceForEmployeeBasedOnEmployeeId(eId);
-	}
-
-	@Override
-	public List<Map<String, Object>> getAttendanceListForApproval(int eId) {
-		return adminDao.getAttendanceListForApproval(eId);
 	}
 
 	@Override
@@ -163,11 +107,4 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.getRegistrationListForApproval();
 	}
 
-	@Override
-	public void deleteAttendanceRequest(int atId) {
-		adminDao.deleteAttendanceRequest(atId);
-		
-	}
-
-	
 }

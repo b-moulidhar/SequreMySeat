@@ -98,10 +98,12 @@ private JwtUtil jwtUtil;
 
 		String token = userService.login(Integer.parseInt(empId), pass);
 		User user=userService.findByEmpId(Integer.parseInt(empId));
+		String role = user.getRoles().iterator().next().getRole();
 		System.out.println(user.getEmpDetails().getMailId());
 		Map<String, String> response = new HashMap<>();
 		response.put("token", token);
 		response.put("EId", String.valueOf(user.getEmpDetails().geteId()));
+		response.put("role", role);
 
 		return ResponseEntity.ok(response);
 	}
@@ -141,6 +143,10 @@ private JwtUtil jwtUtil;
 	@PostMapping("/saveuser")
     public ResponseEntity<String> saveUserEmployee(@RequestBody EmployeeDto employeeDto) {
         try {
+        	
+        	if(userService.findByEmpId(employeeDto.getEmpId()) != null) {
+                return ResponseEntity.badRequest().body("Employee with the given empId already exists");
+            }
             // Create the Employee object from the DTO
             Employee employee = new Employee();
             employee.setEmpName(employeeDto.getEmpName());

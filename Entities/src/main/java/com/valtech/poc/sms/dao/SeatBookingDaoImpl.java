@@ -45,7 +45,7 @@ public  class SeatBookingDaoImpl implements SeatBookingDao {
 
 	@Override
 	public List<Integer> getAllSeats() {
-		String query = "SELECT s_id FROM seat";
+		String query = "SELECT s_name FROM seat";
 		List<Integer> allSeats = jdbcTemplate.queryForList(query, Integer.class);
 		return allSeats;
 		// fetching all the available seats

@@ -86,6 +86,11 @@ public class UserController {
 //
 //	}
 
+	@ResponseBody
+	@GetMapping("/gettingAllManagernames")
+	public List<String> getAllManagerNames(){
+		return userService.getManagerNames();
+	}
 @Autowired
 private JwtUtil jwtUtil;
     
@@ -128,17 +133,17 @@ private JwtUtil jwtUtil;
 		text+="this page is not allowed to unauthenticated users";
 		return text;
 	}
-	@PutMapping("/{empId}")
-    public String updateUserApproval(@PathVariable("empId") int empId) {
-        User user = userService.findByEmpId(empId);
-        boolean approval=true;
-        if (user == null) {
-            return "User not found";
-        }
-        user.setApproval(approval);
-        userService.save(user);
-        return  "User approved successfully";
-    }
+//	@PutMapping("/{empId}")
+//    public String updateUserApproval(@PathVariable("empId") int empId) {
+//        User user = userService.findByEmpId(empId);
+//        boolean approval=true;
+//        if (user == null) {
+//            return "User not found";
+//        }
+//        user.setApproval(approval);
+//        userService.save(user);
+//        return  "User approved successfully";
+//    }
 	
 	@PostMapping("/saveuser")
     public ResponseEntity<String> saveUserEmployee(@RequestBody EmployeeDto employeeDto) {

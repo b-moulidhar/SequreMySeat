@@ -3,6 +3,7 @@ package com.valtech.poc.sms.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,9 @@ public class AdminController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	private UserRepo userRepo;
 
 	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -128,34 +132,39 @@ public class AdminController {
 		return adminService.findRoles();
 	}
 
-
 	@GetMapping("/{eId}")
 	public Employee getEmployeeById(@PathVariable int eId) {
 		return employeeService.getEmployeeByeId(eId);
 	}
 
-    @Autowired
-    private UserRepo userRepo;
-    
-    @ResponseBody
-    @PutMapping("/regestrationApproval/{empId}")
-    public String RegestrationApproval(@PathVariable("empId") int empId) {
-    	User u=userRepo.findByEmpId(empId);
-    	if(u.isApproval()==false) {
-    		adminService.ApproveRegistration(u.getuId());
-    		return "Approved";
-    	}
-    	else {
-    		return "The User is Already Approved";
-    	}
-    }
-  
-  @ResponseBody
-  @DeleteMapping("/regestrationDisapproval/{empId}")
-  public String RegestrationDisApproval(@PathVariable("empId") int empId) {
-	adminService.deleteUser(empId);
-	return "DisApproved";
-	  
-  }
+	@ResponseBody
+	@PutMapping("/registrationApproval/{empId}")
+	public String RegistrationApproval(@PathVariable("empId") int empId) {
+		User u = userRepo.findByEmpId(empId);
+		if (u.isApproval() == false) {
+			adminService.ApproveRegistration(u.getuId());
+			return "Approved";
+		} else {
+			return "The User is Already Approved";
+		}
+	}
+
+	@ResponseBody
+	@DeleteMapping("/registrationDisapproval/{empId}")
+	public String RegistrationDisApproval(@PathVariable("empId") int empId) {
+		adminService.deleteUser(empId);
+		return "DisApproved";
+
+	}
+
+	
+	@ResponseBody
+	@GetMapping("/registrationApprovalList")
+	public List<Map<String, Object>> getRegistrationListForApproval() {
+		logger.info("fetching the list of Approval Request");
+		return adminService.getRegistrationListForApproval();
+	}
+		
  
+	
 }

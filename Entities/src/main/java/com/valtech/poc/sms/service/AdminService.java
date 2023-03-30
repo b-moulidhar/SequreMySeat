@@ -14,11 +14,33 @@ public interface AdminService {
 
 	int getCount(String ftDate);
 	
+	void updateAttendance(int atId);
+
 	List<String> findRoles();
+
+	void automaticRegularization(int sbId, AttendanceTable attendance);
+
+	Employee getSpecificEmploye(AttendanceTable attendance);
+
+	AttendanceTable getList(int atId);
+
+	List<Map<String, Object>> getCompleteAttendanceList();
+
+	Map<String, Object> getAttendanceListForEachEmployee(int atId);
+
 
 	String generateQrCode(int empId);
 
+	List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(int eId);
+
+	List<Map<String, Object>> getAttendanceListForApproval(int eId);
+
+	void ApproveRegistration(int empId);
+
+	void deleteUser(int empId);
 	List<Map<String, Object>> getRegistrationListForApproval();
+
+	void deleteAttendanceRequest(int atId);
 
 	List<String> findShiftStartTimings();
 

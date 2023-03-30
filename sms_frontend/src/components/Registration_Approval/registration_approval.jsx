@@ -1,13 +1,14 @@
-import './registration_approval.css';
-
+import "./registration_approval.css"
 
 function Registration_Approval(){
     return(
         
         <div className='manager'>
-        
         <div>
-        <h2>Regitration Approval for SMS</h2>
+        </div>
+        <div>
+        <h2>Employee Approval for SMS</h2>
+
         <table className="table1">
         <thead>
             <tr>

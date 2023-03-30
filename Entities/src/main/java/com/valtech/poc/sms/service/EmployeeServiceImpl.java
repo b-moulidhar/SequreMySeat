@@ -17,6 +17,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	
+	@Autowired
+	private EmployeeRepo employeeRepo;
+	
 	@Override
     public Employee getEmployeeByeId(int eId) {
         return employeeDAO.getEmployeeByeId(eId);
@@ -42,5 +45,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getAllEmployees(int empID) {
 		logger.info("Getting All Employee Details by manager");
 		return employeeDAO.getAllEmployees(empID);
+	}
+
+	@Override
+	public Employee saveEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return employeeRepo.save(employee);
 	}
 }

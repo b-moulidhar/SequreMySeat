@@ -14,32 +14,77 @@ function AdminDashboard(){
                 console.log(res.data.data.length)
         })
     },[])
+
+    function reportGen(evt){
+      if(evt=="weekly"){
+        console.log("weekly");
+      }
+      else if(evt=="monthly"){
+        console.log("monthly");
+      }
+
+    }
     return (
       <div className="dashboard_container">
-      <div className="mainpage">
-        <div>
-        </div>
-        <div>
-          {/* <h2 className="status">Status</h2> */}
-          {/* <div className="dashboard_head">
+        <div className="mainpage">
+          <div></div>
+          <div>
+            {/* <h2 className="status">Status</h2> */}
+            {/* <div className="dashboard_head">
             <h3>your name</h3>
             <p>your seat for today is 1 at ground floor</p>
           </div> */}
-          <div className=" atten">
-            <div className="attenstatus">
-              <button type="button" className="btn btn-success statusbtn">
-                Approved
-              </button>
+          <nav className="navbar navbar-expand-lg bg-body-tertiary">
+               <div className="container-fluid">
+                 <div className="navbar-brand">
+                   admin dashboard
+                 </div>
+              </div>
+            </nav>
+            <div className=" atten">
+              <div className="attenstatus">
+                <div className="card" style={{ width: "18rem" }}>
+                  <div className="card-body">
+                    <h5 className="card-title">Food count</h5>
+                    <h6 className="card-subtitle mb-2 text-body-secondary">
+                      Food count
+                    </h6>
+                    <p className="card-text">{count.counts}</p>
+                  </div>
+                </div>
+
+              </div>
+              <div className="attenstatus">
+              <div className="card" style={{ width: "18rem" }}>
+                  <div className="card-body">
+                    <h5 className="card-title">Employee count</h5>
+                    <h6 className="card-subtitle mb-2 text-body-secondary">
+                      Employee count
+                    </h6>
+                    <p className="card-text">{count.counts}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="attenstatus">
-              <button type="button" className="btn btn-warning statusbtn">
-                Pending
+            <div className="dashboard">
+            <select onChange={(event)=>reportGen(event.target.value)}>
+                 <option value selected>
+                   generate report
+                 </option>
+                 <option value="weekly">weekly</option>
+                 <option value="monthly">monthly</option>
+               </select>
+               <a href="/admin/approval">
+              <button type="button" className="btn btn-success seat">
+                Registration Approval
               </button>
-            </div>
-            <div className="attenstatus">
-              <button type="button" className="btn btn-danger statusbtn">
-                Rejected
+            </a>
+               <br />
+               <a href="/qrscanner">
+              <button type="button" className="btn btn-success seat">
+                scan Qr
               </button>
+            </a>            
             </div>
           </div>
           <div className="dashboard">
@@ -55,7 +100,8 @@ function AdminDashboard(){
             </a>
           </div>
 
-          {/* <div className="dashboard_bottom">
+            {/* <div className="dashboard_bottom">
+
             <div>
               <img
                 style={{ margin: "" }}
@@ -76,9 +122,10 @@ function AdminDashboard(){
               </a>
             </div>
           </div> */}
+          </div>
         </div>
       </div>
-    </div>
+
       // <div classname="container admin_body">
       //   <div classname="mainpage">
       //     <div classname="admin_container">
@@ -147,7 +194,7 @@ function AdminDashboard(){
       //     </div>
       //   </div>
       // </div>
-      
+
     );
 }
 

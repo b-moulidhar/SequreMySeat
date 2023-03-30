@@ -84,6 +84,14 @@ public class UserDAOImpl implements UserDAO {
 		jdbcTemplate.update(sql,emp.geteId());
 	}
 
+	@Override
+	public void deleteUserRoles(int uId) {
+		// TODO Auto-generated method stub
+		
+		String sql="delete from user_roles where u_id=?";
+		jdbcTemplate.update(sql,uId);
+	}
+
 	
 
 

@@ -25,4 +25,6 @@ public interface UserDAO {
 
 	void deleteEmployee(Employee emp);
 
+	void deleteUserRoles(int getuId);
+
 }

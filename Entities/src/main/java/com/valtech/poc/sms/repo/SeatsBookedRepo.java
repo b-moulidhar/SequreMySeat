@@ -6,6 +6,7 @@ import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.SeatsBooked;
@@ -19,8 +20,8 @@ public interface SeatsBookedRepo extends JpaRepository<SeatsBooked, Integer>{
     
 	List<SeatsBooked> findAllByeId(Employee emp);
 
-	    @Query("UPDATE SeatBooking sb SET sb.notifStatus = false WHERE sb.sbId = :sbId")
-	    void notifStatus(@Param("sbId") int sbId);
+	   // @Query("UPDATE seats_booked sb SET sb.notifStatus = ? WHERE sb.sbId = ?")
+	    //void notifStatus( @PathVariable("sbId") int sbId);
 
 	}
 

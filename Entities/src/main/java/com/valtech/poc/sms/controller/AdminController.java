@@ -165,6 +165,9 @@ public class AdminController {
 		return adminService.getRegistrationListForApproval();
 	}
 		
- 
+	@GetMapping("/profileDetailsAdmin/{admeId}")
+    public Employee getAdminById(@PathVariable int eId) {
+        return employeeService.getEmployeeByeId(eId);
+    }
 	
 }

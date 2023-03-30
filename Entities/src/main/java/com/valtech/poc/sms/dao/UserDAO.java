@@ -1,5 +1,7 @@
 package com.valtech.poc.sms.dao;
 
+import java.util.List;
+
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.Manager;
 import com.valtech.poc.sms.entities.User;
@@ -26,5 +28,7 @@ public interface UserDAO {
 	void deleteEmployee(Employee emp);
 
 	void deleteUserRoles(int getuId);
+
+	List<String> getMangerNames();
 
 }

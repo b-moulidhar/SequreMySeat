@@ -54,6 +54,9 @@ public class AdminController {
 
 	@Autowired
 	UserService userService;
+	
+	 @Autowired
+	    private UserRepo userRepo;
 
 	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -239,8 +242,7 @@ public class AdminController {
 		return employeeService.getEmployeeByeId(eId);
 	}
 
-    @Autowired
-    private UserRepo userRepo;
+   
     
     @ResponseBody
     @PutMapping("/regestrationApproval/{empId}")

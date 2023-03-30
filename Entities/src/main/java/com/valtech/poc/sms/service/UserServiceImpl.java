@@ -2,6 +2,7 @@ package com.valtech.poc.sms.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -32,9 +33,8 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	private UserRepo userepo;
 
 	@Autowired
-
 	private EmployeeRepo employeeRepo;
-	private UserDAO userDAO;
+//	private UserDAO userDAO;
 
 	@Autowired
 //	EmployeeRepo employeeRepo;
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 		try {
 			logger.info("fetching manager ");
 
-			Manager mng = userDAO.getMidByMname(managerName, emp);
+			Manager mng = userDao.getMidByMname(managerName, emp);
 //		logger.info("" + mng.getmId());
 //			if (mng != null)
 				return mng;
@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	public boolean checkIfEmpIdExist(int empId) throws EmptyResultDataAccessException{
 		try {
 		logger.info("checking if EmpId Is already Exist or not");
-		int rows = userDAO.checkIfEmpIdExist(empId);
+		int rows = userDao.checkIfEmpIdExist(empId);
 		if (rows != 0)
 			return false;
 		
@@ -185,13 +185,13 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	@Override
 	public int getRidByRoleName(String role) {
 		logger.info("Getting role_id by using name of the role");
-		return userDAO.getRidByRoleName(role);
+		return userDao.getRidByRoleName(role);
 	}
 
 	@Override
 	public void saveUserRoles(int uId, int rId) {
 		logger.info("Saving the User_roles");
-		userDAO.saveUserRole(uId, rId);
+		userDao.saveUserRole(uId, rId);
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
 	@Override
 	public void deleteEmployee(Employee emp) {
-		userDAO.deleteEmployee(emp);
+		userDao.deleteEmployee(emp);
 	}
 
 
@@ -241,6 +241,14 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	public int getMidByName(String managerName) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+
+	@Override
+	public List<String> getManagerNames() {
+		// TODO Auto-generated method stub
+		return userDao.getMangerNames();
 	}
 	
 

@@ -8,28 +8,18 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.valtech.poc.sms.entities.AttendanceTable;
 import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.entities.SeatsBooked;
 import com.valtech.poc.sms.entities.User;
-import com.valtech.poc.sms.repo.AttendanceRepository;
 import com.valtech.poc.sms.repo.SeatsBookedRepo;
 import com.valtech.poc.sms.service.AdminService;
 import com.valtech.poc.sms.service.EmployeeService;
-import com.valtech.poc.sms.service.MailContent;
 import com.valtech.poc.sms.service.SeatBookingService;
 import com.valtech.poc.sms.service.UserService;
 
@@ -40,16 +30,13 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@Autowired
-	private AttendanceRepository attendanceRepository;
-	
-	@Autowired
-	private MailContent mailContent;
-	
-	@Autowired
 	SeatBookingService seatBookingService;
 	
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	SeatsBookedRepo seatsBookedRepo;
 	
 	@Autowired
 	UserService userService;
@@ -63,9 +50,6 @@ public class AdminController {
 		int count=adminService.getFoodCount(ftDate);
 	    return count;
 	}
-	
-	@Autowired
-	SeatsBookedRepo seatsBookedRepo;
 	
 	@ResponseBody
 	@GetMapping("/checkout")
@@ -144,94 +128,5 @@ public class AdminController {
  		return adminService.getRegistrationListForApproval();
  		
  	}
- 
 
-	
-	    @ResponseBody
-	    @PostMapping("/attendanceRegularization")
-	    public String saveAttendance(@RequestBody AttendanceTable attendance) {
-	    	Employee employee=adminService.getSpecificEmploye(attendance);
-	     //   Manager manager = employee.getManagerDetails();
-	        attendance.seteId(employee);
-	        attendanceRepository.save(attendance);
-	        mailContent.attendanceApprovalRequest(attendance);
-	        return "saved";
-	    }
-	    
-	    @ResponseBody
-	    @PutMapping("/attendanceApproval/{atId}")
-	    	public String approveAttendance(@PathVariable("atId") int atId) {
-	    	    logger.info("Requesting approval");
-	    	    adminService.updateAttendance(atId);
-	    		return "approved";
-	  
-	    	}
-	    
-	 
-	    
-	    @ResponseBody
-	    @PostMapping("/automaticAttendance/{sbId}")
-        public String AutomaticRegularization(@PathVariable("sbId") int sbId) {
-	    	AttendanceTable attendance=new AttendanceTable();
-	    	adminService.automaticRegularization(sbId,attendance);
-	        attendanceRepository.save(attendance);
-	        mailContent.attendanceApprovalRequest(attendance);
-	        return "saved";
-	    }
-	    
-	    @DeleteMapping("/disapproveAttendance/{atId}")
-		public void deleteAttendanceRequest(@PathVariable("atId") int atId) {
-	        adminService.deleteAttendanceRequest(atId);
-	    }
-			
-
-	
-	    @ResponseBody
-	    @GetMapping("/att/{atId}")
-	    public AttendanceTable getListWithManagerDetails(@PathVariable("atId") int atId) {
-	       return adminService.getList(atId);
-	    }
-	    
-	    @ResponseBody
-	    @GetMapping("/attendance")
-	    public List<Map<String, Object>> getCompleteAttendanceList() {
-	        return adminService.getCompleteAttendanceList();
-	    	
-	    }
-	    
-	    @ResponseBody
-	    @GetMapping("/attendance/{atId}")
-	    public Map<String, Object> getAttendanceEachEmployeeBasedOnAttendanceId(@PathVariable("atId") int atId) {    	
-	    	  try {
-	    	       return adminService.getAttendanceListForEachEmployee(atId);
-	    	    } catch (EmptyResultDataAccessException ex) {
-	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for id: " + atId);
-	    	    }
-	    	
-	    }
-	    
-	    @ResponseBody
-	    @GetMapping("/employeeAttendance/{eId}")
-	    public List<Map<String, Object>> getAttendanceForEmployeeBasedOnEmployeeId(@PathVariable("eId") int eId) {    	
-	    	  try {
-	    	       return adminService.getAttendanceForEmployeeBasedOnEmployeeId(eId);
-	    	    } catch (EmptyResultDataAccessException ex) {
-	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
-	    	    }
-	    	  
-	    }
-	    
-	    @ResponseBody
-	    @GetMapping("/attendanceApproval/{eId}")
-	    public List<Map<String, Object>> getAttendanceListForApproval(@PathVariable("eId") int eId) {    	
-	    	  try {
-	    	       return adminService.getAttendanceListForApproval(eId);
-	    	    } catch (EmptyResultDataAccessException ex) {
-	    	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendance details not found for employeeid: " + eId);
-	    	    }
-	    	
-	    }
-	    
-	   
-	  
 }

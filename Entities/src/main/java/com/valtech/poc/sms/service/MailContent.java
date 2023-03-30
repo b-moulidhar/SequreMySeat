@@ -17,4 +17,8 @@ public interface MailContent {
 
 	void attendanceApprovalRequest(AttendanceTable attendanceTable);
 
+	void attendanceApproved(String mail);
+
+	void attendanceDisApproved(String mail);
+
 }

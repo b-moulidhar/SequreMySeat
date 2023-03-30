@@ -52,10 +52,10 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
     }
 	
 	
-	@Override
-	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp)	{
-		return seatBookingDao.findAllByEId(emp);
-	}
+//	@Override
+//	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp)	{
+//		return seatBookingDao.findAllByEId(emp);
+//	}
 	
 	@Override
 	public SeatsBooked findCurrentSeatBookingDetails(Employee emp) {

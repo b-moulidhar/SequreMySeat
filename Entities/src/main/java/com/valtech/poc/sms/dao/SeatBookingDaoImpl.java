@@ -66,51 +66,51 @@ public  class SeatBookingDaoImpl implements SeatBookingDao {
 	}
 	
 
-	@Override
-	public List<SeatsBooked> findAllByEId(Employee emp) {
-		String query = "select * from seats_booked where e_id = ?";
-		int empId = emp.geteId();
-		@SuppressWarnings("deprecation")
-		List<SeatsBooked> seatsBooked = jdbcTemplate.query(query, new Object[] { empId },
-				new ResultSetExtractor<List<SeatsBooked>>() {
-					public List<SeatsBooked> extractData(ResultSet rs) throws SQLException, DataAccessException {
-						List<SeatsBooked> list = new ArrayList<SeatsBooked>();
-						while (rs.next()) {
-							SeatsBooked seatsBooked = new SeatsBooked();
-							seatsBooked.setSbId(rs.getInt("sb_id"));
-							int seatId = rs.getInt("s_id");
-							Seat seat = seatRepo.findById(seatId).get();
-							seatsBooked.setsId(seat);
-//							int mngId = emp.getManagerDetails().getmId();
-//							Manager mng = managerRepo.findById(mngId);
-//							System.out.println(mng);					
-//							emp.setManagerDetails(mng);
-							seatsBooked.seteId(emp);
-							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-							String sbSDate = rs.getString("sb_start_date");
-							LocalDateTime dateTime = LocalDateTime.parse(sbSDate, formatter);
-							seatsBooked.setSbStartDate(dateTime);
-							String sbEDate = rs.getString("sb_end_date");
-							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
-							seatsBooked.setSbEndDate(dateTime1);
-							String sbISDate = rs.getString("punch_in");
-							LocalDateTime dateTimeI = LocalDateTime.parse(sbISDate, formatter);
-							seatsBooked.setPunchIn(dateTimeI);
-							String sbOSDate = rs.getString("punch_out");
-							LocalDateTime dateTimeO = LocalDateTime.parse(sbOSDate, formatter);
-							seatsBooked.setPunchOut(dateTimeO);
-							seatsBooked.setCode(rs.getString("code"));
-							seatsBooked.setCurrent(rs.getBoolean("current"));
-							list.add(seatsBooked);
-						}
-						return list;
-						
-					}
-
-				});
-//		System.out.println(seatsBooked);
-		return seatsBooked;
-	}
+//	@Override
+//	public List<SeatsBooked> findAllByEId(Employee emp) {
+//		String query = "select * from seats_booked where e_id = ?";
+//		int empId = emp.geteId();
+//		@SuppressWarnings("deprecation")
+//		List<SeatsBooked> seatsBooked = jdbcTemplate.query(query, new Object[] { empId },
+//				new ResultSetExtractor<List<SeatsBooked>>() {
+//					public List<SeatsBooked> extractData(ResultSet rs) throws SQLException, DataAccessException {
+//						List<SeatsBooked> list = new ArrayList<SeatsBooked>();
+//						while (rs.next()) {
+//							SeatsBooked seatsBooked = new SeatsBooked();
+//							seatsBooked.setSbId(rs.getInt("sb_id"));
+//							int seatId = rs.getInt("s_id");
+//							Seat seat = seatRepo.findById(seatId).get();
+//							seatsBooked.setsId(seat);
+////							int mngId = emp.getManagerDetails().getmId();
+////							Manager mng = managerRepo.findById(mngId);
+////							System.out.println(mng);					
+////							emp.setManagerDetails(mng);
+//							seatsBooked.seteId(emp);
+//							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//							String sbSDate = rs.getString("sb_start_date");
+//							LocalDateTime dateTime = LocalDateTime.parse(sbSDate, formatter);
+//							seatsBooked.setSbStartDate(dateTime);
+//							String sbEDate = rs.getString("sb_end_date");
+//							LocalDateTime dateTime1 = LocalDateTime.parse(sbEDate, formatter);
+//							seatsBooked.setSbEndDate(dateTime1);
+//							String sbISDate = rs.getString("punch_in");
+//							LocalDateTime dateTimeI = LocalDateTime.parse(sbISDate, formatter);
+//							seatsBooked.setPunchIn(dateTimeI);
+//							String sbOSDate = rs.getString("punch_out");
+//							LocalDateTime dateTimeO = LocalDateTime.parse(sbOSDate, formatter);
+//							seatsBooked.setPunchOut(dateTimeO);
+//							seatsBooked.setCode(rs.getString("code"));
+//							seatsBooked.setCurrent(rs.getBoolean("current"));
+//							list.add(seatsBooked);
+//						}
+//						return list;
+//						
+//					}
+//
+//				});
+////		System.out.println(seatsBooked);
+//		return seatsBooked;
+//	}
 
 	@SuppressWarnings("deprecation")
 	@Override

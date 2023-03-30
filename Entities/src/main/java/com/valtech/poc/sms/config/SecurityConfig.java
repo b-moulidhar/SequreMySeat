@@ -61,7 +61,7 @@ public class SecurityConfig {
         .disable()
         .cors().and() 
                 .authorizeHttpRequests()
-                .requestMatchers("/api/login").permitAll()
+                .requestMatchers("/api/login","/saveuser","/roleNames","/gettingAllManagernames").permitAll()
                 .requestMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources/**", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll().requestMatchers("/api/").permitAll()
                 .anyRequest().authenticated().and().formLogin().and().httpBasic();
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

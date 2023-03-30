@@ -14,4 +14,7 @@ public interface EmployeeService {
 
 	List<Employee> getAllEmployees(int empID);
 
+	Employee saveEmployee(Employee employee);
+
+
 }

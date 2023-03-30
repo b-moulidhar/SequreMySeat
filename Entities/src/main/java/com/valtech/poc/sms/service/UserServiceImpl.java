@@ -2,6 +2,7 @@ package com.valtech.poc.sms.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import com.valtech.poc.sms.entities.User;
 import com.valtech.poc.sms.repo.EmployeeRepo;
 import com.valtech.poc.sms.repo.ManagerRepo;
 import com.valtech.poc.sms.repo.UserRepo;
+import com.valtech.poc.sms.security.JwtUtil;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,11 +32,13 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
 	@Autowired
 	private UserRepo userepo;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	@Autowired
-
 	private EmployeeRepo employeeRepo;
-	private UserDAO userDAO;
+//	private UserDAO userDAO;
 
 	@Autowired
 //	EmployeeRepo employeeRepo;
@@ -68,36 +72,6 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 //		
 //	}
 
-	@Override
-	public String login(int empId, String pass) {
-	    UserDetails userDetails;
-	    try {
-	        userDetails = loadUserByUsername(String.valueOf(empId));
-	    } catch (UsernameNotFoundException ex) {
-	        throw new RuntimeException("User not found with empId: " + empId);
-	    }
-	    User user = userRepo.findByEmpId(empId);
-	    if (user != null && bCryptPasswordEncoder.matches(pass, user.getPass())) {
-	        if (user.isApproval()) {
-	            Map<String, Object> claims = new HashMap<>();
-	            claims.put("empId", user.getEmpId());
-	            claims.put("uId", user.getuId());
-	            claims.put("approval", user.isApproval());
-	            String token = Jwts.builder()
-	                    .setClaims(claims)
-	                    .setIssuedAt(new Date())
-	                    .setExpiration(new Date(System.currentTimeMillis() + 864000000))
-	                    .signWith(SignatureAlgorithm.HS256, "secretkey")
-	                    .compact();
-	            return token;
-	        } else {
-	            throw new RuntimeException("User is not approved");
-	        }
-	    } else {
-	        throw new RuntimeException("Invalid username or password");
-	    }
-	}
-
 
 	@Override
 	public void register(int empId, String pass, Employee empDetails) {
@@ -123,7 +97,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 		try {
 			logger.info("fetching manager ");
 
-			Manager mng = userDAO.getMidByMname(managerName, emp);
+			Manager mng = userDao.getMidByMname(managerName, emp);
 //		logger.info("" + mng.getmId());
 //			if (mng != null)
 				return mng;
@@ -171,7 +145,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	public boolean checkIfEmpIdExist(int empId) throws EmptyResultDataAccessException{
 		try {
 		logger.info("checking if EmpId Is already Exist or not");
-		int rows = userDAO.checkIfEmpIdExist(empId);
+		int rows = userDao.checkIfEmpIdExist(empId);
 		if (rows != 0)
 			return false;
 		
@@ -184,13 +158,13 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	@Override
 	public int getRidByRoleName(String role) {
 		logger.info("Getting role_id by using name of the role");
-		return userDAO.getRidByRoleName(role);
+		return userDao.getRidByRoleName(role);
 	}
 
 	@Override
 	public void saveUserRoles(int uId, int rId) {
 		logger.info("Saving the User_roles");
-		userDAO.saveUserRole(uId, rId);
+		userDao.saveUserRole(uId, rId);
 	}
 
 	@Override
@@ -207,21 +181,31 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 
 	@Override
 	public void deleteEmployee(Employee emp) {
-		userDAO.deleteEmployee(emp);
+		userDao.deleteEmployee(emp);
 	}
 
 
 	@Override
 	public User findByEmpId(int empId) {
-		User user=userRepo.findByEmpId(empId);
-		return user;
+		User usr = userRepo.findByEmpId(empId);
+//		User usr = userRepo.findById(empId);
+//		System.out.println(usr);
+		return usr;
+	}
+	
+	
+	@Override
+	public User findByEId(int eId) {
+		Employee emp = employeeRepo.findById(eId).get();
+		User usr = userRepo.findByEmpDetails(emp);
+		return usr;
 	}
 
 
 	@Override
-	public void save(User user) {
+	public User save(User user) {
 		logger.info("Saving User Info");
-		userepo.save(user);
+		return userepo.save(user);
 		
 	}
 
@@ -230,6 +214,35 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	public int getMidByName(String managerName) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+
+	@Override
+	public List<String> getManagerNames() {
+		// TODO Auto-generated method stub
+		return userDao.getMangerNames();
+	}
+	
+	@Override
+	public String login(int empId, String pass) {
+	    UserDetails userDetails;
+	    try {
+	        userDetails = loadUserByUsername(String.valueOf(empId));
+	    } catch (UsernameNotFoundException ex) {
+	        throw new RuntimeException("User not found with empId: " + empId);
+	    }
+	    User user = userRepo.findByEmpId(empId);
+	    if (user != null && bCryptPasswordEncoder.matches(pass, user.getPass())) {
+	        if (user.isApproval()) {
+	        	String token=jwtUtil.generateToken(userDetails);
+	            return token;
+	        } else {
+	            throw new RuntimeException("User is not approved");
+	        }
+	    } else {
+	        throw new RuntimeException("Invalid username or password");
+	    }
 	}
 	
 

@@ -17,13 +17,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	
+	
 	@Override
     public Employee getEmployeeByeId(int eId) {
         return employeeDAO.getEmployeeByeId(eId);
     }
 	
 	@Autowired
-	EmployeeRepo empRepo;
+	private EmployeeRepo empRepo;
 
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
@@ -43,4 +44,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.info("Getting All Employee Details by manager");
 		return employeeDAO.getAllEmployees(empID);
 	}
+
+	@Override
+	public Employee saveEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return empRepo.save(employee);
+	}
+
+	
 }

@@ -27,6 +27,8 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
 	@Autowired
 	SeatsBookedRepo seatsBookedRepo;
 	
+//	@Override
+//	public String getQrCodeKeyForEmpId(int empId)
 
 	@Override
 	public List<Integer> getAllSeats() {
@@ -50,10 +52,10 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
     }
 	
 	
-	@Override
-	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp)	{
-		return seatBookingDao.findAllByEId(emp);
-	}
+//	@Override
+//	public List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp)	{
+//		return seatBookingDao.findAllByEId(emp);
+//	}
 	
 	@Override
 	public SeatsBooked findCurrentSeatBookingDetails(Employee emp) {
@@ -80,7 +82,7 @@ public  class SeatBookingServiceImpl implements SeatBookingService {
 	 
 	 @Override
 	 public void notifStatus(int sbId) {
-		 seatsBookedRepo.notifStatus(sbId);
+		 seatBookingDao.notifStatus( sbId);
 	 }
 	 
 //	@Override

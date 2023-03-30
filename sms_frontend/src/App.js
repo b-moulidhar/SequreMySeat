@@ -17,9 +17,8 @@ import GroundFloor from './components/layouts/ground';
 import QrCodeScan from './components/QR/qrscanner';
 import QrCodeGen from './components/QR/qrgenerator';
 import ViewPass from './components/ViewPass/viewPass';
+import Registration_Approval from './components/Registration_Approval/registration_approval';
 import Manager from './components/Manager/manager';
-import Regestration_Approval from './components/Registration_Approval/registration_approval';
-import Combine_Dashboard from './components/combine_dasboard';
 
 
 
@@ -49,8 +48,8 @@ function App() {
     <Route path="/qrscanner" element={<QrCodeScan/>}/>    
     <Route path="/qrgenerator" element={<QrCodeGen/>}/>    
     <Route path="/gfloor" element={<GroundFloor/>}/>    
-    <Route path="/admin/approval" element={<Regestration_Approval/>}/>   
-    <Route path='/combine_dashboard' element={<Combine_Dashboard/>}/> 
+    <Route path="/admin/approval" element={<Registration_Approval/>}/>    
+
     </Routes>
     </BrowserRouter>
     </>

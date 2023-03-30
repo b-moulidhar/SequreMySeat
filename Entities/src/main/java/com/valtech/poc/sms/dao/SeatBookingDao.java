@@ -15,7 +15,7 @@ public interface SeatBookingDao {
 
 	List<Integer> availableSeats();
 
-	List<SeatsBooked> findAllByEId(Employee emp);
+//	List<SeatsBooked> findAllByEId(Employee emp);
 
 	SeatsBooked findCurrentSeat(Employee emp);
 
@@ -26,6 +26,10 @@ public interface SeatBookingDao {
 	List<Seat> findAvailableSeatsByDate(LocalDate date);
 
     void bookSeat(SeatsBooked seatsBooked);
+
+	//void notifStatus(boolean notifStatus, int sbId);
+
+	void notifStatus(int sbId);
 
 	//void updateNotifStatus(int sbId, Connection connection);
 

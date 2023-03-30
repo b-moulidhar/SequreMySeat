@@ -1,16 +1,12 @@
 package com.valtech.poc.sms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.valtech.poc.sms.entities.Employee;
 import com.valtech.poc.sms.service.EmployeeService;
-import com.valtech.poc.sms.service.HttpService;
 import com.valtech.poc.sms.service.ResetPassword;
 
 @RestController
@@ -22,8 +18,6 @@ public class MailController {
 	@Autowired
 	ResetPassword resetPassword;
 	
-	@Autowired
-	private HttpService httpService;
 
 	@ResponseBody
 	@PostMapping("/reset/{email}")

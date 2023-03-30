@@ -22,7 +22,7 @@ public interface SeatBookingService {
 
 	//List<Integer> getSeatById();
 
-	List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp);
+//	List<SeatsBooked> findEmployeeWiseSeatsBooked(Employee emp);
 
 	SeatsBooked findCurrentSeatBookingDetails(Employee emp);
 

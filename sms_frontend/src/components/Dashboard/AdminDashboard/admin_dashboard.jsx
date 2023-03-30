@@ -6,12 +6,12 @@ import './admin_dashboard.css';
 function AdminDashboard(){
     const [count,setCount] = useState({counts:0})
     useEffect(()=>{
-        axios.get("https://reqres.in/api/users").then((res)=>{
+        axios.get("http://10.191.80.112:7001/seatCount/2023-03-30%2010%3A55%3A27.676107").then((res)=>{
                 setCount({
                     ...count,counts:res.data.data.length
                 }
                 )
-                console.log(res.data.data.length)
+                console.log(res.data)
         })
     },[])
     return (

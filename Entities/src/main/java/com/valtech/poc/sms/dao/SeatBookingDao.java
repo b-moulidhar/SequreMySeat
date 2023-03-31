@@ -15,7 +15,7 @@ public interface SeatBookingDao {
 
 	List<Integer> availableSeats();
 
-	List<SeatsBooked> findAllByEId(Employee emp);
+//	List<SeatsBooked> findAllByEId(Employee emp);
 
 	SeatsBooked findCurrentSeat(Employee emp);
 

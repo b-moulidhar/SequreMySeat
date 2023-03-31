@@ -30,7 +30,7 @@ public class ManagerController {
 	}
 	
 	@ResponseBody
-	@GetMapping
+	@GetMapping("/GetAllManagers")
 	public List<String> ManagerList() {
 		return managerService.getAllManagerNames();
 		
